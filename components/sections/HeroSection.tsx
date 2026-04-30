@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { weddingConfig } from "@/lib/wedding-config";
 import { useEffect, useState } from "react";
 
-// Premium floating particle — elegant SVG shapes instead of emoji
+// Premium floating particle — elegant SVG shapes
 function FloatingParticle({ index }: { index: number }) {
   const left = `${(index * 13.7 + 5) % 100}%`;
   const delay = (index * 0.9) % 10;
@@ -12,26 +12,18 @@ function FloatingParticle({ index }: { index: number }) {
   const size = 6 + (index % 3) * 5;
   const type = index % 4;
 
-  // Four elegant shapes: diamond ◆, ring ○, dot ·, cross ✦
   const shapes = [
-    // Diamond
     <svg key="d" width={size} height={size} viewBox="0 0 12 12" fill="none">
       <path d="M6 1L11 6L6 11L1 6Z" fill="rgba(201,168,76,0.55)" />
     </svg>,
-    // Ring
     <svg key="r" width={size + 2} height={size + 2} viewBox="0 0 14 14" fill="none">
       <circle cx="7" cy="7" r="5" stroke="rgba(201,168,76,0.45)" strokeWidth="1.5" />
     </svg>,
-    // Dot
     <svg key="dot" width={size - 2} height={size - 2} viewBox="0 0 8 8" fill="none">
       <circle cx="4" cy="4" r="3" fill="rgba(201,168,76,0.4)" />
     </svg>,
-    // Four-point star
     <svg key="s" width={size} height={size} viewBox="0 0 12 12" fill="none">
-      <path
-        d="M6 0.5L6.8 5.2L11.5 6L6.8 6.8L6 11.5L5.2 6.8L0.5 6L5.2 5.2Z"
-        fill="rgba(201,168,76,0.5)"
-      />
+      <path d="M6 0.5L6.8 5.2L11.5 6L6.8 6.8L6 11.5L5.2 6.8L0.5 6L5.2 5.2Z" fill="rgba(201,168,76,0.5)" />
     </svg>,
   ];
 
@@ -60,7 +52,7 @@ export default function HeroSection() {
         background: "linear-gradient(160deg, #FDF6EC 0%, #F7E7CE 40%, #F2D4D7 75%, #EED5E9 100%)",
       }}
     >
-      {/* Premium floating particles */}
+      {/* Floating particles */}
       {mounted && Array.from({ length: 14 }).map((_, i) => <FloatingParticle key={i} index={i} />)}
 
       {/* Decorative rings */}
@@ -79,9 +71,80 @@ export default function HeroSection() {
         style={{ width: "min(660px, 95vw)", height: "min(660px, 95vw)" }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      {/* ── Large floral ornaments — Left side ── */}
+      <motion.div
+        initial={{ opacity: 0, x: -60 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.4, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute left-0 bottom-0 pointer-events-none select-none hidden lg:block"
+        style={{ transformOrigin: "bottom left" }}
+      >
+        <motion.img
+          src="/flower-path-two-flip.png"
+          alt=""
+          draggable={false}
+          style={{ width: "clamp(180px, 18vw, 280px)", height: "auto", opacity: 0.85 }}
+          animate={{ rotate: [-3, 2, -3], y: [-4, 4, -4] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
 
+      {/* Top-left small accent */}
+      <motion.div
+        initial={{ opacity: 0, x: -40, y: -20 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ duration: 1.4, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute left-2 top-8 pointer-events-none select-none hidden lg:block"
+        style={{ transformOrigin: "top left" }}
+      >
+        <motion.img
+          src="/flower-path-one-flip.png"
+          alt=""
+          draggable={false}
+          style={{ width: "clamp(100px, 10vw, 150px)", height: "auto", opacity: 0.65 }}
+          animate={{ rotate: [-5, 1, -5], y: [-3, 3, -3] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
+
+      {/* ── Large floral ornaments — Right side ── */}
+      <motion.div
+        initial={{ opacity: 0, x: 60 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.4, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute right-0 bottom-0 pointer-events-none select-none hidden lg:block"
+        style={{ transformOrigin: "bottom right" }}
+      >
+        <motion.img
+          src="/flower-path-two.png"
+          alt=""
+          draggable={false}
+          style={{ width: "clamp(180px, 18vw, 280px)", height: "auto", opacity: 0.85 }}
+          animate={{ rotate: [3, -2, 3], y: [4, -4, 4] }}
+          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
+
+      {/* Top-right small accent */}
+      <motion.div
+        initial={{ opacity: 0, x: 40, y: -20 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ duration: 1.4, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute right-2 top-8 pointer-events-none select-none hidden lg:block"
+        style={{ transformOrigin: "top right" }}
+      >
+        <motion.img
+          src="/flower-path-one.png"
+          alt=""
+          draggable={false}
+          style={{ width: "clamp(100px, 10vw, 150px)", height: "auto", opacity: 0.65 }}
+          animate={{ rotate: [5, -1, 5], y: [3, -3, 3] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
+
+      {/* ── Hero Content ── */}
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         {/* Pre-title */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -103,16 +166,22 @@ export default function HeroSection() {
           {weddingConfig.bride}
         </motion.h1>
 
-        {/* Ampersand divider */}
+        {/* Premium ornamental divider */}
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex items-center gap-4 justify-center my-5"
+          transition={{ duration: 1, delay: 0.9 }}
+          className="flex items-center gap-3 justify-center my-5"
         >
-          <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-          <span className="text-2xl text-amber-500" style={{ fontFamily: "serif" }}>♡</span>
-          <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
+          <div className="h-px flex-1 max-w-[60px]" style={{ background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
+          {/* Premium SVG ornament — interlocking rings */}
+          <svg width="48" height="24" viewBox="0 0 48 24" fill="none" className="flex-shrink-0">
+            <circle cx="16" cy="12" r="9" stroke="#C9A84C" strokeWidth="1.25" fill="none" opacity="0.9" />
+            <circle cx="32" cy="12" r="9" stroke="#C9A84C" strokeWidth="1.25" fill="none" opacity="0.9" />
+            <circle cx="16" cy="12" r="3" fill="#C9A84C" opacity="0.6" />
+            <circle cx="32" cy="12" r="3" fill="#C9A84C" opacity="0.6" />
+          </svg>
+          <div className="h-px flex-1 max-w-[60px]" style={{ background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
         </motion.div>
 
         {/* Groom name */}

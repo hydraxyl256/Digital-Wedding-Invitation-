@@ -9,9 +9,10 @@ import EventDetails from "@/components/sections/EventDetails";
 import ScheduleTimeline from "@/components/sections/ScheduleTimeline";
 import LocationMap from "@/components/sections/LocationMap";
 import RSVPForm from "@/components/sections/RSVPForm";
-import Gallery from "@/components/sections/Gallery";
+
 import CountdownTimer from "@/components/sections/CountdownTimer";
 import Footer from "@/components/sections/Footer";
+import FloralDecoration from "@/components/ui/FloralDecoration";
 
 export default function Home() {
   const { setActiveSection } = useWedding();
@@ -36,6 +37,7 @@ export default function Home() {
   return (
     <>
       <IntroOverlay />
+      <FloralDecoration />
       <main>
         <HeroSection />
         <OurStory />
@@ -43,7 +45,7 @@ export default function Home() {
         <ScheduleTimeline />
         <LocationMap />
         <RSVPForm />
-        <Gallery />
+
         <CountdownTimer />
         <Footer />
       </main>
