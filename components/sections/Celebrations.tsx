@@ -26,7 +26,7 @@ function CelebrationCard({
             y: { duration: isHotel ? 5 : 4.5, repeat: Infinity, ease: "easeInOut" },
             rotate: { duration: isHotel ? 6 : 5.5, repeat: Infinity, ease: "easeInOut" },
             x: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-            initial: { duration: 0.8 }
+            opacity: { duration: 0.8 }
           }}
           className="relative z-20 pointer-events-none"
           style={{ marginBottom: isHotel ? "-44px" : "-36px" }}
