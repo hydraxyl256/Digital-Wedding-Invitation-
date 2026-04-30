@@ -1,225 +1,174 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { weddingConfig } from "@/lib/wedding-config";
 import { useEffect, useState } from "react";
-
-// Premium floating particle — elegant SVG shapes
-function FloatingParticle({ index }: { index: number }) {
-  const left = `${(index * 13.7 + 5) % 100}%`;
-  const delay = (index * 0.9) % 10;
-  const duration = 14 + (index % 5) * 3;
-  const size = 6 + (index % 3) * 5;
-  const type = index % 4;
-
-  const shapes = [
-    <svg key="d" width={size} height={size} viewBox="0 0 12 12" fill="none">
-      <path d="M6 1L11 6L6 11L1 6Z" fill="rgba(201,168,76,0.55)" />
-    </svg>,
-    <svg key="r" width={size + 2} height={size + 2} viewBox="0 0 14 14" fill="none">
-      <circle cx="7" cy="7" r="5" stroke="rgba(201,168,76,0.45)" strokeWidth="1.5" />
-    </svg>,
-    <svg key="dot" width={size - 2} height={size - 2} viewBox="0 0 8 8" fill="none">
-      <circle cx="4" cy="4" r="3" fill="rgba(201,168,76,0.4)" />
-    </svg>,
-    <svg key="s" width={size} height={size} viewBox="0 0 12 12" fill="none">
-      <path d="M6 0.5L6.8 5.2L11.5 6L6.8 6.8L6 11.5L5.2 6.8L0.5 6L5.2 5.2Z" fill="rgba(201,168,76,0.5)" />
-    </svg>,
-  ];
-
-  return (
-    <motion.div
-      className="absolute top-0 pointer-events-none select-none"
-      style={{ left }}
-      initial={{ y: -20, opacity: 0, rotate: 0 }}
-      animate={{ y: "110vh", opacity: [0, 0.9, 0.9, 0], rotate: 180 }}
-      transition={{ duration, delay, repeat: Infinity, ease: "linear" }}
-    >
-      {shapes[type]}
-    </motion.div>
-  );
-}
+import { ChevronDown } from "lucide-react";
+import FormalInvitation from "./FormalInvitation";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [showInvitation, setShowInvitation] = useState(false);
+  const [sequenceComplete, setSequenceComplete] = useState(false);
+  const controlsLeft = useAnimation();
+  const controlsRight = useAnimation();
+  const controlsContent = useAnimation();
+  const controlsArrow = useAnimation();
+
+  useEffect(() => { 
+    setMounted(true); 
+    
+    const sequence = async () => {
+      // 1. Initial wait (3s)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      // 2. Fade out Hero names & Open Doors (5s)
+      controlsContent.start({ opacity: 0, scale: 1.1, transition: { duration: 1.5 } });
+      setShowInvitation(true);
+      await Promise.all([
+        controlsLeft.start({ x: "-100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
+        controlsRight.start({ x: "100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } })
+      ]);
+      
+      // 3. Keep open for 15s
+      await new Promise(resolve => setTimeout(resolve, 15000));
+      
+      // 4. Close Doors (5s)
+      await Promise.all([
+        controlsLeft.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
+        controlsRight.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } })
+      ]);
+      
+      // 5. Fade Hero names back in and show Arrow
+      setShowInvitation(false);
+      await controlsContent.start({ opacity: 1, scale: 1, transition: { duration: 2 } });
+      setSequenceComplete(true);
+      controlsArrow.start({ opacity: 1, y: 0, transition: { duration: 1 } });
+    };
+
+    sequence();
+  }, [controlsLeft, controlsRight, controlsContent, controlsArrow]);
+
+  if (!mounted) return null;
 
   return (
     <section
       data-section
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        background: "linear-gradient(160deg, #FDF6EC 0%, #F7E7CE 40%, #F2D4D7 75%, #EED5E9 100%)",
-      }}
+      className="relative h-screen w-full overflow-hidden bg-white"
     >
-      {/* Floating particles */}
-      {mounted && Array.from({ length: 14 }).map((_, i) => <FloatingParticle key={i} index={i} />)}
-
-      {/* Decorative rings */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute rounded-full border border-amber-200/40 pointer-events-none"
-        style={{ width: "min(480px, 80vw)", height: "min(480px, 80vw)" }}
-      />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute rounded-full border border-amber-100/25 pointer-events-none"
-        style={{ width: "min(660px, 95vw)", height: "min(660px, 95vw)" }}
-      />
-
-      {/* ── Large floral ornaments — Left side ── */}
-      <motion.div
-        initial={{ opacity: 0, x: -60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.4, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-0 bottom-0 pointer-events-none select-none hidden lg:block"
-        style={{ transformOrigin: "bottom left" }}
-      >
-        <motion.img
-          src="/flower-path-two-flip.png"
-          alt=""
-          draggable={false}
-          style={{ width: "clamp(180px, 18vw, 280px)", height: "auto", opacity: 0.85 }}
-          animate={{ rotate: [-3, 2, -3], y: [-4, 4, -4] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
-
-      {/* Top-left small accent */}
-      <motion.div
-        initial={{ opacity: 0, x: -40, y: -20 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.4, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-2 top-8 pointer-events-none select-none hidden lg:block"
-        style={{ transformOrigin: "top left" }}
-      >
-        <motion.img
-          src="/flower-path-one-flip.png"
-          alt=""
-          draggable={false}
-          style={{ width: "clamp(100px, 10vw, 150px)", height: "auto", opacity: 0.65 }}
-          animate={{ rotate: [-5, 1, -5], y: [-3, 3, -3] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
-
-      {/* ── Large floral ornaments — Right side ── */}
-      <motion.div
-        initial={{ opacity: 0, x: 60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.4, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute right-0 bottom-0 pointer-events-none select-none hidden lg:block"
-        style={{ transformOrigin: "bottom right" }}
-      >
-        <motion.img
-          src="/flower-path-two.png"
-          alt=""
-          draggable={false}
-          style={{ width: "clamp(180px, 18vw, 280px)", height: "auto", opacity: 0.85 }}
-          animate={{ rotate: [3, -2, 3], y: [4, -4, 4] }}
-          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
-
-      {/* Top-right small accent */}
-      <motion.div
-        initial={{ opacity: 0, x: 40, y: -20 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.4, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute right-2 top-8 pointer-events-none select-none hidden lg:block"
-        style={{ transformOrigin: "top right" }}
-      >
-        <motion.img
-          src="/flower-path-one.png"
-          alt=""
-          draggable={false}
-          style={{ width: "clamp(100px, 10vw, 150px)", height: "auto", opacity: 0.65 }}
-          animate={{ rotate: [5, -1, 5], y: [3, -3, 3] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
-
-      {/* ── Hero Content ── */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        {/* Pre-title */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-xs md:text-sm uppercase tracking-[0.4em] text-amber-700 mb-10 font-medium"
-        >
-          Together with their families
-        </motion.p>
-
-        {/* Bride name */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-900 leading-none mb-4"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          {weddingConfig.bride}
-        </motion.h1>
-
-        {/* Premium ornamental divider */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="flex items-center gap-3 justify-center my-5"
-        >
-          <div className="h-px flex-1 max-w-[60px]" style={{ background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-          {/* Premium SVG ornament — interlocking rings */}
-          <svg width="48" height="24" viewBox="0 0 48 24" fill="none" className="flex-shrink-0">
-            <circle cx="16" cy="12" r="9" stroke="#C9A84C" strokeWidth="1.25" fill="none" opacity="0.9" />
-            <circle cx="32" cy="12" r="9" stroke="#C9A84C" strokeWidth="1.25" fill="none" opacity="0.9" />
-            <circle cx="16" cy="12" r="3" fill="#C9A84C" opacity="0.6" />
-            <circle cx="32" cy="12" r="3" fill="#C9A84C" opacity="0.6" />
-          </svg>
-          <div className="h-px flex-1 max-w-[60px]" style={{ background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
-        </motion.div>
-
-        {/* Groom name */}
-        <motion.h1
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-amber-900 leading-none mb-10"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          {weddingConfig.groom}
-        </motion.h1>
-
-        {/* Date */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
-          className="text-sm md:text-base uppercase tracking-[0.35em] text-amber-700"
-        >
-          {weddingConfig.weddingDateFormatted}
-        </motion.p>
+      {/* ── BACKGROUND CONTENT (Formal Invitation Revealed) ── */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        {showInvitation && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="w-full h-full"
+          >
+            <FormalInvitation />
+          </motion.div>
+        )}
       </div>
 
-      {/* Scroll hint */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      {/* ── THE OPENING DOORS (Hero Background) ── */}
+      <div className="absolute inset-0 z-20 flex pointer-events-none">
+        
+        {/* Left Door */}
+        <motion.div 
+          animate={controlsLeft}
+          className="relative w-1/2 h-full overflow-hidden border-r border-white/10"
+        >
+          <div 
+            className="absolute inset-0 w-[200%] h-full"
+            style={{
+              backgroundImage: "url('/hero-background.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "left center",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/5" />
+        </motion.div>
+
+        {/* Right Door */}
+        <motion.div 
+          animate={controlsRight}
+          className="relative w-1/2 h-full overflow-hidden border-l border-white/10"
+        >
+          <div 
+            className="absolute inset-0 w-[200%] h-full -left-full"
+            style={{
+              backgroundImage: "url('/hero-background.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "right center",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/5" />
+        </motion.div>
+      </div>
+
+      {/* ── HERO TEXT (Sitting on top of doors) ── */}
+      <motion.div 
+        animate={controlsContent}
+        className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
       >
-        <span className="text-[10px] uppercase tracking-widest text-amber-600/70">Scroll</span>
+        {/* Language Switcher */}
+        <div className="absolute top-6 right-6 flex items-center gap-1 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/50 shadow-sm scale-90 md:scale-100">
+          <button className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3D5A5B] text-white">EN</button>
+          <button className="text-[10px] font-bold px-2 py-0.5 rounded-full text-[#3D5A5B]">DE</button>
+        </div>
+
+        {/* Content */}
+        <div className="flex flex-col items-center gap-2 md:gap-4 drop-shadow-2xl">
+          <motion.p
+            className="text-white text-[10px] md:text-xs uppercase tracking-[0.6em] font-light mb-8"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            We are getting married
+          </motion.p>
+
+          <h1
+            className="text-white text-7xl md:text-9xl lg:text-[11rem] leading-none"
+            style={{ fontFamily: "'Great Vibes', cursive" }}
+          >
+            {weddingConfig.bride}
+          </h1>
+
+          <span className="text-white text-xl md:text-2xl font-serif italic my-2">
+            &
+          </span>
+
+          <h1
+            className="text-white text-7xl md:text-9xl lg:text-[11rem] leading-none"
+            style={{ fontFamily: "'Great Vibes', cursive" }}
+          >
+            {weddingConfig.groom}
+          </h1>
+        </div>
+
+        {/* Audio Toggle Toggle visual */}
+        <div className="absolute bottom-8 right-8">
+          <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3D5A5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── SCROLL ARROW (Appears after sequence) ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={controlsArrow}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2"
+      >
+        <span className="text-white/70 text-[9px] uppercase tracking-[0.4em]">Scroll Down</span>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-px h-8"
-          style={{ background: "linear-gradient(180deg, #C9A84C, transparent)" }}
-        />
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        >
+          <ChevronDown size={24} className="text-white" strokeWidth={1} />
+        </motion.div>
       </motion.div>
     </section>
   );

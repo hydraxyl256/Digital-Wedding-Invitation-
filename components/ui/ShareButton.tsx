@@ -4,6 +4,8 @@ import { Check, Copy, Share2 } from "lucide-react";
 import { useState } from "react";
 import { weddingConfig } from "@/lib/wedding-config";
 
+const THEME = "#3D5A5B";
+
 export default function ShareButton() {
   const [copied, setCopied] = useState(false);
 
@@ -20,20 +22,47 @@ export default function ShareButton() {
 
   return (
     <div className="flex items-center gap-3 justify-center flex-wrap">
+      {/* Share on WhatsApp — solid teal */}
       <button
         onClick={handleWhatsApp}
-        className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-        style={{ background: "#25D366" }}
+        className="flex items-center gap-2 transition-all duration-300 hover:opacity-75 active:scale-95"
+        style={{
+          background: THEME,
+          color: "white",
+          fontFamily: "'Montserrat', sans-serif",
+          fontSize: "0.7rem",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          padding: "13px 24px",
+          borderRadius: 40,
+          border: "none",
+          cursor: "pointer",
+        }}
       >
-        <Share2 size={15} />
+        <Share2 size={13} />
         Share on WhatsApp
       </button>
+
+      {/* Copy Link — outlined teal */}
       <button
         onClick={handleCopy}
-        className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border"
-        style={{ borderColor: "#C9A84C", color: "#C9A84C" }}
+        className="flex items-center gap-2 transition-all duration-300 hover:opacity-75 active:scale-95"
+        style={{
+          background: "transparent",
+          color: THEME,
+          fontFamily: "'Montserrat', sans-serif",
+          fontSize: "0.7rem",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          padding: "12px 24px",
+          borderRadius: 40,
+          border: `1.5px solid rgba(61,90,91,0.25)`,
+          cursor: "pointer",
+        }}
       >
-        {copied ? <Check size={15} /> : <Copy size={15} />}
+        {copied ? <Check size={13} /> : <Copy size={13} />}
         {copied ? "Copied!" : "Copy Invite Link"}
       </button>
     </div>

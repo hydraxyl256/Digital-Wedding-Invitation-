@@ -4,10 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { weddingConfig } from "@/lib/wedding-config";
-import {
-  Send, Check, AlertCircle, User, Users,
-  MessageSquare, ChevronDown, Loader2,
-} from "lucide-react";
+import { Send, Check, AlertCircle, User, Users, MessageSquare, ChevronDown, Loader2 } from "lucide-react";
+
+const THEME = "#3D5A5B";
+const BG = "rgba(255,255,255,0.45)";
+const BORDER = "rgba(61,90,91,0.12)";
 
 interface FormState {
   guest_name: string;
@@ -17,23 +18,30 @@ interface FormState {
   message: string;
 }
 
-const INITIAL: FormState = {
-  guest_name: "", attending: null, num_guests: 1, meal_preference: "", message: "",
-};
+const INITIAL: FormState = { guest_name: "", attending: null, num_guests: 1, meal_preference: "", message: "" };
 
-const inputStyle: React.CSSProperties = {
+const inputBase: React.CSSProperties = {
   width: "100%",
-  borderRadius: 12,
-  padding: "14px 20px",
-  fontSize: "0.875rem",
-  color: "#78350f",
-  border: "1.5px solid rgba(201,168,76,0.3)",
-  background: "rgba(253,246,236,0.95)",
+  borderRadius: 16,
+  padding: "14px 18px",
+  fontSize: "0.85rem",
+  color: THEME,
+  border: `1px solid ${BORDER}`,
+  background: "rgba(255,255,255,0.6)",
   outline: "none",
   boxSizing: "border-box",
-  fontFamily: "inherit",
+  fontFamily: "'Montserrat', sans-serif",
   transition: "border-color 0.2s",
 };
+
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[9px] uppercase tracking-[0.5em] font-bold opacity-40 mb-3"
+       style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
+      {children}
+    </p>
+  );
+}
 
 export default function RSVPForm() {
   const [form, setForm] = useState<FormState>(INITIAL);
@@ -47,15 +55,8 @@ export default function RSVPForm() {
     setErrorMsg("");
     setStatus("loading");
     try {
-      const res = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Something went wrong");
-      }
+      const res = await fetch("/api/rsvp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+      if (!res.ok) { const d = await res.json(); throw new Error(d.error || "Something went wrong"); }
       setStatus("success");
     } catch (err: unknown) {
       setStatus("error");
@@ -64,383 +65,133 @@ export default function RSVPForm() {
   };
 
   return (
-    <section
-      data-section
-      style={{ background: "linear-gradient(180deg, #F7E7CE 0%, #FDF6EC 100%)" }}
-      className="relative overflow-hidden"
-    >
-      <div style={{ maxWidth: 720, margin: "0 auto", width: "100%", padding: "112px 24px" }}>
+    <section data-section className="relative bg-[#f0f0e4] flex flex-col items-center" style={{ paddingTop: "6rem", paddingBottom: "8rem" }}>
+      <div className="w-full max-w-xl mx-auto px-6 flex flex-col items-center">
 
-        {/* ── Heading ── */}
-        <AnimatedSection direction="fade" className="w-full">
-          <div style={{ textAlign: "center", marginBottom: 64, width: "100%" }}>
-            <p
-              className="text-amber-600"
-              style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.5em", marginBottom: 20 }}
-            >
-              Will you join us?
-            </p>
-            <h2
-              className="text-amber-900"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-                fontWeight: 700,
-                marginBottom: 24,
-              }}
-            >
-              RSVP
-            </h2>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 20 }}>
-              <div style={{ height: 1, width: 64, background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-              <span style={{ color: "#C9A84C" }}>✦</span>
-              <div style={{ height: 1, width: 64, background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
-            </div>
-            <p style={{ color: "rgba(120,53,15,0.55)", fontSize: "0.875rem" }}>
-              Kindly respond by{" "}
-              <span style={{ color: "#78350f", fontWeight: 600 }}>August 1, 2026</span>
-            </p>
-          </div>
+        {/* Heading */}
+        <AnimatedSection direction="fade" className="text-center mb-16 flex flex-col items-center gap-4">
+          <p className="text-[9px] uppercase tracking-[0.7em] font-bold opacity-30" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
+            Will you join us?
+          </p>
+          <h2 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}>
+            RSVP
+          </h2>
+          <p className="text-[10px] uppercase tracking-[0.4em] opacity-45 font-medium" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
+            Kindly respond by <span className="font-bold">August 1, 2026</span>
+          </p>
         </AnimatedSection>
 
-        {/* ── Form / Success ── */}
+        {/* Form / Success */}
         <AnimatePresence mode="wait">
           {status === "success" ? (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", stiffness: 240, damping: 22 }}
-              style={{
-                textAlign: "center",
-                padding: "80px 40px",
-                borderRadius: 24,
-                background: "rgba(253,246,236,0.9)",
-                backdropFilter: "blur(24px)",
-                border: "1px solid rgba(255,255,255,0.6)",
-                boxShadow: "0 24px 64px rgba(201,168,76,0.12)",
-              }}
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.15, type: "spring", stiffness: 300 }}
-                style={{
-                  width: 96,
-                  height: 96,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 32px",
-                  background: "linear-gradient(135deg, #C9A84C, #e8c97a)",
-                }}
-              >
-                <Check size={40} color="white" strokeWidth={2.5} />
+            <motion.div key="success" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }}
+              className="w-full flex flex-col items-center text-center"
+              style={{ background: BG, backdropFilter: "blur(16px)", borderRadius: 48, padding: "64px 40px", border: `1px solid ${BORDER}` }}>
+              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}
+                className="w-20 h-20 rounded-full flex items-center justify-center mb-8"
+                style={{ background: "rgba(61,90,91,0.08)" }}>
+                <Check size={32} color={THEME} strokeWidth={1.5} />
               </motion.div>
-              <h3
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "1.75rem",
-                  color: "#78350f",
-                  marginBottom: 16,
-                }}
-              >
-                Thank You!
-              </h3>
-              <p style={{ color: "rgba(120,53,15,0.65)", fontSize: "0.9rem", lineHeight: 1.7, maxWidth: 300, margin: "0 auto" }}>
-                Your RSVP has been received. We can't wait to celebrate with you on our special day! 🥂
+              <h3 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "2.8rem", marginBottom: "1rem" }}>Thank You!</h3>
+              <p className="text-xs leading-relaxed opacity-50 max-w-xs" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
+                Your RSVP has been received. We can't wait to celebrate with you! 🥂
               </p>
             </motion.div>
           ) : (
-            <motion.form
-              key="form"
-              onSubmit={handleSubmit}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <AnimatedSection direction="up" delay={0.1} className="w-full">
-                <div
-                  style={{
-                    borderRadius: 24,
-                    background: "rgba(253,246,236,0.78)",
-                    backdropFilter: "blur(24px)",
-                    border: "1px solid rgba(255,255,255,0.6)",
-                    boxShadow: "0 16px 48px rgba(201,168,76,0.1)",
-                    padding: "48px 40px",
-                  }}
-                >
-                  {/* Name */}
-                  <div style={{ marginBottom: 28 }}>
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
-                        fontSize: 10,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#d97706",
-                        fontWeight: 700,
-                        marginBottom: 10,
-                      }}
-                    >
-                      <User size={12} />
-                      Your Full Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={form.guest_name}
-                      onChange={(e) => setForm({ ...form, guest_name: e.target.value })}
-                      style={inputStyle}
-                    />
-                  </div>
+            <motion.form key="form" onSubmit={handleSubmit} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full">
+              <div style={{ background: BG, backdropFilter: "blur(16px)", borderRadius: 48, padding: "52px 40px", border: `1px solid ${BORDER}`, display: "flex", flexDirection: "column", gap: "28px" }}>
 
-                  {/* Attendance */}
-                  <div style={{ marginBottom: 28 }}>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: 10,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#d97706",
-                        fontWeight: 700,
-                        marginBottom: 12,
-                      }}
-                    >
-                      Will you attend?
-                    </label>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      {[
-                        { val: true,  label: "Joyfully Accepts" },
-                        { val: false, label: "Regretfully Declines" },
-                      ].map(({ val, label }) => (
-                        <button
-                          key={String(val)}
-                          type="button"
-                          onClick={() => setForm({ ...form, attending: val })}
-                          style={{
-                            padding: "14px 12px",
-                            borderRadius: 12,
-                            fontSize: "0.875rem",
-                            fontWeight: 600,
-                            border: `2px solid ${form.attending === val ? "#C9A84C" : "rgba(201,168,76,0.3)"}`,
-                            background: form.attending === val
-                              ? "linear-gradient(135deg, rgba(201,168,76,0.12), rgba(247,231,206,0.8))"
-                              : "rgba(253,246,236,0.8)",
-                            color: "#78350f",
-                            cursor: "pointer",
-                            transform: form.attending === val ? "scale(1.02)" : "scale(1)",
-                            transition: "all 0.2s",
-                          }}
-                        >
-                          {label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                {/* Full Name */}
+                <div>
+                  <Label><User size={10} style={{ display: "inline", marginRight: 6 }} />Full Name</Label>
+                  <input type="text" placeholder="Your name" value={form.guest_name}
+                    onChange={e => setForm({ ...form, guest_name: e.target.value })} style={inputBase} />
+                </div>
 
-                  {/* Guest count */}
-                  <AnimatePresence>
-                    {form.attending === true && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        style={{ overflow: "hidden", marginBottom: 28 }}
-                      >
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 6,
-                            fontSize: 10,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.2em",
-                            color: "#d97706",
-                            fontWeight: 700,
-                            marginBottom: 12,
-                          }}
-                        >
-                          <Users size={12} />
-                          Number of Guests
-                        </label>
-                        <div style={{ display: "flex", gap: 12 }}>
-                          {[1, 2, 3, 4].map((n) => (
-                            <button
-                              key={n}
-                              type="button"
-                              onClick={() => setForm({ ...form, num_guests: n })}
+                {/* Attendance */}
+                <div>
+                  <Label>Will you attend?</Label>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    {[{ val: true, label: "Joyfully Accepts" }, { val: false, label: "Regretfully Declines" }].map(({ val, label }) => (
+                      <button key={String(val)} type="button" onClick={() => setForm({ ...form, attending: val })}
+                        style={{
+                          padding: "13px 10px", borderRadius: 16, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", transition: "all 0.2s",
+                          fontFamily: "'Montserrat', sans-serif", letterSpacing: "0.05em",
+                          border: `1.5px solid ${form.attending === val ? THEME : BORDER}`,
+                          background: form.attending === val ? THEME : "rgba(255,255,255,0.5)",
+                          color: form.attending === val ? "white" : THEME,
+                        }}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Guest count + Meal */}
+                <AnimatePresence>
+                  {form.attending === true && (
+                    <motion.div key="extras" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: 28 }}>
+                      <div>
+                        <Label><Users size={10} style={{ display: "inline", marginRight: 6 }} />Number of Guests</Label>
+                        <div style={{ display: "flex", gap: 10 }}>
+                          {[1, 2, 3, 4].map(n => (
+                            <button key={n} type="button" onClick={() => setForm({ ...form, num_guests: n })}
                               style={{
-                                width: 48,
-                                height: 48,
-                                borderRadius: "50%",
-                                fontSize: "0.9rem",
-                                fontWeight: 700,
-                                border: `2px solid ${form.num_guests === n ? "#C9A84C" : "rgba(201,168,76,0.3)"}`,
-                                background: form.num_guests === n
-                                  ? "linear-gradient(135deg, #C9A84C, #e8c97a)"
-                                  : "rgba(253,246,236,0.9)",
-                                color: form.num_guests === n ? "#1A1208" : "#78350f",
-                                cursor: "pointer",
-                                transform: form.num_guests === n ? "scale(1.1)" : "scale(1)",
-                                transition: "all 0.2s",
-                              }}
-                            >
+                                width: 44, height: 44, borderRadius: "50%", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "all 0.2s",
+                                border: `1.5px solid ${form.num_guests === n ? THEME : BORDER}`,
+                                background: form.num_guests === n ? THEME : "rgba(255,255,255,0.5)",
+                                color: form.num_guests === n ? "white" : THEME,
+                              }}>
                               {n}
                             </button>
                           ))}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Meal preference */}
-                  <AnimatePresence>
-                    {form.attending === true && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        style={{ overflow: "hidden", marginBottom: 28 }}
-                      >
-                        <label
-                          style={{
-                            display: "block",
-                            fontSize: 10,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.2em",
-                            color: "#d97706",
-                            fontWeight: 700,
-                            marginBottom: 10,
-                          }}
-                        >
-                          Meal Preference
-                        </label>
+                      </div>
+                      <div>
+                        <Label>Meal Preference</Label>
                         <div style={{ position: "relative" }}>
-                          <select
-                            value={form.meal_preference}
-                            onChange={(e) => setForm({ ...form, meal_preference: e.target.value })}
-                            style={{ ...inputStyle, appearance: "none", paddingRight: 40 }}
-                          >
+                          <select value={form.meal_preference} onChange={e => setForm({ ...form, meal_preference: e.target.value })}
+                            style={{ ...inputBase, appearance: "none", paddingRight: 40 }}>
                             <option value="">Select a meal option</option>
-                            {weddingConfig.mealOptions.map((opt) => (
-                              <option key={opt} value={opt}>{opt}</option>
-                            ))}
+                            {weddingConfig.mealOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                           </select>
-                          <ChevronDown
-                            size={15}
-                            style={{
-                              position: "absolute",
-                              right: 14,
-                              top: "50%",
-                              transform: "translateY(-50%)",
-                              color: "#d97706",
-                              pointerEvents: "none",
-                            }}
-                          />
+                          <ChevronDown size={13} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", color: THEME, opacity: 0.4, pointerEvents: "none" }} />
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Message */}
-                  <div style={{ marginBottom: 28 }}>
-                    <label
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
-                        fontSize: 10,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#d97706",
-                        fontWeight: 700,
-                        marginBottom: 10,
-                      }}
-                    >
-                      <MessageSquare size={12} />
-                      Leave a Message
-                      <span style={{ fontSize: 10, color: "rgba(217,119,6,0.5)", textTransform: "none", letterSpacing: "normal", fontWeight: 400 }}>
-                        (optional)
-                      </span>
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Share your wishes for the couple..."
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      style={{ ...inputStyle, resize: "none" }}
-                    />
-                  </div>
-
-                  {/* Error */}
-                  {errorMsg && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        padding: "14px 18px",
-                        borderRadius: 12,
-                        background: "#fef2f2",
-                        border: "1px solid #fecaca",
-                        color: "#b91c1c",
-                        fontSize: "0.875rem",
-                        marginBottom: 24,
-                      }}
-                    >
-                      <AlertCircle size={16} style={{ flexShrink: 0 }} />
-                      {errorMsg}
+                      </div>
                     </motion.div>
                   )}
+                </AnimatePresence>
 
-                  {/* Submit */}
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    style={{
-                      width: "100%",
-                      padding: "18px 24px",
-                      borderRadius: 12,
-                      background: "linear-gradient(135deg, #C9A84C, #e8c97a)",
-                      color: "#78350f",
-                      fontWeight: 700,
-                      fontSize: "0.875rem",
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      border: "none",
-                      cursor: status === "loading" ? "not-allowed" : "pointer",
-                      opacity: status === "loading" ? 0.6 : 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 10,
-                      transition: "all 0.3s",
-                    }}
-                  >
-                    {status === "loading" ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send size={15} />
-                        Send RSVP
-                      </>
-                    )}
-                  </button>
+                {/* Message */}
+                <div>
+                  <Label><MessageSquare size={10} style={{ display: "inline", marginRight: 6 }} />Message <span style={{ textTransform: "none", letterSpacing: "normal", fontWeight: 400, opacity: 0.5 }}>(optional)</span></Label>
+                  <textarea rows={4} placeholder="Share your wishes for the couple..." value={form.message}
+                    onChange={e => setForm({ ...form, message: e.target.value })} style={{ ...inputBase, resize: "none" }} />
                 </div>
-              </AnimatedSection>
+
+                {/* Error */}
+                {errorMsg && (
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca", color: "#b91c1c", fontSize: "0.8rem" }}>
+                    <AlertCircle size={14} /> {errorMsg}
+                  </div>
+                )}
+
+                {/* Submit */}
+                <button type="submit" disabled={status === "loading"}
+                  style={{
+                    width: "100%", padding: "17px 24px", borderRadius: 16, fontFamily: "'Montserrat', sans-serif",
+                    background: status === "loading" ? `${THEME}80` : THEME, color: "white", fontWeight: 700,
+                    fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", border: "none",
+                    cursor: status === "loading" ? "not-allowed" : "pointer", display: "flex", alignItems: "center",
+                    justifyContent: "center", gap: 10, transition: "all 0.3s",
+                  }}>
+                  {status === "loading" ? <><Loader2 size={15} className="animate-spin" /> Sending...</> : <><Send size={14} /> Send RSVP</>}
+                </button>
+
+              </div>
             </motion.form>
           )}
         </AnimatePresence>
-
       </div>
     </section>
   );

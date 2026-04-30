@@ -1,223 +1,131 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
-import { weddingConfig } from "@/lib/wedding-config";
-import { Heart, Wine, Sparkles, UtensilsCrossed, Music, Cake } from "lucide-react";
 
-const ICONS: Record<string, React.ReactNode> = {
-  heart:    <Heart size={18} strokeWidth={1.5} className="text-amber-700" />,
-  wine:     <Wine size={18} strokeWidth={1.5} className="text-amber-700" />,
-  sparkles: <Sparkles size={18} strokeWidth={1.5} className="text-amber-700" />,
-  utensils: <UtensilsCrossed size={18} strokeWidth={1.5} className="text-amber-700" />,
-  music:    <Music size={18} strokeWidth={1.5} className="text-amber-700" />,
-  cake:     <Cake size={18} strokeWidth={1.5} className="text-amber-700" />,
-};
+const THEME_COLOR = "#3D5A5B";
 
-const cardStyle: React.CSSProperties = {
-  background: "rgba(253,246,236,0.85)",
-  backdropFilter: "blur(12px)",
-  border: "1px solid rgba(255,255,255,0.7)",
-  borderRadius: 16,
-  padding: "24px 28px",
-  width: "100%",
-  maxWidth: 280,
-  boxSizing: "border-box",
-};
+const CRUISE_ITINERARY = [
+  { time: "6:30 PM", event: "Departure from The Peninsula Private Quay" },
+  { time: "6:30 – 9:30 PM", event: "Sunset Cocktails & Hors d'Œuvres" },
+  { time: "10:00 PM", event: "Arrival at The Peninsula Private Quay" }
+];
 
-export default function ScheduleTimeline() {
-  const lineRef = useRef(null);
-  const lineInView = useInView(lineRef, { once: true });
+const WEDDING_ITINERARY = [
+  { time: "6:00 PM", event: "Arrival & Welcome Drinks" },
+  { time: "", event: "Ceremony" },
+  { time: "", event: "Banquet" },
+  { time: "", event: "Party" },
+  { time: "", event: "After Party" }
+];
 
+function Dot() {
+  return <div className="w-3 h-3 rounded-full bg-[#f0f0e4] border border-[#3D5A5B]/25 z-10 shrink-0 mt-1" />;
+}
+
+function TimelineBlock({ items }: { items: { time: string; event: string }[] }) {
   return (
-    <section
-      data-section
-      style={{ background: "linear-gradient(180deg, #FDF6EC 0%, #F2D4D7 100%)" }}
-      className="relative overflow-hidden"
-    >
-      <div style={{ maxWidth: 800, margin: "0 auto", width: "100%", padding: "112px 24px" }}>
-
-        {/* ── Heading ── */}
-        <AnimatedSection direction="fade" className="w-full">
-          <div style={{ textAlign: "center", marginBottom: 80, width: "100%" }}>
-            <p className="text-xs uppercase text-amber-600 mb-5" style={{ letterSpacing: "0.5em" }}>
-              Plan your day
-            </p>
-            <h2
-              className="text-amber-900"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-                fontWeight: 700,
-                marginBottom: 24,
-              }}
-            >
-              Day Schedule
-            </h2>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center" }}>
-              <div style={{ height: 1, width: 64, background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-              <Sparkles size={14} className="text-amber-400" />
-              <div style={{ height: 1, width: 64, background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
+    <div className="w-full max-w-sm relative flex flex-col gap-6 md:gap-8">
+      <div className="absolute left-[5px] top-2 bottom-2 w-[1px] bg-[#3D5A5B]/12" />
+      {items.map((item, index) => (
+        <AnimatedSection key={index} direction="up" delay={index * 0.08}>
+          <div className="flex items-start gap-5 md:gap-6">
+            <Dot />
+            <div className="flex flex-col gap-1">
+              {item.time && (
+                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.4em] font-bold opacity-35"
+                  style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
+                  {item.time}
+                </span>
+              )}
+              <p className="text-sm opacity-75 font-serif" style={{ color: THEME_COLOR }}>
+                {item.event}
+              </p>
             </div>
           </div>
         </AnimatedSection>
+      ))}
+    </div>
+  );
+}
 
-        {/* ── Timeline ── */}
-        <div ref={lineRef} style={{ position: "relative", width: "100%" }}>
+export default function ScheduleTimeline() {
+  return (
+    <section data-section className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center" style={{ paddingTop: "12rem", paddingBottom: "8rem" }}>
 
-          {/* Vertical gold line — desktop */}
-          <div
-            className="hidden md:block"
-            style={{
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-              top: 0,
-              bottom: 0,
-              width: 1,
-              overflow: "hidden",
-            }}
-          >
-            <motion.div
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "linear-gradient(180deg, #C9A84C, #e8c97a, #C9A84C)",
-                transformOrigin: "top",
-              }}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: lineInView ? 1 : 0 }}
-              transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
+      {/* Curtains — same desktop sizes, just slightly narrower on tiny screens */}
+      <motion.div animate={{ rotate: [-0.5, 0.5, -0.5] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-0 top-0 z-30 w-[18%] md:w-[13%] origin-top-left pointer-events-none">
+        <img src="/curtain-left.png" alt="" className="w-full h-auto" />
+      </motion.div>
 
-          {/* Mobile left line */}
-          <div
-            className="md:hidden"
-            style={{
-              position: "absolute",
-              left: 20,
-              top: 0,
-              bottom: 0,
-              width: 1,
-              background: "linear-gradient(180deg, #C9A84C, #e8c97a, #C9A84C)",
-            }}
+      <motion.div animate={{ rotate: [0.5, -0.5, 0.5] }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-0 top-0 z-30 w-[18%] md:w-[13%] origin-top-right pointer-events-none">
+        <img src="/curtain-right.png" alt="" className="w-full h-auto" />
+      </motion.div>
+
+      <motion.div animate={{ y: [-6, 6, -6] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-full md:w-[80%] lg:w-[70%] pointer-events-none">
+        <img src="/curtain-center.png" alt="" className="w-full h-auto opacity-30 md:opacity-35" />
+      </motion.div>
+
+      {/* ── PART 1: WELCOME CRUISE ── */}
+      {/* Mobile: pt-48 (curtains are shorter), Desktop: pt-[26rem] */}
+      <div className="relative z-20 w-full max-w-2xl mx-auto px-6 md:px-8 flex flex-col items-center pt-48 pb-12 md:pt-[26rem] md:pb-24">
+
+        <AnimatedSection direction="fade" className="text-center mb-10 md:mb-16 flex flex-col items-center gap-3">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
+            Wedding Weekend
+          </h2>
+          <p className="text-[9px] uppercase tracking-[0.7em] font-bold opacity-30"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>Itinerary</p>
+          <p className="text-[10px] uppercase tracking-[0.35em] font-medium opacity-45"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>22 – 23 July 2026</p>
+        </AnimatedSection>
+
+        <AnimatedSection direction="fade" className="text-center mb-10 md:mb-12 flex flex-col items-center gap-3">
+          <h3 className="text-2xl md:text-4xl lg:text-5xl leading-tight"
+            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
+            Welcome Cruise on the Bosphorus
+          </h3>
+          <p className="text-[10px] font-serif italic opacity-55" style={{ color: THEME_COLOR }}>22 July 2026</p>
+          <p className="text-[10px] md:text-xs max-w-xs text-center leading-relaxed opacity-45 mt-1"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
+            Please join us for cocktails and hors d'oeuvres as we sail the Bosphorus
+          </p>
+        </AnimatedSection>
+
+        <TimelineBlock items={CRUISE_ITINERARY} />
+      </div>
+
+      {/* ── PART 2: THE WEDDING ── */}
+      <div className="relative z-20 w-full max-w-2xl mx-auto px-6 md:px-8 flex flex-col items-center pt-10 pb-14 md:pt-20 md:pb-24">
+
+        <motion.img src="/candles.png" alt=""
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1.4 }}
+          className="w-24 md:w-48 h-auto opacity-90 mb-6 md:mb-8"
+        />
+
+        <AnimatedSection direction="fade" className="text-center mb-10 md:mb-14 flex flex-col items-center gap-3">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl"
+            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>Wedding</h2>
+          <p className="text-[10px] uppercase tracking-[0.5em] font-medium opacity-45"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
+            23 July 2026 · The Peninsula Hotel Istanbul
+          </p>
+        </AnimatedSection>
+
+        <div className="relative w-full flex justify-center">
+          <TimelineBlock items={WEDDING_ITINERARY} />
+          {/* Vase hidden on mobile to avoid overflow */}
+          <motion.img src="/vase.png" alt=""
+            initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5, delay: 0.6 }}
+            className="absolute right-0 bottom-0 w-40 h-auto opacity-80 hidden md:block"
           />
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-            {weddingConfig.schedule.map((item, i) => {
-              const isLeft = i % 2 === 0;
-
-              return (
-                <AnimatedSection
-                  key={item.event}
-                  direction={isLeft ? "left" : "right"}
-                  delay={i * 0.1}
-                  className="w-full"
-                >
-                  {/* Mobile */}
-                  <div className="flex items-start gap-5 md:hidden" style={{ paddingLeft: 8 }}>
-                    <div
-                      style={{
-                        flexShrink: 0,
-                        width: 40,
-                        height: 40,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: "linear-gradient(135deg, #FDF6EC, #F7E7CE)",
-                        border: "2px solid #C9A84C",
-                        boxShadow: "0 0 14px rgba(201,168,76,0.25)",
-                        zIndex: 10,
-                        position: "relative",
-                      }}
-                    >
-                      {ICONS[item.icon] ?? <Sparkles size={14} className="text-amber-600" />}
-                    </div>
-                    <div style={{ ...cardStyle, maxWidth: "none", flex: 1 }}>
-                      <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.2em", color: "#d97706", fontWeight: 600 }}>
-                        {item.time}
-                      </span>
-                      <h3
-                        style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#78350f", margin: "6px 0 6px" }}
-                      >
-                        {item.event}
-                      </h3>
-                      <p style={{ fontSize: "0.875rem", color: "rgba(120,53,15,0.7)", lineHeight: 1.6 }}>{item.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Desktop — 3-col grid */}
-                  <div
-                    className="hidden md:grid"
-                    style={{
-                      gridTemplateColumns: "1fr 80px 1fr",
-                      alignItems: "center",
-                      width: "100%",
-                    }}
-                  >
-                    {/* Left slot */}
-                    <div style={{ minWidth: 0, display: "flex", justifyContent: "flex-end", paddingRight: 24 }}>
-                      {isLeft && (
-                        <div style={cardStyle}>
-                          <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.2em", color: "#d97706", fontWeight: 600 }}>
-                            {item.time}
-                          </span>
-                          <h3
-                            style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#78350f", margin: "6px 0 8px" }}
-                          >
-                            {item.event}
-                          </h3>
-                          <p style={{ fontSize: "0.875rem", color: "rgba(120,53,15,0.7)", lineHeight: 1.6 }}>{item.description}</p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Center icon node */}
-                    <div style={{ minWidth: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <div
-                        style={{
-                          width: 48,
-                          height: 48,
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                          background: "linear-gradient(135deg, #FDF6EC, #F7E7CE)",
-                          border: "2px solid #C9A84C",
-                          boxShadow: "0 0 20px rgba(201,168,76,0.3)",
-                          zIndex: 10,
-                          position: "relative",
-                        }}
-                      >
-                        {ICONS[item.icon] ?? <Sparkles size={18} className="text-amber-600" />}
-                      </div>
-                    </div>
-
-                    {/* Right slot */}
-                    <div style={{ minWidth: 0, display: "flex", justifyContent: "flex-start", paddingLeft: 24 }}>
-                      {!isLeft && (
-                        <div style={cardStyle}>
-                          <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.2em", color: "#d97706", fontWeight: 600 }}>
-                            {item.time}
-                          </span>
-                          <h3
-                            style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#78350f", margin: "6px 0 8px" }}
-                          >
-                            {item.event}
-                          </h3>
-                          <p style={{ fontSize: "0.875rem", color: "rgba(120,53,15,0.7)", lineHeight: 1.6 }}>{item.description}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </AnimatedSection>
-              );
-            })}
-          </div>
         </div>
       </div>
     </section>

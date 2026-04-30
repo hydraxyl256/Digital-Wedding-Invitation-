@@ -6,116 +6,72 @@ import { weddingConfig } from "@/lib/wedding-config";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
+const THEME = "#3D5A5B";
+
 export default function Footer() {
   return (
-    <footer
-      style={{ background: "linear-gradient(180deg, #F2D4D7 0%, #FDF6EC 100%)" }}
-      className="relative overflow-hidden"
-    >
-      <div style={{ maxWidth: 640, margin: "0 auto", width: "100%", padding: "112px 24px" }}>
+    <footer className="relative bg-[#f0f0e4] flex flex-col items-center" style={{ paddingTop: "6rem", paddingBottom: "5rem" }}>
+      <div className="w-full max-w-lg mx-auto px-6">
         <AnimatedSection direction="fade" className="w-full">
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", width: "100%" }}>
+          <div className="flex flex-col items-center text-center gap-8">
 
             {/* Pulsing heart */}
             <motion.div
               animate={{ scale: [1, 1.15, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "linear-gradient(135deg, #F2D4D7, #EED5E9)",
-                boxShadow: "0 8px 32px rgba(244,114,182,0.15)",
-                marginBottom: 40,
-              }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(61,90,91,0.06)", boxShadow: "0 8px 32px rgba(61,90,91,0.08)" }}
             >
-              <Heart size={32} strokeWidth={1.5} style={{ color: "#fb7185", fill: "#fda4af" }} />
+              <Heart size={30} strokeWidth={1.5} style={{ color: THEME, fill: "rgba(61,90,91,0.15)" }} />
             </motion.div>
 
-            {/* Couple names */}
-            <h2
-              className="text-amber-900"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontWeight: 700,
-                marginBottom: 28,
-              }}
-            >
+            {/* Couple names in Great Vibes */}
+            <h2 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "clamp(2.5rem, 6vw, 4rem)" }}>
               {weddingConfig.coupleNames}
             </h2>
 
-            {/* Gold divider */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32, width: "100%", maxWidth: 240 }}>
-              <div style={{ height: 1, flex: 1, background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-              <span style={{ color: "#C9A84C", fontSize: "0.85rem" }}>✦</span>
-              <div style={{ height: 1, flex: 1, background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
+            {/* Teal divider */}
+            <div className="flex items-center gap-3 w-full max-w-[200px]">
+              <div className="h-[1px] flex-1" style={{ background: `linear-gradient(90deg, transparent, ${THEME}40)` }} />
+              <span style={{ color: `${THEME}60`, fontSize: "0.7rem" }}>✦</span>
+              <div className="h-[1px] flex-1" style={{ background: `linear-gradient(270deg, transparent, ${THEME}40)` }} />
             </div>
 
             {/* Quote */}
             <p
-              className="text-amber-800"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontStyle: "italic",
-                fontSize: "1.05rem",
-                lineHeight: 1.7,
-                opacity: 0.65,
-                marginBottom: 12,
-              }}
+              className="font-serif italic leading-relaxed opacity-55 max-w-xs"
+              style={{ fontSize: "1rem", color: THEME }}
             >
               "Two souls, one heart, one forever."
             </p>
 
             {/* Date */}
             <p
-              className="text-amber-600"
-              style={{
-                fontSize: 11,
-                textTransform: "uppercase",
-                letterSpacing: "0.3em",
-                opacity: 0.6,
-                marginBottom: 56,
-              }}
+              className="text-[9px] uppercase tracking-[0.5em] font-bold opacity-35"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
             >
               {weddingConfig.weddingDateFormatted}
             </p>
 
-            {/* Thank you */}
+            {/* Thank-you note */}
             <p
-              style={{
-                color: "rgba(120,53,15,0.55)",
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
-                maxWidth: 380,
-                marginBottom: 48,
-              }}
+              className="text-xs leading-relaxed opacity-45 max-w-sm"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
             >
-              We are so grateful to have you with us on this journey.
-              Your presence means the world to us — please share this
-              invitation with family and friends.
+              We are so grateful to have you with us on this journey. Your presence means the world to us — please share this invitation with family and friends.
             </p>
 
             {/* Share button */}
-            <div style={{ marginBottom: 56 }}>
-              <ShareButton />
-            </div>
+            <ShareButton />
 
             {/* Bottom rule */}
-            <div
-              style={{
-                height: 1,
-                width: 200,
-                background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
-                marginBottom: 24,
-              }}
-            />
+            <div className="h-[1px] w-40" style={{ background: `linear-gradient(90deg, transparent, ${THEME}30, transparent)` }} />
 
             {/* Hashtag */}
-            <p style={{ color: "rgba(201,168,76,0.4)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>
+            <p
+              className="text-[9px] uppercase tracking-[0.4em] opacity-25"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
+            >
               {weddingConfig.hashtag} · Made with ♡
             </p>
 
