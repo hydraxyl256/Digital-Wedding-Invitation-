@@ -2,16 +2,17 @@
 
 import { motion, useAnimation } from "framer-motion";
 import { weddingConfig } from "@/lib/wedding-config";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import FormalInvitation from "./FormalInvitation";
 import { useWedding } from "@/components/providers/WeddingContext";
 
 export default function HeroSection() {
-  const { language, setLanguage } = useWedding();
+  const { language, setLanguage, invitationOpen } = useWedding();
   const [mounted, setMounted] = useState(false);
   const [showInvitation, setShowInvitation] = useState(false);
   const [sequenceComplete, setSequenceComplete] = useState(false);
+  const sequenceStarted = useRef(false);
   const controlsLeft = useAnimation();
   const controlsRight = useAnimation();
   const controlsContent = useAnimation();
@@ -21,6 +22,9 @@ export default function HeroSection() {
     setMounted(true);
 
     const sequence = async () => {
+      if (sequenceStarted.current) return;
+      sequenceStarted.current = true;
+
       // 1. Initial wait (10s)
       await new Promise(resolve => setTimeout(resolve, 10000));
 
@@ -48,8 +52,14 @@ export default function HeroSection() {
       controlsArrow.start({ opacity: 1, y: 0, transition: { duration: 1 } });
     };
 
-    sequence();
-  }, [controlsLeft, controlsRight, controlsContent, controlsArrow]);
+    if (window.innerWidth < 768) {
+      if (invitationOpen) {
+        sequence();
+      }
+    } else {
+      sequence();
+    }
+  }, [controlsLeft, controlsRight, controlsContent, controlsArrow, invitationOpen]);
 
   if (!mounted) return null;
 
