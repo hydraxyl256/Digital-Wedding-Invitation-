@@ -5,7 +5,7 @@ import { useWedding } from "@/components/providers/WeddingContext";
 import { useState } from "react";
 
 export default function IntroOverlay() {
-  const { invitationOpen, setInvitationOpen } = useWedding();
+  const { invitationOpen, setInvitationOpen, language } = useWedding();
   const [closing, setClosing] = useState(false);
 
   const handleOpen = () => {
@@ -97,7 +97,7 @@ export default function IntroOverlay() {
               textShadow: "0 1px 8px rgba(0,0,0,0.4)",
               margin: 0,
             }}>
-              Tap to open
+              {language === "EN" ? "Tap to open" : "Zum Öffnen tippen"}
             </p>
           </motion.div>
         )}

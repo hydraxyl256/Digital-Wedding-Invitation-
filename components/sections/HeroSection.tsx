@@ -5,8 +5,10 @@ import { weddingConfig } from "@/lib/wedding-config";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import FormalInvitation from "./FormalInvitation";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 export default function HeroSection() {
+  const { language, setLanguage } = useWedding();
   const [mounted, setMounted] = useState(false);
   const [showInvitation, setShowInvitation] = useState(false);
   const [sequenceComplete, setSequenceComplete] = useState(false);
@@ -112,9 +114,13 @@ export default function HeroSection() {
         className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
       >
         {/* Language Switcher */}
-        <div className="absolute top-6 right-6 flex items-center gap-1 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/50 shadow-sm scale-90 md:scale-100">
-          <button className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#3D5A5B] text-white">EN</button>
-          <button className="text-[10px] font-bold px-2 py-0.5 rounded-full text-[#3D5A5B]">DE</button>
+        <div className="absolute top-6 right-6 flex items-center gap-1 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/50 shadow-sm scale-90 md:scale-100 pointer-events-auto">
+          <button 
+            onClick={() => setLanguage("EN")}
+            className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${language === "EN" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}>EN</button>
+          <button 
+            onClick={() => setLanguage("DE")}
+            className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${language === "DE" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}>DE</button>
         </div>
 
         {/* Content */}
@@ -123,7 +129,7 @@ export default function HeroSection() {
             className="text-white text-[10px] md:text-xs uppercase tracking-[0.6em] font-light mb-8"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            We are getting married
+            {language === "EN" ? "We are getting married" : "Wir heiraten"}
           </motion.p>
 
           <h1
@@ -162,7 +168,9 @@ export default function HeroSection() {
         animate={controlsArrow}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2"
       >
-        <span className="text-white/70 text-[9px] uppercase tracking-[0.4em]">Scroll Down</span>
+        <span className="text-white/70 text-[9px] uppercase tracking-[0.4em]">
+          {language === "EN" ? "Scroll Down" : "Nach unten scrollen"}
+        </span>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}

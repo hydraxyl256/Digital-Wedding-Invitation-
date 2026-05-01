@@ -5,10 +5,12 @@ import ShareButton from "@/components/ui/ShareButton";
 import { weddingConfig } from "@/lib/wedding-config";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME = "#3D5A5B";
 
 export default function Footer() {
+  const { language } = useWedding();
   return (
     <footer className="relative bg-[#f0f0e4] flex flex-col items-center" style={{ paddingTop: "6rem", paddingBottom: "5rem" }}>
       <div className="w-full max-w-lg mx-auto px-6">
@@ -42,7 +44,7 @@ export default function Footer() {
               className="font-serif italic leading-relaxed opacity-55 max-w-xs"
               style={{ fontSize: "1rem", color: THEME }}
             >
-              "Two souls, one heart, one forever."
+              {language === "EN" ? '"Two souls, one heart, one forever."' : '"Zwei Seelen, ein Herz, eine Ewigkeit."'}
             </p>
 
             {/* Date */}
@@ -50,7 +52,7 @@ export default function Footer() {
               className="text-[9px] uppercase tracking-[0.5em] font-bold opacity-35"
               style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
             >
-              {weddingConfig.weddingDateFormatted}
+              {language === "EN" ? weddingConfig.weddingDateFormatted : "23. Juli 2026"}
             </p>
 
             {/* Thank-you note */}
@@ -58,7 +60,9 @@ export default function Footer() {
               className="text-xs leading-relaxed opacity-45 max-w-sm"
               style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
             >
-              We are so grateful to have you with us on this journey. Your presence means the world to us — please share this invitation with family and friends.
+              {language === "EN" 
+                ? "We are so grateful to have you with us on this journey. Your presence means the world to us — please share this invitation with family and friends."
+                : "Wir sind sehr dankbar, dass ihr uns auf dieser Reise begleitet. Eure Anwesenheit bedeutet uns alles — bitte teilt diese Einladung mit Familie und Freunden."}
             </p>
 
             {/* Share button */}
@@ -72,7 +76,7 @@ export default function Footer() {
               className="text-[9px] uppercase tracking-[0.4em] opacity-25"
               style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}
             >
-              {weddingConfig.hashtag} · Made with ♡
+              {weddingConfig.hashtag} · {language === "EN" ? "Made with ♡" : "Mit ♡ gemacht"}
             </p>
 
           </div>

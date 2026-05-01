@@ -11,6 +11,8 @@ interface WeddingContextType {
   toggleMusic: () => void;
   activeSection: number;
   setActiveSection: (i: number) => void;
+  language: string;
+  setLanguage: (v: string) => void;
 }
 
 const WeddingContext = createContext<WeddingContextType | null>(null);
@@ -20,6 +22,7 @@ export function WeddingProvider({ children }: { children: React.ReactNode }) {
   const [invitationOpen, setInvitationOpen] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [language, setLanguage] = useState("EN");
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Parse guest name from URL
@@ -60,7 +63,7 @@ export function WeddingProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <WeddingContext.Provider
-      value={{ guestName, invitationOpen, setInvitationOpen, musicPlaying, toggleMusic, activeSection, setActiveSection }}
+      value={{ guestName, invitationOpen, setInvitationOpen, musicPlaying, toggleMusic, activeSection, setActiveSection, language, setLanguage }}
     >
       {children}
     </WeddingContext.Provider>

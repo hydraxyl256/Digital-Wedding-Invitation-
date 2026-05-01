@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME_COLOR = "#3D5A5B";
 
@@ -11,6 +12,7 @@ function CelebrationCard({
   subtitle: string; location: string; address: string;
   date: string; time: string; image?: string; floatStyle?: "yacht" | "hotel";
 }) {
+  const { language } = useWedding();
   const isHotel = floatStyle === "hotel";
   return (
     <div className="flex flex-col items-center w-full max-w-2xl mx-auto">
@@ -72,7 +74,7 @@ function CelebrationCard({
           <button
             className="text-[9px] uppercase tracking-[0.5em] font-bold border-b border-[#3D5A5B]/20 pb-1.5 hover:opacity-50 transition-all active:scale-95 mt-2"
             style={{ color: THEME_COLOR }}>
-            View on Map
+            {language === "EN" ? "View on Map" : "Auf der Karte ansehen"}
           </button>
         </div>
       </motion.div>
@@ -81,6 +83,7 @@ function CelebrationCard({
 }
 
 export default function Celebrations() {
+  const { language } = useWedding();
   return (
     <section data-section className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center" style={{ paddingTop: "6rem", paddingBottom: "12rem" }}>
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center">
@@ -88,17 +91,19 @@ export default function Celebrations() {
         <AnimatedSection direction="fade" className="text-center mb-14 md:mb-24">
           <h2 className="text-5xl md:text-6xl lg:text-7xl opacity-80"
             style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-            The Celebrations
+            {language === "EN" ? "The Celebrations" : "Die Feierlichkeiten"}
           </h2>
         </AnimatedSection>
 
         <div className="flex flex-col items-center w-full gap-16 md:gap-36">
-          <CelebrationCard image="/yacht.png" floatStyle="yacht" subtitle="Welcome Cruise"
+          <CelebrationCard image="/yacht.png" floatStyle="yacht" 
+            subtitle={language === "EN" ? "Welcome Cruise" : "Willkommens-Kreuzfahrt"}
             location="The Peninsula" address="Private Quay"
-            date="Saturday, September 20, 2026" time="3:00 PM" />
-          <CelebrationCard image="/hotel.png" floatStyle="hotel" subtitle="The Wedding"
+            date={language === "EN" ? "Saturday, September 20, 2026" : "Samstag, 20. September 2026"} time="3:00 PM" />
+          <CelebrationCard image="/hotel.png" floatStyle="hotel" 
+            subtitle={language === "EN" ? "The Wedding" : "Die Hochzeit"}
             location="The Peninsula" address="Hotel Istanbul"
-            date="Saturday, September 20, 2026" time="6:00 PM" />
+            date={language === "EN" ? "Saturday, September 20, 2026" : "Samstag, 20. September 2026"} time="6:00 PM" />
         </div>
       </div>
     </section>

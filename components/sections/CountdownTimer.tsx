@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { weddingConfig } from "@/lib/wedding-config";
 import { getCountdown } from "@/lib/utils";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME_COLOR = "#3D5A5B"; // Dark muted teal/green from reference
 
@@ -30,6 +31,7 @@ function Digit({ value, label }: { value: number; label: string }) {
 }
 
 export default function CountdownTimer() {
+  const { language } = useWedding();
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState(getCountdown(weddingConfig.weddingDate));
 
@@ -105,7 +107,7 @@ export default function CountdownTimer() {
             className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-medium opacity-50"
             style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}
           >
-            Until 20 September 2026
+            {language === "EN" ? "Until 20 September 2026" : "Bis zum 20. September 2026"}
           </p>
         </AnimatedSection>
 
@@ -114,16 +116,18 @@ export default function CountdownTimer() {
           <div className="w-full max-w-3xl">
             {time.isOver ? (
               <AnimatedSection direction="fade" className="text-center">
-                <h3 className="text-3xl md:text-5xl font-serif mb-4" style={{ color: THEME_COLOR }}>The celebration has begun!</h3>
+                <h3 className="text-3xl md:text-5xl font-serif mb-4" style={{ color: THEME_COLOR }}>
+                  {language === "EN" ? "The celebration has begun!" : "Die Feier hat begonnen!"}
+                </h3>
               </AnimatedSection>
             ) : (
               <AnimatedSection direction="up" delay={0.2}>
                 <div className="flex items-center justify-center gap-5 md:gap-14">
-                  <Digit value={time.days} label="Days" />
+                  <Digit value={time.days} label={language === "EN" ? "Days" : "Tage"} />
                   <div className="h-12 w-[1px] bg-[#3D5A5B]/10 self-center hidden sm:block" />
-                  <Digit value={time.hours} label="Hours" />
+                  <Digit value={time.hours} label={language === "EN" ? "Hours" : "Stunden"} />
                   <div className="h-12 w-[1px] bg-[#3D5A5B]/10 self-center hidden sm:block" />
-                  <Digit value={time.minutes} label="Minutes" />
+                  <Digit value={time.minutes} label={language === "EN" ? "Minutes" : "Minuten"} />
                 </div>
               </AnimatedSection>
             )}

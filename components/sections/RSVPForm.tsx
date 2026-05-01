@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { weddingConfig } from "@/lib/wedding-config";
 import { Send, Check, AlertCircle, User, Users, MessageSquare, ChevronDown, Loader2 } from "lucide-react";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME = "#3D5A5B";
 const BG = "rgba(255,255,255,0.45)";
@@ -44,14 +45,15 @@ function Label({ children }: { children: React.ReactNode }) {
 }
 
 export default function RSVPForm() {
+  const { language } = useWedding();
   const [form, setForm] = useState<FormState>(INITIAL);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.guest_name.trim()) { setErrorMsg("Please enter your full name."); return; }
-    if (form.attending === null) { setErrorMsg("Please let us know if you'll be attending."); return; }
+    if (!form.guest_name.trim()) { setErrorMsg(language === "EN" ? "Please enter your full name." : "Bitte gib deinen vollständigen Namen ein."); return; }
+    if (form.attending === null) { setErrorMsg(language === "EN" ? "Please let us know if you'll be attending." : "Bitte teile uns mit, ob du teilnehmen wirst."); return; }
     setErrorMsg("");
     setStatus("loading");
     try {
@@ -60,7 +62,7 @@ export default function RSVPForm() {
       setStatus("success");
     } catch (err: unknown) {
       setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Failed to submit. Please try again.");
+      setErrorMsg(err instanceof Error ? err.message : (language === "EN" ? "Failed to submit. Please try again." : "Fehler beim Senden. Bitte versuche es erneut."));
     }
   };
 
@@ -71,13 +73,14 @@ export default function RSVPForm() {
         {/* Heading */}
         <AnimatedSection direction="fade" className="text-center mb-16 flex flex-col items-center gap-4">
           <p className="text-[9px] uppercase tracking-[0.7em] font-bold opacity-30" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
-            Will you join us?
+            {language === "EN" ? "Will you join us?" : "Seid ihr dabei?"}
           </p>
           <h2 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}>
             RSVP
           </h2>
           <p className="text-[10px] uppercase tracking-[0.4em] opacity-45 font-medium" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
-            Kindly respond by <span className="font-bold">August 1, 2026</span>
+            {language === "EN" ? "Kindly respond by " : "Bitte antwortet bis "} 
+            <span className="font-bold">{language === "EN" ? "August 1, 2026" : "1. August 2026"}</span>
           </p>
         </AnimatedSection>
 
@@ -92,9 +95,11 @@ export default function RSVPForm() {
                 style={{ background: "rgba(61,90,91,0.08)" }}>
                 <Check size={32} color={THEME} strokeWidth={1.5} />
               </motion.div>
-              <h3 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "2.8rem", marginBottom: "1rem" }}>Thank You!</h3>
+              <h3 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "2.8rem", marginBottom: "1rem" }}>
+                {language === "EN" ? "Thank You!" : "Vielen Dank!"}
+              </h3>
               <p className="text-xs leading-relaxed opacity-50 max-w-xs" style={{ fontFamily: "'Montserrat', sans-serif", color: THEME }}>
-                Your RSVP has been received. We can't wait to celebrate with you! 🥂
+                {language === "EN" ? "Your RSVP has been received. We can't wait to celebrate with you! 🥂" : "Ihre Rückmeldung ist eingegangen. Wir können es kaum erwarten, mit Ihnen zu feiern! 🥂"}
               </p>
             </motion.div>
           ) : (
@@ -103,16 +108,19 @@ export default function RSVPForm() {
 
                 {/* Full Name */}
                 <div>
-                  <Label><User size={10} style={{ display: "inline", marginRight: 6 }} />Full Name</Label>
-                  <input type="text" placeholder="Your name" value={form.guest_name}
+                  <Label><User size={10} style={{ display: "inline", marginRight: 6 }} />{language === "EN" ? "Full Name" : "Vollständiger Name"}</Label>
+                  <input type="text" placeholder={language === "EN" ? "Your name" : "Dein Name"} value={form.guest_name}
                     onChange={e => setForm({ ...form, guest_name: e.target.value })} style={inputBase} />
                 </div>
 
                 {/* Attendance */}
                 <div>
-                  <Label>Will you attend?</Label>
+                  <Label>{language === "EN" ? "Will you attend?" : "Bist du dabei?"}</Label>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                    {[{ val: true, label: "Joyfully Accepts" }, { val: false, label: "Regretfully Declines" }].map(({ val, label }) => (
+                    {[
+                      { val: true, label: language === "EN" ? "Joyfully Accepts" : "Ich nehme gerne teil" }, 
+                      { val: false, label: language === "EN" ? "Regretfully Declines" : "Ich muss leider absagen" }
+                    ].map(({ val, label }) => (
                       <button key={String(val)} type="button" onClick={() => setForm({ ...form, attending: val })}
                         style={{
                           padding: "13px 10px", borderRadius: 16, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", transition: "all 0.2s",
@@ -132,7 +140,7 @@ export default function RSVPForm() {
                   {form.attending === true && (
                     <motion.div key="extras" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: 28 }}>
                       <div>
-                        <Label><Users size={10} style={{ display: "inline", marginRight: 6 }} />Number of Guests</Label>
+                        <Label><Users size={10} style={{ display: "inline", marginRight: 6 }} />{language === "EN" ? "Number of Guests" : "Anzahl der Gäste"}</Label>
                         <div style={{ display: "flex", gap: 10 }}>
                           {[1, 2, 3, 4].map(n => (
                             <button key={n} type="button" onClick={() => setForm({ ...form, num_guests: n })}
@@ -148,11 +156,11 @@ export default function RSVPForm() {
                         </div>
                       </div>
                       <div>
-                        <Label>Meal Preference</Label>
+                        <Label>{language === "EN" ? "Meal Preference" : "Essenswunsch"}</Label>
                         <div style={{ position: "relative" }}>
                           <select value={form.meal_preference} onChange={e => setForm({ ...form, meal_preference: e.target.value })}
                             style={{ ...inputBase, appearance: "none", paddingRight: 40 }}>
-                            <option value="">Select a meal option</option>
+                            <option value="">{language === "EN" ? "Select a meal option" : "Wählen Sie eine Option"}</option>
                             {weddingConfig.mealOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                           </select>
                           <ChevronDown size={13} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", color: THEME, opacity: 0.4, pointerEvents: "none" }} />
@@ -164,8 +172,8 @@ export default function RSVPForm() {
 
                 {/* Message */}
                 <div>
-                  <Label><MessageSquare size={10} style={{ display: "inline", marginRight: 6 }} />Message <span style={{ textTransform: "none", letterSpacing: "normal", fontWeight: 400, opacity: 0.5 }}>(optional)</span></Label>
-                  <textarea rows={4} placeholder="Share your wishes for the couple..." value={form.message}
+                  <Label><MessageSquare size={10} style={{ display: "inline", marginRight: 6 }} />{language === "EN" ? "Message" : "Nachricht"} <span style={{ textTransform: "none", letterSpacing: "normal", fontWeight: 400, opacity: 0.5 }}>(optional)</span></Label>
+                  <textarea rows={4} placeholder={language === "EN" ? "Share your wishes for the couple..." : "Teile deine Wünsche für das Brautpaar..."} value={form.message}
                     onChange={e => setForm({ ...form, message: e.target.value })} style={{ ...inputBase, resize: "none" }} />
                 </div>
 
@@ -185,7 +193,9 @@ export default function RSVPForm() {
                     cursor: status === "loading" ? "not-allowed" : "pointer", display: "flex", alignItems: "center",
                     justifyContent: "center", gap: 10, transition: "all 0.3s",
                   }}>
-                  {status === "loading" ? <><Loader2 size={15} className="animate-spin" /> Sending...</> : <><Send size={14} /> Send RSVP</>}
+                  {status === "loading" 
+                    ? <><Loader2 size={15} className="animate-spin" /> {language === "EN" ? "Sending..." : "Sende..."}</> 
+                    : <><Send size={14} /> {language === "EN" ? "Send RSVP" : "RSVP Senden"}</>}
                 </button>
 
               </div>

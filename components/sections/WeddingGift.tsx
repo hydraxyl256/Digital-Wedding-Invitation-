@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME = "#3D5A5B";
 
 export default function WeddingGift() {
+  const { language } = useWedding();
   return (
     <section
       data-section
@@ -43,16 +45,18 @@ export default function WeddingGift() {
             >
               <h2 className="mb-5 md:mb-8"
                 style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "clamp(2.5rem, 7vw, 5rem)" }}>
-                Wedding Gift
+                {language === "EN" ? "Wedding Gift" : "Hochzeitsgeschenk"}
               </h2>
               <div className="w-1.5 h-1.5 rounded-full mb-5 md:mb-8" style={{ background: `${THEME}20` }} />
               <p className="font-serif italic opacity-65 mb-5 md:mb-8 text-sm md:text-[1.05rem]"
                 style={{ color: THEME, lineHeight: 1.7 }}>
-                Your presence is our greatest gift.
+                {language === "EN" ? "Your presence is our greatest gift." : "Eure Anwesenheit ist unser größtes Geschenk."}
               </p>
               <p className="opacity-45 leading-relaxed max-w-sm text-xs md:text-[0.8rem]"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: THEME, lineHeight: 1.9 }}>
-                If you wish to honour us with a gift, we kindly prefer monetary contributions. Bank details will be shared separately.
+                {language === "EN" 
+                  ? "If you wish to honour us with a gift, we kindly prefer monetary contributions. Bank details will be shared separately." 
+                  : "Solltet ihr uns darüber hinaus etwas schenken wollen, freuen wir uns über einen finanziellen Beitrag. Bankdaten werden separat mitgeteilt."}
               </p>
             </motion.div>
 

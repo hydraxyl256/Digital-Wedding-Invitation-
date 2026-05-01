@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { weddingConfig } from "@/lib/wedding-config";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 export default function FormalInvitation() {
+  const { language } = useWedding();
   return (
     <section 
       data-section
@@ -26,10 +28,10 @@ export default function FormalInvitation() {
           {/* Header Text */}
           <div className="flex flex-col gap-2">
             <p className="text-amber-900 text-base md:text-xl lg:text-2xl uppercase tracking-[0.3em] font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              We request the pleasure of your company
+              {language === "EN" ? "We request the pleasure of your company" : "Wir laden herzlich ein"}
             </p>
             <p className="text-amber-900 text-base md:text-xl lg:text-2xl uppercase tracking-[0.3em] font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              To celebrate our wedding on
+              {language === "EN" ? "To celebrate our wedding on" : "zu unserer Hochzeit am"}
             </p>
           </div>
 
@@ -38,7 +40,9 @@ export default function FormalInvitation() {
             {/* Month with lines */}
             <div className="flex flex-col items-center">
               <div className="h-[1.5px] w-16 md:w-24 bg-amber-900/60 mb-2" />
-              <span className="text-amber-900 text-2xl md:text-4xl uppercase tracking-[0.2em] font-serif">July</span>
+              <span className="text-amber-900 text-2xl md:text-4xl uppercase tracking-[0.2em] font-serif">
+                {language === "EN" ? "July" : "Juli"}
+              </span>
               <div className="h-[1.5px] w-16 md:w-24 bg-amber-900/60 mt-2" />
             </div>
 
@@ -57,13 +61,13 @@ export default function FormalInvitation() {
 
           {/* Day of Week */}
           <p className="text-amber-900 text-2xl md:text-4xl uppercase tracking-[0.4em] font-serif mb-6">
-            Thursday
+            {language === "EN" ? "Thursday" : "Donnerstag"}
           </p>
 
           {/* To be held at */}
           <div className="flex flex-col gap-4">
             <p className="text-amber-900 text-base md:text-xl lg:text-2xl uppercase tracking-[0.3em] font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              To be held at
+              {language === "EN" ? "To be held at" : "Ort der Feier"}
             </p>
             {/* Optional: Add venue names here if wanted, or keep it clean as per screenshot */}
             <p className="text-amber-800 text-2xl md:text-3xl font-serif italic" style={{ fontFamily: "'Great Vibes', cursive" }}>

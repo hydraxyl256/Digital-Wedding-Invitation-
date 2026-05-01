@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME_COLOR = "#3D5A5B";
 
 export default function DressCode() {
+  const { language } = useWedding();
   return (
     <section
       data-section
@@ -18,7 +20,7 @@ export default function DressCode() {
         <AnimatedSection direction="fade">
           <h2 className="text-5xl md:text-6xl lg:text-7xl text-center opacity-85"
             style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-            Dress Code
+            {language === "EN" ? "Dress Code" : "Kleiderordnung"}
           </h2>
         </AnimatedSection>
 
@@ -41,15 +43,15 @@ export default function DressCode() {
           >
             <div className="flex flex-col items-center justify-center text-center gap-6">
               <h3 className="text-4xl md:text-6xl" style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-                Welcome Cruise
+                {language === "EN" ? "Welcome Cruise" : "Willkommens-Kreuzfahrt"}
               </h3>
               <p className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-bold opacity-35"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
-                22nd July
+                {language === "EN" ? "22nd July" : "22. Juli"}
               </p>
               <p className="text-[10px] md:text-xs uppercase tracking-[0.35em] font-semibold opacity-55 mt-2"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
-                White Cocktail Attire
+                {language === "EN" ? "White Cocktail Attire" : "Weiße Cocktail-Kleidung"}
               </p>
             </div>
           </motion.div>
@@ -83,11 +85,11 @@ export default function DressCode() {
           >
             <div className="flex flex-col items-center justify-center text-center gap-6">
               <h3 className="text-4xl md:text-6xl" style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-                Wedding
+                {language === "EN" ? "Wedding" : "Hochzeit"}
               </h3>
               <p className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-bold opacity-35"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
-                23rd July
+                {language === "EN" ? "23rd July" : "23. Juli"}
               </p>
               <p className="text-[10px] md:text-xs uppercase tracking-[0.35em] font-semibold opacity-55 mt-2"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>

@@ -2,21 +2,34 @@
 
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME_COLOR = "#3D5A5B";
 
-const CRUISE_ITINERARY = [
+const CRUISE_ITINERARY_EN = [
   { time: "6:30 PM", event: "Departure from The Peninsula Private Quay" },
   { time: "6:30 – 9:30 PM", event: "Sunset Cocktails & Hors d'Œuvres" },
   { time: "10:00 PM", event: "Arrival at The Peninsula Private Quay" }
 ];
+const CRUISE_ITINERARY_DE = [
+  { time: "18:30 Uhr", event: "Abfahrt vom Peninsula Private Quay" },
+  { time: "18:30 – 21:30 Uhr", event: "Sonnenuntergangs-Cocktails & Hors d'Œuvres" },
+  { time: "22:00 Uhr", event: "Ankunft am Peninsula Private Quay" }
+];
 
-const WEDDING_ITINERARY = [
+const WEDDING_ITINERARY_EN = [
   { time: "6:00 PM", event: "Arrival & Welcome Drinks" },
   { time: "", event: "Ceremony" },
   { time: "", event: "Banquet" },
   { time: "", event: "Party" },
   { time: "", event: "After Party" }
+];
+const WEDDING_ITINERARY_DE = [
+  { time: "18:00 Uhr", event: "Ankunft & Begrüßungsgetränke" },
+  { time: "", event: "Zeremonie" },
+  { time: "", event: "Bankett" },
+  { time: "", event: "Party" },
+  { time: "", event: "After-Party" }
 ];
 
 function Dot() {
@@ -50,6 +63,10 @@ function TimelineBlock({ items }: { items: { time: string; event: string }[] }) 
 }
 
 export default function ScheduleTimeline() {
+  const { language } = useWedding();
+  const cruiseItinerary = language === "EN" ? CRUISE_ITINERARY_EN : CRUISE_ITINERARY_DE;
+  const weddingItinerary = language === "EN" ? WEDDING_ITINERARY_EN : WEDDING_ITINERARY_DE;
+
   return (
     <section data-section className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center" style={{ paddingTop: "12rem", paddingBottom: "8rem" }}>
 
@@ -78,27 +95,35 @@ export default function ScheduleTimeline() {
 
         <AnimatedSection direction="fade" className="text-center mb-10 md:mb-16 flex flex-col items-center gap-3">
           <h2 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-            Wedding Weekend
+            {language === "EN" ? "Wedding Weekend" : "Hochzeitswochenende"}
           </h2>
           <p className="text-[9px] uppercase tracking-[0.7em] font-bold opacity-30"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>Itinerary</p>
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
+            {language === "EN" ? "Itinerary" : "Ablauf"}
+          </p>
           <p className="text-[10px] uppercase tracking-[0.35em] font-medium opacity-45"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>22 – 23 July 2026</p>
+            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
+            {language === "EN" ? "22 – 23 July 2026" : "22. – 23. Juli 2026"}
+          </p>
         </AnimatedSection>
 
         <AnimatedSection direction="fade" className="text-center mb-10 md:mb-12 flex flex-col items-center gap-3">
           <h3 className="text-2xl md:text-4xl lg:text-5xl leading-tight"
             style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
-            Welcome Cruise on the Bosphorus
+            {language === "EN" ? "Welcome Cruise on the Bosphorus" : "Willkommens-Kreuzfahrt auf dem Bosporus"}
           </h3>
-          <p className="text-[10px] font-serif italic opacity-55" style={{ color: THEME_COLOR }}>22 July 2026</p>
+          <p className="text-[10px] font-serif italic opacity-55" style={{ color: THEME_COLOR }}>
+            {language === "EN" ? "22 July 2026" : "22. Juli 2026"}
+          </p>
           <p className="text-[10px] md:text-xs max-w-xs text-center leading-relaxed opacity-45 mt-1"
             style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
-            Please join us for cocktails and hors d'oeuvres as we sail the Bosphorus
+            {language === "EN" 
+              ? "Please join us for cocktails and hors d'oeuvres as we sail the Bosphorus" 
+              : "Bitte begleiten Sie uns zu Cocktails und Hors d'Œuvres auf einer Fahrt über den Bosporus"}
           </p>
         </AnimatedSection>
 
-        <TimelineBlock items={CRUISE_ITINERARY} />
+        <TimelineBlock items={cruiseItinerary} />
       </div>
 
       {/* ── PART 2: THE WEDDING ── */}
@@ -111,15 +136,17 @@ export default function ScheduleTimeline() {
 
         <AnimatedSection direction="fade" className="text-center mb-10 md:mb-14 flex flex-col items-center gap-3">
           <h2 className="text-4xl md:text-5xl lg:text-6xl"
-            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>Wedding</h2>
+            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}>
+            {language === "EN" ? "Wedding" : "Hochzeit"}
+          </h2>
           <p className="text-[10px] uppercase tracking-[0.5em] font-medium opacity-45"
             style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR }}>
-            23 July 2026 · The Peninsula Hotel Istanbul
+            {language === "EN" ? "23 July 2026 · The Peninsula Hotel Istanbul" : "23. Juli 2026 · The Peninsula Hotel Istanbul"}
           </p>
         </AnimatedSection>
 
         <div className="relative w-full flex justify-center">
-          <TimelineBlock items={WEDDING_ITINERARY} />
+          <TimelineBlock items={weddingItinerary} />
           {/* Vase hidden on mobile to avoid overflow */}
           <motion.img src="/vase.png" alt=""
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
