@@ -3,6 +3,9 @@
 // ============================================================
 
 export const weddingConfig = {
+  // Maintenance
+  maintenanceMode: true,
+
   // Couple
   bride: "Anita",
   groom: "Richard",

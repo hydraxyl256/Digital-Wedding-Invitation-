@@ -8,8 +8,14 @@ import WeddingGift from "@/components/sections/WeddingGift";
 import RSVPForm from "@/components/sections/RSVPForm";
 import CountdownTimer from "@/components/sections/CountdownTimer";
 import Footer from "@/components/sections/Footer";
+import Maintenance from "@/components/sections/Maintenance";
+import { weddingConfig } from "@/lib/wedding-config";
 
 export default function Home() {
+  if (weddingConfig.maintenanceMode) {
+    return <Maintenance />;
+  }
+
   return (
     <main className="flex flex-col">
       <IntroOverlay />
