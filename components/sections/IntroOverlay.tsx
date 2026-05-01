@@ -2,16 +2,28 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useWedding } from "@/components/providers/WeddingContext";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function IntroOverlay() {
   const { invitationOpen, setInvitationOpen, language } = useWedding();
   const [closing, setClosing] = useState(false);
+  const [playingVideo, setPlayingVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleOpen = () => {
     setClosing(true);
-    // Brief fade-out, then reveal the main page
-    setTimeout(() => setInvitationOpen(true), 800);
+    
+    if (window.innerWidth < 768 && videoRef.current) {
+      setPlayingVideo(true);
+      videoRef.current.play().catch((err) => {
+        console.error("Video play failed", err);
+        setPlayingVideo(false);
+        setTimeout(() => setInvitationOpen(true), 800);
+      });
+    } else {
+      // Brief fade-out, then reveal the main page
+      setTimeout(() => setInvitationOpen(true), 800);
+    }
   };
 
   if (invitationOpen) return null;
@@ -21,7 +33,7 @@ export default function IntroOverlay() {
       <motion.div
         key="envelope"
         initial={{ opacity: 0 }}
-        animate={{ opacity: closing ? 0 : 1 }}
+        animate={{ opacity: (closing && !playingVideo) ? 0 : 1 }}
         transition={{ duration: 0.8 }}
         onClick={!closing ? handleOpen : undefined}
         style={{
@@ -36,8 +48,8 @@ export default function IntroOverlay() {
         {/* Fullscreen envelope image */}
         <motion.div
           initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: closing ? 1.08 : 1 }}
-          transition={{ duration: closing ? 0.8 : 1.1, ease: [0.22, 1, 0.36, 1] }}
+          animate={{ opacity: 1, scale: (closing && !playingVideo) ? 1.08 : 1 }}
+          transition={{ duration: (closing && !playingVideo) ? 0.8 : 1.1, ease: [0.22, 1, 0.36, 1] }}
           style={{ position: "absolute", inset: 0 }}
         >
           <picture style={{ width: "100%", height: "100%", display: "block" }}>
@@ -57,6 +69,28 @@ export default function IntroOverlay() {
             />
           </picture>
         </motion.div>
+
+        {/* Video for mobile */}
+        <video
+          ref={videoRef}
+          src="/intro-video.mp4"
+          playsInline
+          muted
+          onEnded={() => {
+            setPlayingVideo(false);
+            setTimeout(() => setInvitationOpen(true), 800);
+          }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 20,
+            opacity: playingVideo ? 1 : 0,
+            pointerEvents: "none"
+          }}
+        />
 
         {/* Tap hint — bottom center */}
         {!closing && (

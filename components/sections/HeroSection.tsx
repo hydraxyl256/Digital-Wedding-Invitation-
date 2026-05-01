@@ -21,8 +21,8 @@ export default function HeroSection() {
     setMounted(true);
 
     const sequence = async () => {
-      // 1. Initial wait (9s)
-      await new Promise(resolve => setTimeout(resolve, 9000));
+      // 1. Initial wait (10s)
+      await new Promise(resolve => setTimeout(resolve, 10000));
 
       // 2. Fade out Hero names & Open Doors (5s)
       controlsContent.start({ opacity: 0, scale: 1.1, transition: { duration: 2.5 } });
@@ -32,8 +32,8 @@ export default function HeroSection() {
         controlsRight.start({ x: "100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } })
       ]);
 
-      // 3. Keep open for 12s
-      await new Promise(resolve => setTimeout(resolve, 12000));
+      // 3. Keep open for 10s
+      await new Promise(resolve => setTimeout(resolve, 10000));
 
       // 4. Close Doors (5s)
       await Promise.all([
@@ -115,10 +115,10 @@ export default function HeroSection() {
       >
         {/* Language Switcher */}
         <div className="absolute top-6 right-6 flex items-center gap-1 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/50 shadow-sm scale-90 md:scale-100 pointer-events-auto">
-          <button 
+          <button
             onClick={() => setLanguage("EN")}
             className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${language === "EN" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}>EN</button>
-          <button 
+          <button
             onClick={() => setLanguage("DE")}
             className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${language === "DE" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}>DE</button>
         </div>
