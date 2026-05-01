@@ -58,7 +58,7 @@ export default function Maintenance() {
         <div className="w-12 h-[1px] bg-white/30 mb-8" />
 
         <h2
-          className="text-white/90 text-[11px] md:text-xs uppercase tracking-[0.4em] font-medium mb-4"
+          className="text-white/90 text-[8px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] font-medium mb-4"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
           Preparing something beautiful
