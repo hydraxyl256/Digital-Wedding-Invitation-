@@ -15,30 +15,30 @@ export default function HeroSection() {
   const controlsContent = useAnimation();
   const controlsArrow = useAnimation();
 
-  useEffect(() => { 
-    setMounted(true); 
-    
+  useEffect(() => {
+    setMounted(true);
+
     const sequence = async () => {
-      // 1. Initial wait (3s)
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
+      // 1. Initial wait (9s)
+      await new Promise(resolve => setTimeout(resolve, 9000));
+
       // 2. Fade out Hero names & Open Doors (5s)
-      controlsContent.start({ opacity: 0, scale: 1.1, transition: { duration: 1.5 } });
+      controlsContent.start({ opacity: 0, scale: 1.1, transition: { duration: 2.5 } });
       setShowInvitation(true);
       await Promise.all([
         controlsLeft.start({ x: "-100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
         controlsRight.start({ x: "100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } })
       ]);
-      
-      // 3. Keep open for 15s
-      await new Promise(resolve => setTimeout(resolve, 15000));
-      
+
+      // 3. Keep open for 12s
+      await new Promise(resolve => setTimeout(resolve, 12000));
+
       // 4. Close Doors (5s)
       await Promise.all([
         controlsLeft.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
         controlsRight.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } })
       ]);
-      
+
       // 5. Fade Hero names back in and show Arrow
       setShowInvitation(false);
       await controlsContent.start({ opacity: 1, scale: 1, transition: { duration: 2 } });
@@ -59,9 +59,9 @@ export default function HeroSection() {
       {/* ── BACKGROUND CONTENT (Formal Invitation Revealed) ── */}
       <div className="absolute inset-0 z-0 flex items-center justify-center">
         {showInvitation && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="w-full h-full"
           >
@@ -72,13 +72,13 @@ export default function HeroSection() {
 
       {/* ── THE OPENING DOORS (Hero Background) ── */}
       <div className="absolute inset-0 z-20 flex pointer-events-none">
-        
+
         {/* Left Door */}
-        <motion.div 
+        <motion.div
           animate={controlsLeft}
           className="relative w-1/2 h-full overflow-hidden border-r border-white/10"
         >
-          <div 
+          <div
             className="absolute inset-0 w-[200%] h-full"
             style={{
               backgroundImage: "url('/hero-background.png')",
@@ -90,11 +90,11 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Right Door */}
-        <motion.div 
+        <motion.div
           animate={controlsRight}
           className="relative w-1/2 h-full overflow-hidden border-l border-white/10"
         >
-          <div 
+          <div
             className="absolute inset-0 w-[200%] h-full -left-full"
             style={{
               backgroundImage: "url('/hero-background.png')",
@@ -107,7 +107,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── HERO TEXT (Sitting on top of doors) ── */}
-      <motion.div 
+      <motion.div
         animate={controlsContent}
         className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
       >
@@ -146,14 +146,14 @@ export default function HeroSection() {
         </div>
 
         {/* Audio Toggle Toggle visual */}
-        <div className="absolute bottom-8 right-8">
+        {/* <div className="absolute bottom-8 right-8">
           <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3D5A5B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
             </svg>
           </div>
-        </div>
+        </div> */}
       </motion.div>
 
       {/* ── SCROLL ARROW (Appears after sequence) ── */}
