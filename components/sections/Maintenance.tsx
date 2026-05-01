@@ -61,7 +61,7 @@ export default function Maintenance() {
           className="text-white/90 text-[8px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] font-medium mb-4"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
-          Preparing something beautiful
+          {/* Preparing something beautiful */}
         </h2>
 
         <p
