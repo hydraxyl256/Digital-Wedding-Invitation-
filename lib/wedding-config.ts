@@ -4,7 +4,7 @@
 
 export const weddingConfig = {
   // Maintenance
-  maintenanceMode: false,
+  maintenanceMode: true,
 
   // Couple
   bride: "Anita",
