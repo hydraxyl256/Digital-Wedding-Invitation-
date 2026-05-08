@@ -1,10 +1,10 @@
-// ============================================================
-// WEDDING CONFIGURATION — Edit all details here
-// ============================================================
+
+// WEDDING CONFIGURATION 
+
 
 export const weddingConfig = {
   // Maintenance
-  maintenanceMode: true,
+  maintenanceMode: false,
 
   // Couple
   bride: "Anita",
