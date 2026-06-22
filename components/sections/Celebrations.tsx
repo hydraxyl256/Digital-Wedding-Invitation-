@@ -215,17 +215,6 @@ export default function Celebrations() {
             viewMapLabel={t.viewMap}
             note={t.welcomeDesc}
           />
-          <CelebrationCard
-            image="/hotel.png"
-            floatStyle="hotel"
-            subtitle={t.theWedding}
-            location="Palazzo Gallio"
-            address="Via Regina Levante 2, 22015 Gravedona CO, Italy"
-            date={language === "IT" ? "Domenica, 16 Agosto 2026" : "Sunday, August 16, 2026"}
-            time="6:30 PM"
-            viewMapLabel={t.viewMap}
-            note={t.weddingDesc}
-          />
         </div>
       </div>
     </section>
