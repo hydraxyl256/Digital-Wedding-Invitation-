@@ -38,7 +38,7 @@ const TEXTS = {
 function Swatch({ color }: { color: string }) {
   return (
     <div
-      className="w-9 h-9 md:w-11 md:h-11 rounded-full border border-white/70 shadow-sm"
+      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full border border-white/70 shadow-sm"
       style={{ background: color }}
       aria-hidden
     />
@@ -53,13 +53,22 @@ export default function DressCode() {
     <section
       data-section
       className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center"
-      style={{ paddingTop: "10rem", paddingBottom: "12rem" }}
+      style={{
+        paddingTop: "clamp(5rem, 10vw, 10rem)",
+        paddingBottom: "clamp(6rem, 12vw, 12rem)",
+      }}
     >
-      <div className="w-full max-w-3xl mx-auto px-6 md:px-16 flex flex-col items-center gap-12 md:gap-20">
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-16 flex flex-col items-center gap-10 sm:gap-14 md:gap-20">
         <AnimatedSection direction="fade">
           <h2
-            className="text-5xl md:text-6xl lg:text-7xl text-center"
-            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR, opacity: 0.92 }}
+            className="text-center"
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              color: THEME_COLOR,
+              opacity: 0.92,
+              fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
+              lineHeight: 1.1,
+            }}
           >
             {t.title}
           </h2>
@@ -74,37 +83,61 @@ export default function DressCode() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2 }}
             className="absolute pointer-events-none z-20 hidden md:block"
-            style={{ width: 160, top: -56, left: -40 }}
+            style={{
+              width: "clamp(7rem, 12vw, 10rem)",
+              top: "-3.5rem",
+              left: "-2.5rem",
+            }}
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0 }}
-            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[28px] md:rounded-[44px] shadow-[0_8px_32px_rgba(61,90,91,0.06)] px-6 py-12 md:px-16 md:py-20"
+            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[clamp(1.5rem,4vw,2.75rem)] shadow-[0_8px_32px_rgba(61,90,91,0.06)]"
+            style={{
+              padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
+            }}
           >
-            <div className="flex flex-col items-center justify-center text-center gap-5">
+            <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
               <h3
-                className="text-4xl md:text-6xl"
-                style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}
+                style={{
+                  fontFamily: "'Great Vibes', cursive",
+                  color: THEME_COLOR,
+                  fontSize: "clamp(2.2rem, 6vw, 4rem)",
+                }}
               >
                 {t.card1Title}
               </h3>
               <p
-                className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-bold"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.6 }}
+                className="uppercase tracking-[0.5em] sm:tracking-[0.6em] font-bold"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  color: THEME_COLOR,
+                  opacity: 0.6,
+                  fontSize: "clamp(9px, 0.95vw, 12px)",
+                }}
               >
                 {t.card1Date}
               </p>
               <p
-                className="text-[10px] md:text-xs uppercase tracking-[0.35em] font-semibold mt-2"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.85 }}
+                className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-semibold mt-1 sm:mt-2"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  color: THEME_COLOR,
+                  opacity: 0.85,
+                  fontSize: "clamp(9px, 0.95vw, 12px)",
+                }}
               >
                 {t.card1Attire}
               </p>
               <p
-                className="font-serif italic text-sm md:text-base max-w-md leading-relaxed mt-2"
-                style={{ color: THEME_COLOR, opacity: 0.75 }}
+                className="font-serif italic max-w-md leading-relaxed mt-1 sm:mt-2"
+                style={{
+                  color: THEME_COLOR,
+                  opacity: 0.75,
+                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                }}
               >
                 {t.card1Hint}
               </p>
@@ -113,7 +146,7 @@ export default function DressCode() {
         </div>
 
         {/* CARD 2 */}
-        <div className="relative w-full mb-8 md:mb-16">
+        <div className="relative w-full mb-6 sm:mb-8 md:mb-16">
           <motion.img
             src="/cypress.png"
             alt=""
@@ -121,7 +154,11 @@ export default function DressCode() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2 }}
             className="absolute pointer-events-none z-20"
-            style={{ width: "clamp(80px, 12vw, 180px)", bottom: "-2rem", left: "clamp(-8px, -2vw, -60px)" }}
+            style={{
+              width: "clamp(4.5rem, 12vw, 11rem)",
+              bottom: "-1.5rem",
+              left: "clamp(-0.5rem, -2vw, -3.75rem)",
+            }}
           />
 
           <motion.img
@@ -131,50 +168,79 @@ export default function DressCode() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2 }}
             className="absolute pointer-events-none z-20 hidden md:block"
-            style={{ width: 160, top: -30, right: -50 }}
+            style={{
+              width: "clamp(7rem, 10vw, 10rem)",
+              top: "-1.9rem",
+              right: "-3.1rem",
+            }}
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0 }}
-            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[28px] md:rounded-[44px] shadow-[0_8px_32px_rgba(61,90,91,0.06)] px-6 py-12 md:px-16 md:py-20"
+            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[clamp(1.5rem,4vw,2.75rem)] shadow-[0_8px_32px_rgba(61,90,91,0.06)]"
+            style={{
+              padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
+            }}
           >
-            <div className="flex flex-col items-center justify-center text-center gap-5">
+            <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
               <h3
-                className="text-4xl md:text-6xl"
-                style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR }}
+                style={{
+                  fontFamily: "'Great Vibes', cursive",
+                  color: THEME_COLOR,
+                  fontSize: "clamp(2.2rem, 6vw, 4rem)",
+                }}
               >
                 {t.card2Title}
               </h3>
               <p
-                className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-bold"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.6 }}
+                className="uppercase tracking-[0.5em] sm:tracking-[0.6em] font-bold"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  color: THEME_COLOR,
+                  opacity: 0.6,
+                  fontSize: "clamp(9px, 0.95vw, 12px)",
+                }}
               >
                 {t.card2Date}
               </p>
               <p
-                className="text-[10px] md:text-xs uppercase tracking-[0.35em] font-semibold mt-2"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.9 }}
+                className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-semibold mt-1 sm:mt-2"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  color: THEME_COLOR,
+                  opacity: 0.9,
+                  fontSize: "clamp(9px, 0.95vw, 12px)",
+                }}
               >
                 {t.card2Attire}
               </p>
               <p
-                className="font-serif italic text-sm md:text-base max-w-md leading-relaxed mt-2"
-                style={{ color: THEME_COLOR, opacity: 0.75 }}
+                className="font-serif italic max-w-md leading-relaxed mt-1 sm:mt-2"
+                style={{
+                  color: THEME_COLOR,
+                  opacity: 0.75,
+                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                }}
               >
                 {t.card2Hint}
               </p>
 
               {/* Color palette */}
-              <div className="mt-6 flex flex-col items-center gap-3">
+              <div className="mt-4 sm:mt-6 flex flex-col items-center gap-2 sm:gap-3">
                 <p
-                  className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold"
-                  style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.55 }}
+                  className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-bold"
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    color: THEME_COLOR,
+                    opacity: 0.55,
+                    fontSize: "clamp(8px, 0.85vw, 10px)",
+                  }}
                 >
                   {t.paletteLabel}
                 </p>
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 sm:gap-2.5">
                   {t.palette.map((c) => (
                     <Swatch key={c} color={c} />
                   ))}

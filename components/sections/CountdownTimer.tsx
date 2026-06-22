@@ -29,17 +29,28 @@ const TEXTS = {
 function Digit({ value, label }: { value: number; label: string }) {
   const display = String(value).padStart(2, "0");
   return (
-    <div className="flex flex-col items-center gap-3 md:gap-4">
+    <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
       <span
         suppressHydrationWarning
-        className="font-serif text-5xl md:text-7xl lg:text-8xl italic font-light"
-        style={{ fontFamily: "'Playfair Display', serif", color: THEME_COLOR, opacity: 0.95 }}
+        className="font-serif italic font-light"
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          color: THEME_COLOR,
+          opacity: 0.95,
+          fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
+          lineHeight: 1,
+        }}
       >
         {display}
       </span>
       <span
-        className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-semibold"
-        style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.55 }}
+        className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-semibold"
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          color: THEME_COLOR,
+          opacity: 0.6,
+          fontSize: "clamp(8px, 1vw, 11px)",
+        }}
       >
         {label}
       </span>
@@ -63,7 +74,8 @@ export default function CountdownTimer() {
   return (
     <section
       data-section
-      className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-[#f0f0e4]"
+      className="relative min-h-[70vh] sm:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-[#f0f0e4]"
+      style={{ paddingBlock: "clamp(4rem, 8vw, 7rem)" }}
     >
       {/* LEFT FLORAL COLUMN */}
       <motion.div
@@ -104,24 +116,43 @@ export default function CountdownTimer() {
       </motion.div>
 
       {/* Mobile Floral Accents */}
-      <div className="absolute top-0 -left-20 w-48 md:hidden" style={{ opacity: 0.12 }}>
-        <img src="/column-left.png" alt="" className="w-full" />
+      <div
+        className="absolute top-0 -left-20 w-48 md:hidden pointer-events-none"
+        style={{ opacity: 0.12 }}
+      >
+        <img src="/column-left.png" alt="" className="w-full h-auto" />
       </div>
-      <div className="absolute top-0 -right-20 w-48 md:hidden" style={{ opacity: 0.12 }}>
-        <img src="/column-right.png" alt="" className="w-full" />
+      <div
+        className="absolute top-0 -right-20 w-48 md:hidden pointer-events-none"
+        style={{ opacity: 0.12 }}
+      >
+        <img src="/column-right.png" alt="" className="w-full h-auto" />
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 py-20 flex flex-col items-center">
-        <AnimatedSection direction="fade" className="w-full text-center mb-16 md:mb-20">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center">
+        <AnimatedSection
+          direction="fade"
+          className="w-full text-center mb-12 sm:mb-16 md:mb-20"
+        >
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl mb-6"
-            style={{ fontFamily: "'Great Vibes', cursive", color: THEME_COLOR, opacity: 0.9 }}
+            className="mb-3 sm:mb-4 md:mb-6"
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              color: THEME_COLOR,
+              opacity: 0.9,
+              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            }}
           >
             Countdown
           </h2>
           <p
-            className="text-[10px] md:text-xs uppercase tracking-[0.6em] font-semibold"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME_COLOR, opacity: 0.6 }}
+            className="uppercase tracking-[0.5em] sm:tracking-[0.6em] font-semibold"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              color: THEME_COLOR,
+              opacity: 0.65,
+              fontSize: "clamp(9px, 1.1vw, 13px)",
+            }}
           >
             {t.until}
           </p>
@@ -132,19 +163,32 @@ export default function CountdownTimer() {
             {time.isOver ? (
               <AnimatedSection direction="fade" className="text-center">
                 <h3
-                  className="text-3xl md:text-5xl font-serif mb-4"
-                  style={{ color: THEME_COLOR, opacity: 0.95 }}
+                  className="font-serif mb-4"
+                  style={{
+                    color: THEME_COLOR,
+                    opacity: 0.95,
+                    fontSize: "clamp(1.8rem, 4vw, 3rem)",
+                  }}
                 >
                   {t.over}
                 </h3>
               </AnimatedSection>
             ) : (
               <AnimatedSection direction="up" delay={0.2}>
-                <div className="flex items-center justify-center gap-5 md:gap-14">
+                <div
+                  className="flex items-center justify-center gap-3 sm:gap-6 md:gap-10 lg:gap-14"
+                  style={{ flexWrap: "nowrap" }}
+                >
                   <Digit value={time.days} label={t.days} />
-                  <div className="h-12 w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block" />
+                  <div
+                    className="w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block"
+                    style={{ height: "clamp(2.5rem, 6vw, 3.5rem)" }}
+                  />
                   <Digit value={time.hours} label={t.hours} />
-                  <div className="h-12 w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block" />
+                  <div
+                    className="w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block"
+                    style={{ height: "clamp(2.5rem, 6vw, 3.5rem)" }}
+                  />
                   <Digit value={time.minutes} label={t.minutes} />
                 </div>
               </AnimatedSection>

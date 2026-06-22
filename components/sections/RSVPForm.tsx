@@ -9,7 +9,7 @@ import { useWedding } from "@/components/providers/WeddingContext";
 
 const THEME = "#3D5A5B";
 const BG = "rgba(255,255,255,0.55)";
-const BORDER = "rgba(61,90,91,0.18)";
+const BORDER = "rgba(61,90,91,0.2)";
 
 interface FormState {
   guest_name: string;
@@ -30,8 +30,8 @@ const INITIAL: FormState = {
 const inputBase: React.CSSProperties = {
   width: "100%",
   borderRadius: 16,
-  padding: "14px 18px",
-  fontSize: "0.95rem",
+  padding: "clamp(12px, 1.4vw, 16px) clamp(14px, 1.6vw, 18px)",
+  fontSize: "clamp(0.9rem, 1.1vw, 0.95rem)",
   color: THEME,
   border: `1px solid ${BORDER}`,
   background: "rgba(255,255,255,0.7)",
@@ -39,13 +39,19 @@ const inputBase: React.CSSProperties = {
   boxSizing: "border-box",
   fontFamily: "'Montserrat', sans-serif",
   transition: "border-color 0.2s",
+  minHeight: 48,
 };
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold mb-3"
-      style={{ fontFamily: "'Montserrat', sans-serif", color: THEME, opacity: 0.65 }}
+      className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-bold mb-2 sm:mb-3"
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        color: THEME,
+        opacity: 0.65,
+        fontSize: "clamp(8px, 0.85vw, 10px)",
+      }}
     >
       {children}
     </p>
@@ -119,24 +125,45 @@ export default function RSVPForm() {
     <section
       data-section
       className="relative bg-[#f0f0e4] flex flex-col items-center"
-      style={{ paddingTop: "6rem", paddingBottom: "8rem" }}
+      style={{
+        paddingTop: "clamp(4rem, 6vw, 6rem)",
+        paddingBottom: "clamp(5rem, 8vw, 8rem)",
+      }}
     >
-      <div className="w-full max-w-xl mx-auto px-6 flex flex-col items-center">
-        <AnimatedSection direction="fade" className="text-center mb-16 flex flex-col items-center gap-4">
+      <div className="w-full max-w-xl mx-auto px-4 sm:px-6 flex flex-col items-center">
+        <AnimatedSection
+          direction="fade"
+          className="text-center mb-12 sm:mb-14 md:mb-16 flex flex-col items-center gap-3 sm:gap-4"
+        >
           <p
-            className="text-[9px] md:text-[10px] uppercase tracking-[0.7em] font-bold"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME, opacity: 0.5 }}
+            className="uppercase tracking-[0.5em] sm:tracking-[0.7em] font-bold"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              color: THEME,
+              opacity: 0.5,
+              fontSize: "clamp(8px, 0.85vw, 10px)",
+            }}
           >
             {txt.heading}
           </p>
           <h2
-            style={{ fontFamily: "'Great Vibes', cursive", color: THEME, fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              color: THEME,
+              fontSize: "clamp(3rem, 9vw, 5.5rem)",
+              lineHeight: 1.1,
+            }}
           >
             {txt.title}
           </h2>
           <p
-            className="text-[10px] uppercase tracking-[0.4em] font-medium"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: THEME, opacity: 0.65 }}
+            className="uppercase tracking-[0.3em] sm:tracking-[0.4em] font-medium"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              color: THEME,
+              opacity: 0.65,
+              fontSize: "clamp(9px, 0.95vw, 11px)",
+            }}
           >
             {txt.deadline}
             <span className="font-bold" style={{ opacity: 0.85 }}>
@@ -155,8 +182,8 @@ export default function RSVPForm() {
               style={{
                 background: BG,
                 backdropFilter: "blur(16px)",
-                borderRadius: 48,
-                padding: "64px 40px",
+                borderRadius: "clamp(1.5rem, 4vw, 3rem)",
+                padding: "clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2.5rem)",
                 border: `1px solid ${BORDER}`,
               }}
             >
@@ -164,24 +191,29 @@ export default function RSVPForm() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="w-20 h-20 rounded-full flex items-center justify-center mb-8"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-6 sm:mb-8"
                 style={{ background: "rgba(61,90,91,0.1)" }}
               >
-                <Check size={32} color={THEME} strokeWidth={1.5} />
+                <Check size={28} color={THEME} strokeWidth={1.5} />
               </motion.div>
               <h3
                 style={{
                   fontFamily: "'Great Vibes', cursive",
                   color: THEME,
-                  fontSize: "2.8rem",
+                  fontSize: "clamp(2.2rem, 6vw, 2.8rem)",
                   marginBottom: "1rem",
                 }}
               >
                 {txt.successTitle}
               </h3>
               <p
-                className="text-sm leading-relaxed max-w-xs"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: THEME, opacity: 0.7 }}
+                className="leading-relaxed max-w-xs"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  color: THEME,
+                  opacity: 0.7,
+                  fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
+                }}
               >
                 {txt.successBody}
               </p>
@@ -198,12 +230,12 @@ export default function RSVPForm() {
                 style={{
                   background: BG,
                   backdropFilter: "blur(16px)",
-                  borderRadius: 48,
-                  padding: "52px 40px",
+                  borderRadius: "clamp(1.5rem, 4vw, 3rem)",
+                  padding: "clamp(1.75rem, 4vw, 3.25rem) clamp(1.25rem, 4vw, 2.5rem)",
                   border: `1px solid ${BORDER}`,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "28px",
+                  gap: "clamp(1.25rem, 2.5vw, 1.75rem)",
                 }}
               >
                 <div>
@@ -222,7 +254,13 @@ export default function RSVPForm() {
 
                 <div>
                   <Label>{txt.attend}</Label>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "clamp(0.5rem, 1.2vw, 0.75rem)",
+                    }}
+                  >
                     {[
                       { val: true, label: txt.yes },
                       { val: false, label: txt.no },
@@ -232,9 +270,8 @@ export default function RSVPForm() {
                         type="button"
                         onClick={() => setForm({ ...form, attending: val })}
                         style={{
-                          padding: "14px 10px",
+                          padding: "clamp(12px, 1.4vw, 14px) clamp(8px, 1.2vw, 10px)",
                           borderRadius: 16,
-                          fontSize: "0.8rem",
                           fontWeight: 700,
                           cursor: "pointer",
                           transition: "all 0.2s",
@@ -244,6 +281,8 @@ export default function RSVPForm() {
                           background: form.attending === val ? THEME : "rgba(255,255,255,0.55)",
                           color: form.attending === val ? "white" : THEME,
                           minHeight: 48,
+                          fontSize: "clamp(0.75rem, 1vw, 0.8rem)",
+                          whiteSpace: "nowrap",
                         }}
                       >
                         {label}
@@ -259,14 +298,19 @@ export default function RSVPForm() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: 28 }}
+                      style={{
+                        overflow: "hidden",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "clamp(1.25rem, 2.5vw, 1.75rem)",
+                      }}
                     >
                       <div>
                         <Label>
                           <Users size={10} style={{ display: "inline", marginRight: 6 }} />
                           {txt.guests}
                         </Label>
-                        <div style={{ display: "flex", gap: 10 }}>
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                           {[1, 2, 3, 4].map((n) => (
                             <button
                               key={n}
@@ -276,7 +320,6 @@ export default function RSVPForm() {
                                 width: 48,
                                 height: 48,
                                 borderRadius: "50%",
-                                fontSize: "0.95rem",
                                 fontWeight: 700,
                                 cursor: "pointer",
                                 transition: "all 0.2s",
@@ -284,6 +327,7 @@ export default function RSVPForm() {
                                 background:
                                   form.num_guests === n ? THEME : "rgba(255,255,255,0.55)",
                                 color: form.num_guests === n ? "white" : THEME,
+                                fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
                               }}
                             >
                               {n}
@@ -346,7 +390,7 @@ export default function RSVPForm() {
                     placeholder={txt.messagePh}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    style={{ ...inputBase, resize: "none" }}
+                    style={{ ...inputBase, resize: "none", minHeight: 100 }}
                   />
                 </div>
 
@@ -361,7 +405,7 @@ export default function RSVPForm() {
                       background: "#fef2f2",
                       border: "1px solid #fecaca",
                       color: "#b91c1c",
-                      fontSize: "0.85rem",
+                      fontSize: "clamp(0.8rem, 1.05vw, 0.85rem)",
                     }}
                   >
                     <AlertCircle size={14} /> {errorMsg}
@@ -373,13 +417,12 @@ export default function RSVPForm() {
                   disabled={status === "loading"}
                   style={{
                     width: "100%",
-                    padding: "18px 24px",
+                    padding: "clamp(14px, 1.8vw, 18px) clamp(20px, 2.5vw, 24px)",
                     borderRadius: 16,
                     fontFamily: "'Montserrat', sans-serif",
                     background: status === "loading" ? "rgba(61,90,91,0.55)" : THEME,
                     color: "white",
                     fontWeight: 700,
-                    fontSize: "0.8rem",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     border: "none",
@@ -390,6 +433,7 @@ export default function RSVPForm() {
                     gap: 10,
                     transition: "all 0.3s",
                     minHeight: 52,
+                    fontSize: "clamp(0.75rem, 1vw, 0.8rem)",
                   }}
                 >
                   {status === "loading" ? (

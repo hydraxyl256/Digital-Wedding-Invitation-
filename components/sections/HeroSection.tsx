@@ -37,10 +37,8 @@ export default function HeroSection() {
       if (sequenceStarted.current) return;
       sequenceStarted.current = true;
 
-      // 1. Initial wait
       await new Promise((resolve) => setTimeout(resolve, 10000));
 
-      // 2. Fade out Hero names & Open Doors
       controlsContent.start({ opacity: 0, scale: 1.1, transition: { duration: 2.5 } });
       setShowInvitation(true);
       await Promise.all([
@@ -48,27 +46,26 @@ export default function HeroSection() {
         controlsRight.start({ x: "100%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
       ]);
 
-      // 3. Keep open for 10s
       await new Promise((resolve) => setTimeout(resolve, 10000));
 
-      // 4. Close Doors
       await Promise.all([
         controlsLeft.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
         controlsRight.start({ x: "0%", transition: { duration: 5, ease: [0.45, 0, 0.55, 1] } }),
       ]);
 
-      // 5. Fade Hero names back in and show Arrow
       setShowInvitation(false);
       await controlsContent.start({ opacity: 1, scale: 1, transition: { duration: 2 } });
       controlsArrow.start({ opacity: 1, y: 0, transition: { duration: 1 } });
     };
 
-    if (window.innerWidth < 768) {
-      if (invitationOpen) {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth < 768) {
+        if (invitationOpen) {
+          sequence();
+        }
+      } else {
         sequence();
       }
-    } else {
-      sequence();
     }
   }, [controlsLeft, controlsRight, controlsContent, controlsArrow, invitationOpen]);
 
@@ -77,7 +74,7 @@ export default function HeroSection() {
   return (
     <section
       data-section
-      className="relative h-screen w-full overflow-hidden bg-white"
+      className="relative h-[100svh] w-full overflow-hidden bg-white"
     >
       {/* ── BACKGROUND CONTENT (Formal Invitation Revealed) ── */}
       <div className="absolute inset-0 z-0 flex items-center justify-center">
@@ -129,47 +126,76 @@ export default function HeroSection() {
       {/* ── HERO TEXT (Sitting on top of doors) ── */}
       <motion.div
         animate={controlsContent}
-        className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
+        className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-4 sm:px-6 pointer-events-none"
       >
         {/* Language Switcher */}
-        <div className="absolute top-6 right-6 flex items-center gap-1 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/60 shadow-md scale-90 md:scale-100 pointer-events-auto">
+        <div
+          className="absolute top-5 right-4 sm:top-6 sm:right-6 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/60 shadow-md pointer-events-auto"
+          style={{ transform: "scale(0.85)", transformOrigin: "top right" }}
+        >
           <button
             onClick={() => setLanguage("EN")}
-            className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full transition-colors ${language === "EN" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}
+            className="text-[10px] font-bold px-2.5 py-1 rounded-full transition-colors min-h-[28px]"
+            style={{
+              background: language === "EN" ? "#3D5A5B" : "transparent",
+              color: language === "EN" ? "white" : "#3D5A5B",
+            }}
+            aria-label="Switch to English"
+            aria-pressed={language === "EN"}
           >
             EN
           </button>
           <button
             onClick={() => setLanguage("IT")}
-            className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full transition-colors ${language === "IT" ? "bg-[#3D5A5B] text-white" : "text-[#3D5A5B] hover:bg-black/5"}`}
+            className="text-[10px] font-bold px-2.5 py-1 rounded-full transition-colors min-h-[28px]"
+            style={{
+              background: language === "IT" ? "#3D5A5B" : "transparent",
+              color: language === "IT" ? "white" : "#3D5A5B",
+            }}
+            aria-label="Passa all'italiano"
+            aria-pressed={language === "IT"}
           >
             IT
           </button>
         </div>
 
-        {/* Content */}
-        <div className="flex flex-col items-center gap-2 md:gap-4 drop-shadow-2xl">
+        {/* Content — fluid sizing */}
+        <div className="flex flex-col items-center gap-2 md:gap-4 drop-shadow-2xl max-w-full">
           <motion.p
-            className="text-white text-[10px] md:text-xs uppercase tracking-[0.6em] font-light mb-8"
+            className="text-white text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.5em] sm:tracking-[0.6em] font-light mb-4 sm:mb-6 md:mb-8 px-2"
             style={{ fontFamily: "'Montserrat', sans-serif", textShadow: "0 2px 12px rgba(0,0,0,0.35)" }}
           >
             {t.preHeading}
           </motion.p>
 
           <h1
-            className="text-white text-7xl md:text-9xl lg:text-[11rem] leading-none"
-            style={{ fontFamily: "'Great Vibes', cursive", textShadow: "0 4px 20px rgba(0,0,0,0.4)" }}
+            className="text-white leading-none"
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              textShadow: "0 4px 20px rgba(0,0,0,0.4)",
+              fontSize: "clamp(3rem, 14vw, 11rem)",
+            }}
           >
             {weddingConfig.bride}
           </h1>
 
-          <span className="text-white text-xl md:text-2xl font-serif italic my-2" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.35)" }}>
+          <span
+            className="text-white font-serif italic my-1 sm:my-2"
+            style={{
+              fontSize: "clamp(1.1rem, 3vw, 1.6rem)",
+              textShadow: "0 2px 12px rgba(0,0,0,0.35)",
+            }}
+          >
             &
           </span>
 
           <h1
-            className="text-white text-7xl md:text-9xl lg:text-[11rem] leading-none"
-            style={{ fontFamily: "'Great Vibes', cursive", textShadow: "0 4px 20px rgba(0,0,0,0.4)" }}
+            className="text-white leading-none"
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              textShadow: "0 4px 20px rgba(0,0,0,0.4)",
+              fontSize: "clamp(3rem, 14vw, 11rem)",
+            }}
           >
             {weddingConfig.groom}
           </h1>
@@ -180,21 +206,29 @@ export default function HeroSection() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={controlsArrow}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2"
+        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 px-4"
       >
         <span
-          className="text-white text-[10px] md:text-[11px] uppercase tracking-[0.5em] font-semibold"
-          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.55)" }}
+          className="text-white uppercase tracking-[0.4em] sm:tracking-[0.5em] font-semibold"
+          style={{
+            fontSize: "clamp(9px, 1.2vw, 12px)",
+            textShadow: "0 2px 10px rgba(0,0,0,0.55)",
+          }}
         >
           {t.scroll}
         </span>
         <motion.div
           animate={{ y: [0, 14, 0] }}
           transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="rounded-full bg-white/15 backdrop-blur-sm p-2 border border-white/40"
+          className="rounded-full bg-white/15 backdrop-blur-sm p-1.5 sm:p-2 border border-white/40"
           style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.25)" }}
         >
-          <ChevronDown size={44} className="text-white" strokeWidth={3} />
+          <ChevronDown
+            className="text-white"
+            size={40}
+            strokeWidth={3}
+            style={{ width: "clamp(36px, 6vw, 44px)", height: "auto" }}
+          />
         </motion.div>
       </motion.div>
     </section>

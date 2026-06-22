@@ -14,6 +14,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -22,9 +23,39 @@ body {
   color: #1A1208;
   overflow-x: hidden;
   line-height: 1.6;
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-/* ─── Typography ─── */
+/* ─── Fluid Typography Scale ─── */
+h1, .h1 {
+  font-size: clamp(2.2rem, 5vw + 1rem, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+h2, .h2 {
+  font-size: clamp(1.6rem, 2.4vw + 0.8rem, 3.5rem);
+  line-height: 1.15;
+}
+
+h3, .h3 {
+  font-size: clamp(1.3rem, 1.4vw + 0.6rem, 2.4rem);
+  line-height: 1.2;
+}
+
+h4, .h4 {
+  font-size: clamp(1.1rem, 0.8vw + 0.6rem, 1.6rem);
+  line-height: 1.3;
+}
+
+p {
+  font-size: clamp(0.9rem, 0.4vw + 0.75rem, 1.05rem);
+  line-height: 1.7;
+}
+
+/* ─── Typography Families ─── */
 .font-serif {
   font-family: 'Playfair Display', Georgia, serif;
 }
@@ -90,73 +121,50 @@ section {
 
 /* ─── Animations ─── */
 @keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-
-  100% {
-    background-position: 200% center;
-  }
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
 @keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
+.animate-float { animation: float 4s ease-in-out infinite; }
 
 @keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+/* ─── Responsive container helper ─── */
+.container-fluid {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+  max-width: min(100%, 1280px);
 }
 
-/* ─── Mobile-first responsive typography ─── */
-@media (max-width: 640px) {
-  h1 {
-    font-size: clamp(2.4rem, 11vw, 4.5rem);
-  }
-
-  h2 {
-    font-size: clamp(1.7rem, 7.5vw, 2.8rem);
-  }
-
-  body {
-    font-size: 16px;
-  }
+/* ─── Tap target floor (44px min height for interactive) ─── */
+.tap-target {
+  min-height: 44px;
+  min-width: 44px;
 }
 
-@media (max-width: 380px) {
-  h1 {
-    font-size: clamp(2rem, 10vw, 3.8rem);
-  }
+/* ─── Mobile-first safe-area support ─── */
+@supports (padding: max(0px)) {
+  .safe-top { padding-top: max(env(safe-area-inset-top), 0.5rem); }
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0.5rem); }
 }
+
+/* ─── Prevent iOS horizontal bounce ─── */
+html, body { overscroll-behavior-x: none; }
 
 /* ─── Print styles ─── */
 @media print {
-
-  .fixed,
-  .sticky {
-    display: none !important;
-  }
+  .fixed, .sticky { display: none !important; }
 }
 
 /* ─── Reduced motion support ─── */
@@ -168,4 +176,15 @@ section {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ─── Small-screen overrides (≤ 380px) ─── */
+@media (max-width: 380px) {
+  body { font-size: 0.92rem; }
+  h1 { font-size: clamp(1.9rem, 9vw, 3.2rem); }
+}
+
+/* ─── Tablet (≥ 768px) refinements ─── */
+@media (min-width: 768px) {
+  body { font-size: 1rem; }
 }
