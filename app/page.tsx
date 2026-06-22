@@ -4,6 +4,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import Celebrations from "@/components/sections/Celebrations";
 import ScheduleTimeline from "@/components/sections/ScheduleTimeline";
 import DressCode from "@/components/sections/DressCode";
+import VenueSection from "@/components/sections/VenueSection";
 import WeddingGift from "@/components/sections/WeddingGift";
 import RSVPForm from "@/components/sections/RSVPForm";
 import CountdownTimer from "@/components/sections/CountdownTimer";
@@ -24,6 +25,7 @@ export default function Home() {
       <Celebrations />
       <ScheduleTimeline />
       <DressCode />
+      <VenueSection />
       <WeddingGift />
       <RSVPForm />
       <Footer />
