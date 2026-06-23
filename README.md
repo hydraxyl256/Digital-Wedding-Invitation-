@@ -1,4 +1,4 @@
-# Digital Wedding Invitation & Management Platform 💍
+# Digital Wedding Invitation & Management Platform 
 
 A premium, production-ready digital wedding platform built with modern web technologies. This application serves as a dynamic, interactive, and elegant wedding invitation, featuring a fully functional RSVP system, event timelines, multi-language support, and bespoke animations.
 
@@ -12,7 +12,7 @@ A premium, production-ready digital wedding platform built with modern web techn
 - **Interactive Elements**: Dynamic countdown timer to the big day, integrated image galleries, and a "Wedding Gift" section.
 - **Maintenance Mode**: Config-driven maintenance toggle (`wedding-config.ts`) to easily hide the site while updates are being made.
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router, React 19)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
@@ -23,7 +23,7 @@ A premium, production-ready digital wedding platform built with modern web techn
 - **Audio**: [Howler.js](https://howlerjs.com/) (For background ambient audio)
 - **Language**: TypeScript
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 ├── app/                  # Next.js App Router pages and API routes
@@ -42,7 +42,7 @@ A premium, production-ready digital wedding platform built with modern web techn
 └── tailwind.config.ts    # Tailwind configuration
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
