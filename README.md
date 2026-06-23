@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Digital Wedding Invitation & Management Platform 💍
 
-## Getting Started
+A premium, production-ready digital wedding platform built with modern web technologies. This application serves as a dynamic, interactive, and elegant wedding invitation, featuring a fully functional RSVP system, event timelines, multi-language support, and bespoke animations.
 
-First, run the development server:
+## Key Features
+
+- **Elegant UI & Typography**: Custom-styled with Tailwind CSS v4, utilizing elegant font pairings (Playfair Display, Great Vibes, Montserrat) for a luxurious feel.
+- **Dynamic Animations**: Smooth, sophisticated micro-animations and scroll effects powered by Framer Motion.
+- **Comprehensive RSVP System**: Integrated with Supabase, handling attendance, event selection, dietary requirements, and party sizes with robust validation.
+- **Event Timeline & Details**: Interactive schedule timeline, dress code guidelines, and location maps.
+- **Multi-Language Support**: Built-in context provider (`WeddingContext`) to seamlessly switch between languages (e.g., English, Italian, German).
+- **Interactive Elements**: Dynamic countdown timer to the big day, integrated image galleries, and a "Wedding Gift" section.
+- **Maintenance Mode**: Config-driven maintenance toggle (`wedding-config.ts`) to easily hide the site while updates are being made.
+
+## 🛠 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router, React 19)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Backend/Database**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Validation**: [Zod](https://zod.dev/)
+- **Audio**: [Howler.js](https://howlerjs.com/) (For background ambient audio)
+- **Language**: TypeScript
+
+## 📁 Project Structure
+
+```text
+├── app/                  # Next.js App Router pages and API routes
+│   ├── api/rsvp/         # API endpoint for handling RSVP submissions
+│   ├── layout.tsx        # Root layout with global fonts and styles
+│   └── page.tsx          # Main landing page assembling all sections
+├── components/           # Reusable React components
+│   ├── providers/        # Context providers (e.g., WeddingContext)
+│   ├── sections/         # Page sections (Hero, RSVP, Timeline, etc.)
+│   └── ui/               # Core UI components (Buttons, Animated wrappers)
+├── lib/                  # Utility functions and configurations
+│   ├── supabase.ts       # Supabase client initialization
+│   ├── wedding-config.ts # Global configuration and feature flags
+│   └── utils.ts          # Helper functions
+├── public/               # Static assets (images, fonts, audio)
+└── tailwind.config.ts    # Tailwind configuration
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18.17 or later
+- npm, yarn, pnpm, or bun
+- A Supabase account and project
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd wedding-app
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Setup
+
+Create a `.env.local` file in the root directory and add your Supabase credentials:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 4. Database Setup (Supabase)
+
+Create a table named `rsvp_responses` in your Supabase database with the following schema:
+- `id` (uuid, primary key)
+- `guest_name` (text)
+- `email` (text)
+- `attending` (boolean)
+- `events` (text array)
+- `num_guests` (integer)
+- `children` (boolean)
+- `children_details` (jsonb)
+- `meal_preference` (text)
+- `message` (text)
+- `created_at` (timestamp)
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+##  Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Global settings such as event dates, maintenance mode, and feature flags can be toggled inside `lib/wedding-config.ts`.
 
-## Learn More
+##  Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This project is optimized for deployment on [Vercel](https://vercel.com/):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push your code to a GitHub repository.
+2. Import the project into Vercel.
+3. Add your `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to the Vercel Environment Variables.
+4. Deploy!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Deploy on Vercel
+##  License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is proprietary and confidential. All rights reserved.
