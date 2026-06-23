@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME = "#3D5A5B";
+const THEME = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -26,7 +26,7 @@ export default function WeddingGift() {
   return (
     <section
       data-section
-      className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center"
+      className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
         paddingTop: "clamp(7rem, 14vw, 14rem)",
         paddingBottom: "clamp(6rem, 10vw, 10rem)",
@@ -71,7 +71,7 @@ export default function WeddingGift() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2 }}
-              className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[clamp(1.5rem,4vw,3rem)] flex flex-col items-center text-center"
+              className="w-full bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.5rem,4vw,3rem)] flex flex-col items-center text-center"
               style={{
                 padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 5vw, 5rem)",
               }}

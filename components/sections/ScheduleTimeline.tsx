@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME_COLOR = "#3D5A5B";
+const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -64,14 +64,14 @@ function Dot() {
 
 function TimelineBlock({ items }: { items: { time: string; event: string }[] }) {
   return (
-    <div className="w-full max-w-sm relative flex flex-col gap-5 sm:gap-6 md:gap-8">
+    <div className="w-[85%] sm:w-full max-w-sm relative flex flex-col gap-5 sm:gap-6 md:gap-8 pt-4 sm:pt-6 md:pt-8 mx-auto pl-[15%] sm:pl-0">
       <div
         className="absolute left-[5px] top-2 bottom-2 w-[1px]"
         style={{ background: "rgba(61,90,91,0.2)" }}
       />
       {items.map((item, index) => (
-        <AnimatedSection key={index} direction="up" delay={index * 0.08}>
-          <div className="flex items-start gap-4 sm:gap-5 md:gap-6">
+        <AnimatedSection key={index} direction="up" delay={index * 0.08} className="w-full">
+          <div className="flex items-start gap-4 sm:gap-5 md:gap-6 text-left">
             <Dot />
             <div className="flex flex-col gap-1 min-w-0 flex-1">
               {item.time && (
@@ -112,47 +112,59 @@ export default function ScheduleTimeline() {
   return (
     <section
       data-section
-      className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center"
+      className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
-        paddingTop: "clamp(6rem, 12vw, 10rem)",
+        paddingTop: "clamp(3rem, 10vw, 10rem)",
         paddingBottom: "clamp(5rem, 8vw, 8rem)",
       }}
     >
       {/* Curtains */}
       <motion.div
-        animate={{ rotate: [-0.5, 0.5, -0.5] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-0 top-0 z-30 w-[20%] sm:w-[15%] md:w-[13%] origin-top-left pointer-events-none"
+        initial={{ x: "40vw" }}
+        whileInView={{ x: 0 }}
+        animate={{ skewX: [-2, 2, -2] }}
+        transition={{
+          x: { duration: 2, ease: [0.22, 1, 0.36, 1] },
+          skewX: { duration: 12, repeat: Infinity, ease: "easeInOut" }
+        }}
+        className="absolute left-0 top-0 z-30 w-[20%] sm:w-[15%] md:w-[13%] origin-top pointer-events-none"
       >
         <img src="/curtain-left.png" alt="" className="w-full h-auto" />
       </motion.div>
 
       <motion.div
-        animate={{ rotate: [0.5, -0.5, 0.5] }}
-        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-0 top-0 z-30 w-[20%] sm:w-[15%] md:w-[13%] origin-top-right pointer-events-none"
+        initial={{ x: "-40vw" }}
+        whileInView={{ x: 0 }}
+        animate={{ skewX: [2, -2, 2] }}
+        transition={{
+          x: { duration: 2, ease: [0.22, 1, 0.36, 1] },
+          skewX: { duration: 13, repeat: Infinity, ease: "easeInOut" }
+        }}
+        className="absolute right-0 top-0 z-30 w-[20%] sm:w-[15%] md:w-[13%] origin-top pointer-events-none"
       >
         <img src="/curtain-right.png" alt="" className="w-full h-auto" />
       </motion.div>
 
-      <motion.div
-        animate={{ y: [-6, 6, -6] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-full md:w-[80%] lg:w-[70%] pointer-events-none"
-      >
-        <img
-          src="/curtain-center.png"
-          alt=""
-          className="w-full h-auto"
-          style={{ opacity: 0.32 }}
-        />
-      </motion.div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-full md:w-[80%] lg:w-[70%] pointer-events-none">
+        <motion.div
+          animate={{ rotate: [-1.5, 1.5, -1.5], skewX: [-1, 1, -1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="w-full origin-top"
+        >
+          <img
+            src="/curtain-center.png"
+            alt=""
+            className="w-full h-auto"
+            style={{ opacity: 0.32 }}
+          />
+        </motion.div>
+      </div>
 
       {/* PART 1: WELCOME CRUISE */}
       <div
         className="relative z-20 w-full max-w-2xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col items-center"
         style={{
-          paddingTop: "clamp(8rem, 25vw, 22rem)",
+          paddingTop: "clamp(1.5rem, 6vw, 8rem)",
           paddingBottom: "clamp(3rem, 5vw, 6rem)",
         }}
       >

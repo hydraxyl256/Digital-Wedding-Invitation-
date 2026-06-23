@@ -4,6 +4,7 @@ import AnimatedSection from "@/components/ui/AnimatedSection";
 import { weddingConfig } from "@/lib/wedding-config";
 import { Calendar, Clock, MapPin, Shirt, Download, Gem, Wine } from "lucide-react";
 import { generateICS, downloadICS } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 // Premium icon badge — replaces emoji
 function IconBadge({ icon, color }: { icon: React.ReactNode; color: string }) {
@@ -23,10 +24,10 @@ function IconBadge({ icon, color }: { icon: React.ReactNode; color: string }) {
 function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5 text-amber-500 flex-shrink-0">{icon}</span>
+      <span className="mt-0.5 text-[#7A8B80] flex-shrink-0">{icon}</span>
       <div>
-        <p className="text-[10px] uppercase tracking-widest text-amber-500 mb-0.5 font-semibold">{label}</p>
-        <p className="text-amber-900 font-medium text-sm leading-snug">{value}</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#7A8B80] mb-0.5 font-semibold">{label}</p>
+        <p className="text-[#2C3E35] font-medium text-sm leading-snug">{value}</p>
       </div>
     </div>
   );
@@ -49,19 +50,66 @@ export default function EventDetails() {
   return (
     <section
       data-section
-      style={{ background: "linear-gradient(180deg, #F7E7CE 0%, #FDF6EC 100%)" }}
+      style={{ background: "linear-gradient(180deg, #F8F6F0 0%, #F8F6F0 100%)" }}
       className="relative overflow-hidden"
     >
-      <div style={{ maxWidth: 1024, margin: "0 auto", width: "100%", padding: "112px 24px" }}>
+      {/* FLORAL COLUMNS */}
+      <motion.div
+        initial={{ x: -100, opacity: 0 }}
+        whileInView={{ x: -80, opacity: 1 }}
+        animate={{ rotate: [-1.5, 1.5, -1.5] }}
+        transition={{
+          x: { duration: 2, ease: "easeOut" },
+          rotate: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+        }}
+        className="absolute left-0 top-0 bottom-0 z-0 origin-top-left hidden sm:block"
+        style={{ opacity: 0.5 }}
+      >
+        <img src="/column-left.png" alt="" className="h-full w-auto object-contain object-left pointer-events-none select-none" style={{ maxWidth: "350px" }} />
+      </motion.div>
+
+      <motion.div
+        initial={{ x: 100, opacity: 0 }}
+        whileInView={{ x: 80, opacity: 1 }}
+        animate={{ rotate: [1.5, -1.5, 1.5] }}
+        transition={{
+          x: { duration: 2, ease: "easeOut" },
+          rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
+        }}
+        className="absolute right-0 top-0 bottom-0 z-0 origin-top-right hidden sm:block"
+        style={{ opacity: 0.5 }}
+      >
+        <img src="/column-right.png" alt="" className="h-full w-auto object-contain object-right pointer-events-none select-none" style={{ maxWidth: "350px" }} />
+      </motion.div>
+
+      {/* Mobile Floral Accents */}
+      <motion.div
+        animate={{ rotate: [-2, 2, -2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 -left-16 w-40 sm:hidden pointer-events-none origin-top-left z-0"
+        style={{ opacity: 0.5 }}
+      >
+        <img src="/column-left.png" alt="" className="w-full h-auto" />
+      </motion.div>
+      <motion.div
+        animate={{ rotate: [2, -2, 2] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 -right-16 w-40 sm:hidden pointer-events-none origin-top-right z-0"
+        style={{ opacity: 0.5 }}
+      >
+        <img src="/column-right.png" alt="" className="w-full h-auto" />
+      </motion.div>
+
+      <div style={{ maxWidth: 1024, margin: "0 auto", width: "100%", padding: "112px 24px" }} className="relative z-10">
 
         {/* ── Heading ── */}
         <AnimatedSection direction="fade" className="w-full">
           <div style={{ textAlign: "center", marginBottom: 80, width: "100%" }}>
-            <p className="text-xs uppercase text-amber-600 mb-5" style={{ letterSpacing: "0.5em" }}>
+            <p className="text-xs uppercase text-[#7A8B80] mb-5" style={{ letterSpacing: "0.5em" }}>
               Save the date
             </p>
             <h2
-              className="text-amber-900"
+              className="text-[#2C3E35]"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
@@ -72,9 +120,9 @@ export default function EventDetails() {
               Event Details
             </h2>
             <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center" }}>
-              <div style={{ height: 1, width: 64, background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
-              <span style={{ color: "#C9A84C" }}>✦</span>
-              <div style={{ height: 1, width: 64, background: "linear-gradient(270deg, transparent, #C9A84C)" }} />
+              <div style={{ height: 1, width: 64, background: "linear-gradient(90deg, transparent, #2C3E35)" }} />
+              <span style={{ color: "#7A8B80" }}>✦</span>
+              <div style={{ height: 1, width: 64, background: "linear-gradient(270deg, transparent, #2C3E35)" }} />
             </div>
           </div>
         </AnimatedSection>
@@ -95,18 +143,18 @@ export default function EventDetails() {
                 width: "100%",
                 borderRadius: 24,
                 padding: "40px 36px",
-                background: "rgba(253,246,236,0.85)",
+                background: "#F1EFE9",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.6)",
-                boxShadow: "0 8px 32px rgba(201,168,76,0.1)",
+                border: "1px solid #E3DFD5",
+                boxShadow: "0 8px 32px rgba(44,62,53,0.1)",
               }}
             >
               <IconBadge
-                color="linear-gradient(135deg, #C9A84C, #e8c97a)"
+                color="linear-gradient(135deg, #7A8B80, #A1AFA6)"
                 icon={<Gem size={24} className="text-white" strokeWidth={1.5} />}
               />
               <h3
-                className="text-amber-900 mb-7"
+                className="text-[#2C3E35] mb-7"
                 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600 }}
               >
                 Ceremony
@@ -127,18 +175,18 @@ export default function EventDetails() {
                 width: "100%",
                 borderRadius: 24,
                 padding: "40px 36px",
-                background: "rgba(253,246,236,0.85)",
+                background: "#F1EFE9",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.6)",
-                boxShadow: "0 8px 32px rgba(201,168,76,0.1)",
+                border: "1px solid #E3DFD5",
+                boxShadow: "0 8px 32px rgba(44,62,53,0.1)",
               }}
             >
               <IconBadge
-                color="linear-gradient(135deg, #b8903d, #C9A84C)"
+                color="linear-gradient(135deg, #2C3E35, #4A5D54)"
                 icon={<Wine size={24} className="text-white" strokeWidth={1.5} />}
               />
               <h3
-                className="text-amber-900 mb-7"
+                className="text-[#2C3E35] mb-7"
                 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600 }}
               >
                 Reception
@@ -153,25 +201,45 @@ export default function EventDetails() {
           </AnimatedSection>
         </div>
 
-        {/* ── Add to Calendar ── */}
+        {/* ── Actions ── */}
         <AnimatedSection direction="up" delay={0.25} className="w-full">
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
+            <a
+              href={weddingConfig.ceremony.openMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 hover:scale-105 transition-all duration-300"
+              style={{
+                padding: "14px 32px",
+                borderRadius: 50,
+                background: "#2C3E35",
+                color: "#F8F6F0",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                letterSpacing: "0.05em",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <MapPin size={15} />
+              View Map
+            </a>
             <button
               onClick={handleAddToCalendar}
               className="flex items-center gap-2.5 hover:scale-105 transition-all duration-300"
               style={{
                 padding: "14px 32px",
                 borderRadius: 50,
-                background: "rgba(253,246,236,0.9)",
-                border: "2px solid #C9A84C",
-                color: "#78350f",
+                background: "#F1EFE9",
+                border: "2px solid #2C3E35",
+                color: "#2C3E35",
                 fontWeight: 600,
                 fontSize: "0.875rem",
                 letterSpacing: "0.05em",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: 10,
               }}
             >
               <Download size={15} />

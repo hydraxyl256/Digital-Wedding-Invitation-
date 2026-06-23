@@ -33,7 +33,7 @@ export default function NavigationDots() {
         >
           <span
             className="absolute right-7 text-[10px] font-semibold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none hidden md:block"
-            style={{ color: "#3D5A5B" }}
+            style={{ color: "#2C3E35" }}
           >
             {label}
           </span>
@@ -41,7 +41,7 @@ export default function NavigationDots() {
             animate={{
               width: activeSection === i ? 24 : 8,
               height: 8,
-              backgroundColor: activeSection === i ? "#C9A84C" : "rgba(201,168,76,0.45)",
+              backgroundColor: activeSection === i ? "#2C3E35" : "rgba(44,62,53,0.45)",
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="rounded-full"

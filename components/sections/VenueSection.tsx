@@ -6,8 +6,8 @@ import { weddingConfig } from "@/lib/wedding-config";
 import { useWedding } from "@/components/providers/WeddingContext";
 import { Landmark, Waves, Sparkles, Camera, MapPin, Navigation, Apple } from "lucide-react";
 
-const THEME = "#3D5A5B";
-const GOLD = "#C9A84C";
+const THEME = "#2C3E35";
+const GOLD = "#7A8B80";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; color?: string; strokeWidth?: number; className?: string }>> = {
   landmark: Landmark,
@@ -52,9 +52,8 @@ export default function VenueSection() {
   return (
     <section
       data-section
-      className="relative overflow-hidden flex flex-col items-center"
+      className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
-        background: "linear-gradient(180deg, #f0f0e4 0%, #F2D4D7 60%, #F7E7CE 100%)",
         paddingTop: "clamp(5rem, 10vw, 10rem)",
         paddingBottom: "clamp(5rem, 10vw, 10rem)",
       }}
@@ -88,12 +87,12 @@ export default function VenueSection() {
           <div className="flex items-center gap-2 sm:gap-3 w-full max-w-[220px] mt-1 sm:mt-2">
             <div
               className="h-[1px] flex-1"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(61,90,91,0.5))" }}
+              style={{ background: "linear-gradient(90deg, transparent, rgba(44,62,53,0.5))" }}
             />
-            <span style={{ color: "rgba(201,168,76,0.9)", fontSize: "0.8rem" }}>✦</span>
+            <span style={{ color: "rgba(122,139,128,0.9)", fontSize: "0.8rem" }}>✦</span>
             <div
               className="h-[1px] flex-1"
-              style={{ background: "linear-gradient(270deg, transparent, rgba(61,90,91,0.5))" }}
+              style={{ background: "linear-gradient(270deg, transparent, rgba(44,62,53,0.5))" }}
             />
           </div>
           <p
@@ -148,17 +147,15 @@ export default function VenueSection() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: i * 0.08 }}
-                  className="bg-white/55 backdrop-blur-sm border border-white/70 rounded-[clamp(1.25rem,2.5vw,1.875rem)] flex items-start gap-3 sm:gap-4"
+                  className="bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.25rem,2.5vw,1.875rem)] flex items-start gap-3 sm:gap-4"
                   style={{
-                    boxShadow: "0 8px 32px rgba(61,90,91,0.06)",
                     padding: "clamp(1.25rem, 2.5vw, 2rem)",
                   }}
                 >
                   <div
                     className="rounded-2xl flex items-center justify-center shrink-0"
                     style={{
-                      background: "linear-gradient(135deg, #C9A84C, #e8c97a)",
-                      boxShadow: "0 8px 20px rgba(201,168,76,0.3)",
+                      background: "#2C3E35",
                       width: "clamp(2.75rem, 4vw, 3.5rem)",
                       height: "clamp(2.75rem, 4vw, 3.5rem)",
                     }}
@@ -208,11 +205,10 @@ export default function VenueSection() {
         <AnimatedSection
           direction="up"
           delay={0.1}
-          className="w-full mt-12 sm:mt-16 md:mt-24"
+          className="w-full mt-32 sm:mt-40 md:mt-56 py-12 sm:py-16 md:py-20"
         >
           <div
-            className="relative w-full rounded-[clamp(1.25rem,2.5vw,1.875rem)] overflow-hidden"
-            style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.12)" }}
+            className="relative w-full rounded-[clamp(1.25rem,2.5vw,1.875rem)] overflow-hidden border border-[#E3DFD5]"
           >
             <div
               className="w-full"
@@ -240,17 +236,16 @@ export default function VenueSection() {
                 maxWidth: 440,
                 borderRadius: "clamp(0.875rem,1.5vw,1.25rem)",
                 padding: "clamp(0.875rem, 1.6vw, 1.25rem) clamp(1rem, 1.8vw, 1.25rem)",
-                background: "rgba(253,246,236,0.96)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.7)",
-                boxShadow: "0 8px 32px rgba(201,168,76,0.25)",
+                background: "#F8F6F0",
+                border: "1px solid #E3DFD5",
+                boxShadow: "0 8px 32px rgba(44,62,53,0.15)",
               }}
             >
               <div className="flex items-start gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
                 <div
                   className="rounded-full flex items-center justify-center shrink-0"
                   style={{
-                    background: "linear-gradient(135deg, #C9A84C, #e8c97a)",
+                    background: "#2C3E35",
                     width: "clamp(2rem, 3vw, 2.25rem)",
                     height: "clamp(2rem, 3vw, 2.25rem)",
                   }}
@@ -297,8 +292,8 @@ export default function VenueSection() {
                   style={{
                     padding: "clamp(8px, 1vw, 10px) clamp(12px, 1.5vw, 16px)",
                     borderRadius: 50,
-                    background: "linear-gradient(135deg, #C9A84C, #e8c97a)",
-                    color: "#1A1208",
+                    background: "#2C3E35",
+                    color: "#F8F6F0",
                     fontWeight: 700,
                     textDecoration: "none",
                     letterSpacing: "0.03em",
@@ -316,7 +311,7 @@ export default function VenueSection() {
                   style={{
                     padding: "clamp(8px, 1vw, 10px) clamp(12px, 1.5vw, 16px)",
                     borderRadius: 50,
-                    background: "rgba(253,246,236,0.95)",
+                    background: "#F8F6F0",
                     border: `1.5px solid ${GOLD}`,
                     color: "#78350f",
                     fontWeight: 700,
@@ -337,14 +332,13 @@ export default function VenueSection() {
         <AnimatedSection
           direction="fade"
           delay={0.1}
-          className="w-full max-w-2xl mt-10 sm:mt-12 md:mt-16"
+          className="w-full max-w-2xl mt-32 sm:mt-40 md:mt-48"
         >
           <div
             className="text-center rounded-[clamp(1.25rem,2.5vw,1.875rem)]"
             style={{
-              background: "rgba(255,255,255,0.45)",
-              border: "1px solid rgba(255,255,255,0.7)",
-              backdropFilter: "blur(12px)",
+              background: "#F1EFE9",
+              border: "1px solid #E3DFD5",
               padding: "clamp(2rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem)",
             }}
           >

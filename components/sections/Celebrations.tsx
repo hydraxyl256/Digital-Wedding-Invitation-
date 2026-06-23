@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME_COLOR = "#3D5A5B";
+const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -81,7 +81,7 @@ function CelebrationCard({
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2 }}
-        className="w-full bg-white/55 backdrop-blur-sm border border-white/80 rounded-[clamp(1.5rem,4vw,3.25rem)] shadow-[0_12px_40px_rgba(61,90,91,0.06)]"
+        className="w-full bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.5rem,4vw,3.25rem)]"
         style={{
           padding: "clamp(1.75rem, 4vw, 4rem) clamp(1.25rem, 4vw, 3rem)",
         }}
@@ -133,7 +133,7 @@ function CelebrationCard({
           </p>
           <div
             className="w-1.5 h-1.5 rounded-full"
-            style={{ background: "#3D5A5B", opacity: 0.2 }}
+            style={{ background: "#2C3E35", opacity: 0.2 }}
           />
           <div className="flex flex-col items-center gap-2 sm:gap-3">
             <p
@@ -163,7 +163,7 @@ function CelebrationCard({
             className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-bold border-b pb-1 hover:opacity-60 transition-all active:scale-95 mt-1 sm:mt-2 min-h-[44px] flex items-center"
             style={{
               color: THEME_COLOR,
-              borderColor: "rgba(61,90,91,0.4)",
+              borderColor: "rgba(44,62,53,0.4)",
               fontSize: "clamp(8px, 0.9vw, 11px)",
             }}
           >
@@ -182,7 +182,7 @@ export default function Celebrations() {
   return (
     <section
       data-section
-      className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center"
+      className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
         paddingTop: "clamp(4rem, 8vw, 6rem)",
         paddingBottom: "clamp(6rem, 10vw, 12rem)",

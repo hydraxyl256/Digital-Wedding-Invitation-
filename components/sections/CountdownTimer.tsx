@@ -7,7 +7,7 @@ import { weddingConfig } from "@/lib/wedding-config";
 import { getCountdown } from "@/lib/utils";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME_COLOR = "#3D5A5B";
+const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -34,7 +34,7 @@ function Digit({ value, label }: { value: number; label: string }) {
         suppressHydrationWarning
         className="font-serif italic font-light"
         style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Cormorant Garamond', serif",
           color: THEME_COLOR,
           opacity: 0.95,
           fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
@@ -74,19 +74,19 @@ export default function CountdownTimer() {
   return (
     <section
       data-section
-      className="relative min-h-[70vh] sm:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-[#f0f0e4]"
+      className="relative min-h-[50vh] sm:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-transparent"
       style={{ paddingBlock: "clamp(4rem, 8vw, 7rem)" }}
     >
       {/* LEFT FLORAL COLUMN */}
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         whileInView={{ x: -80, opacity: 1 }}
-        animate={{ y: [0, -15, 0] }}
+        animate={{ rotate: [-1.5, 1.5, -1.5] }}
         transition={{
           x: { duration: 2, ease: "easeOut" },
-          y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+          rotate: { duration: 10, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute left-0 top-0 bottom-0 z-0 hidden xl:block"
+        className="absolute left-0 top-0 bottom-0 z-0 hidden xl:block origin-top-left"
       >
         <img
           src="/column-left.png"
@@ -100,12 +100,12 @@ export default function CountdownTimer() {
       <motion.div
         initial={{ x: 100, opacity: 0 }}
         whileInView={{ x: 80, opacity: 1 }}
-        animate={{ y: [0, 15, 0] }}
+        animate={{ rotate: [1.5, -1.5, 1.5] }}
         transition={{
           x: { duration: 2, ease: "easeOut" },
-          y: { duration: 7, repeat: Infinity, ease: "easeInOut" },
+          rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="absolute right-0 top-0 bottom-0 z-0 hidden xl:block"
+        className="absolute right-0 top-0 bottom-0 z-0 hidden xl:block origin-top-right"
       >
         <img
           src="/column-right.png"
@@ -116,18 +116,22 @@ export default function CountdownTimer() {
       </motion.div>
 
       {/* Mobile Floral Accents */}
-      <div
-        className="absolute top-0 -left-20 w-48 md:hidden pointer-events-none"
-        style={{ opacity: 0.12 }}
+      <motion.div
+        animate={{ rotate: [-2, 2, -2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 -left-20 w-48 md:hidden pointer-events-none origin-top-left z-0"
+        style={{ opacity: 0.5 }}
       >
         <img src="/column-left.png" alt="" className="w-full h-auto" />
-      </div>
-      <div
-        className="absolute top-0 -right-20 w-48 md:hidden pointer-events-none"
-        style={{ opacity: 0.12 }}
+      </motion.div>
+      <motion.div
+        animate={{ rotate: [2, -2, 2] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-0 -right-20 w-48 md:hidden pointer-events-none origin-top-right z-0"
+        style={{ opacity: 0.5 }}
       >
         <img src="/column-right.png" alt="" className="w-full h-auto" />
-      </div>
+      </motion.div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center">
         <AnimatedSection
@@ -176,17 +180,17 @@ export default function CountdownTimer() {
             ) : (
               <AnimatedSection direction="up" delay={0.2}>
                 <div
-                  className="flex items-center justify-center gap-3 sm:gap-6 md:gap-10 lg:gap-14"
+                  className="flex items-center justify-center gap-4 sm:gap-6 md:gap-10 lg:gap-14 w-full px-4 sm:px-0"
                   style={{ flexWrap: "nowrap" }}
                 >
                   <Digit value={time.days} label={t.days} />
                   <div
-                    className="w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block"
+                    className="w-[1px] bg-[#2C3E35]/15 self-center hidden sm:block"
                     style={{ height: "clamp(2.5rem, 6vw, 3.5rem)" }}
                   />
                   <Digit value={time.hours} label={t.hours} />
                   <div
-                    className="w-[1px] bg-[#3D5A5B]/15 self-center hidden sm:block"
+                    className="w-[1px] bg-[#2C3E35]/15 self-center hidden sm:block"
                     style={{ height: "clamp(2.5rem, 6vw, 3.5rem)" }}
                   />
                   <Digit value={time.minutes} label={t.minutes} />

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME_COLOR = "#3D5A5B";
+const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -18,7 +18,7 @@ const TEXTS = {
     card2Attire: "Black Tie",
     card2Hint: "Floor-length gowns and tuxedos. Rich jewel tones welcome. Please avoid white, ivory, and cream.",
     paletteLabel: "Suggested palette",
-    palette: ["#3D5A5B", "#C9A84C", "#F2D4D7", "#7B6B3A", "#1A1208"],
+    palette: ["#2C3E35", "#7A8B80", "#F8F6F0", "#E3DFD5", "#1A1510"],
   },
   IT: {
     title: "Codice di Abbigliamento",
@@ -31,14 +31,14 @@ const TEXTS = {
     card2Attire: "Black Tie",
     card2Hint: "Abiti lunghi e smoking. Toni gioiello benvenuti. Si prega di evitare bianco, avorio e crema.",
     paletteLabel: "Palette suggerita",
-    palette: ["#3D5A5B", "#C9A84C", "#F2D4D7", "#7B6B3A", "#1A1208"],
+    palette: ["#2C3E35", "#7A8B80", "#F8F6F0", "#E3DFD5", "#1A1510"],
   },
 };
 
 function Swatch({ color }: { color: string }) {
   return (
     <div
-      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full border border-white/70 shadow-sm"
+      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full border border-[#E3DFD5]"
       style={{ background: color }}
       aria-hidden
     />
@@ -52,7 +52,7 @@ export default function DressCode() {
   return (
     <section
       data-section
-      className="relative bg-[#f0f0e4] overflow-hidden flex flex-col items-center"
+      className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
         paddingTop: "clamp(5rem, 10vw, 10rem)",
         paddingBottom: "clamp(6rem, 12vw, 12rem)",
@@ -82,7 +82,7 @@ export default function DressCode() {
             initial={{ opacity: 0, scale: 0.85 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2 }}
-            className="absolute pointer-events-none z-20 hidden md:block"
+            className="absolute pointer-events-none z-20"
             style={{
               width: "clamp(7rem, 12vw, 10rem)",
               top: "-3.5rem",
@@ -94,7 +94,7 @@ export default function DressCode() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0 }}
-            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[clamp(1.5rem,4vw,2.75rem)] shadow-[0_8px_32px_rgba(61,90,91,0.06)]"
+            className="w-full bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.5rem,4vw,2.75rem)]"
             style={{
               padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
             }}
@@ -167,7 +167,7 @@ export default function DressCode() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2 }}
-            className="absolute pointer-events-none z-20 hidden md:block"
+            className="absolute pointer-events-none z-20"
             style={{
               width: "clamp(7rem, 10vw, 10rem)",
               top: "-1.9rem",
@@ -179,7 +179,7 @@ export default function DressCode() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0 }}
-            className="w-full bg-white/45 backdrop-blur-sm border border-white/70 rounded-[clamp(1.5rem,4vw,2.75rem)] shadow-[0_8px_32px_rgba(61,90,91,0.06)]"
+            className="w-full bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.5rem,4vw,2.75rem)]"
             style={{
               padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
             }}

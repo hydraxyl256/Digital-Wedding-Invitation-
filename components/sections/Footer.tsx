@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME = "#3D5A5B";
+const THEME = "#2C3E35";
 
 const TEXTS = {
   EN: {
@@ -32,7 +32,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative bg-[#f0f0e4] flex flex-col items-center"
+      className="relative bg-transparent flex flex-col items-center"
       style={{
         paddingTop: "clamp(4rem, 6vw, 6rem)",
         paddingBottom: "clamp(3rem, 5vw, 5rem)",

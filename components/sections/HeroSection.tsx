@@ -10,7 +10,7 @@ import { useWedding } from "@/components/providers/WeddingContext";
 const TEXTS = {
   EN: {
     preHeading: "We are getting married",
-    scroll: "Scroll Down",
+    scroll: "KEEP SCROLLING AND RSVP",
   },
   IT: {
     preHeading: "Ci sposiamo",
@@ -219,14 +219,13 @@ export default function HeroSection() {
         </span>
         <motion.div
           animate={{ y: [0, 14, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="rounded-full bg-white/15 backdrop-blur-sm p-1.5 sm:p-2 border border-white/40"
-          style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.25)" }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="p-1 sm:p-2"
         >
           <ChevronDown
-            className="text-white"
+            className="text-white opacity-80"
             size={40}
-            strokeWidth={3}
+            strokeWidth={1}
             style={{ width: "clamp(36px, 6vw, 44px)", height: "auto" }}
           />
         </motion.div>

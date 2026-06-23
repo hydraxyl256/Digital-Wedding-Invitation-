@@ -7,9 +7,9 @@ import { weddingConfig } from "@/lib/wedding-config";
 import { Send, Check, AlertCircle, User, Users, MessageSquare, ChevronDown, Loader2 } from "lucide-react";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME = "#3D5A5B";
-const BG = "rgba(255,255,255,0.55)";
-const BORDER = "rgba(61,90,91,0.2)";
+const THEME = "#2C3E35";
+const BG = "rgba(241, 239, 233, 0.9)";
+const BORDER = "#E3DFD5";
 
 interface FormState {
   guest_name: string;
@@ -124,7 +124,7 @@ export default function RSVPForm() {
   return (
     <section
       data-section
-      className="relative bg-[#f0f0e4] flex flex-col items-center"
+      className="relative bg-transparent flex flex-col items-center"
       style={{
         paddingTop: "clamp(4rem, 6vw, 6rem)",
         paddingBottom: "clamp(5rem, 8vw, 8rem)",
