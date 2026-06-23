@@ -51,51 +51,37 @@ const TEXTS = {
   },
 };
 
-function Dot() {
-  return (
-    <div
-      className="w-3 h-3 rounded-full border z-10 shrink-0 mt-1"
-      style={{ background: "#f0f0e4", borderColor: "rgba(61,90,91,0.4)" }}
-    />
-  );
-}
+
 
 function TimelineBlock({ items }: { items: { time: string; event: string }[] }) {
   return (
-    <div className="w-[85%] sm:w-full max-w-sm relative flex flex-col gap-5 sm:gap-6 md:gap-8 pt-4 sm:pt-6 md:pt-8 mx-auto pl-[15%] sm:pl-0">
-      <div
-        className="absolute left-[5px] top-2 bottom-2 w-[1px]"
-        style={{ background: "rgba(61,90,91,0.2)" }}
-      />
+    <div className="w-full max-w-sm relative flex flex-col gap-6 sm:gap-8 pt-4 sm:pt-6 md:pt-8 mx-auto">
       {items.map((item, index) => (
         <AnimatedSection key={index} direction="up" delay={index * 0.08} className="w-full">
-          <div className="flex items-start gap-4 sm:gap-5 md:gap-6 text-left">
-            <Dot />
-            <div className="flex flex-col gap-1 min-w-0 flex-1">
-              {item.time && (
-                <span
-                  className="uppercase tracking-[0.35em] sm:tracking-[0.4em] font-bold"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    color: THEME_COLOR,
-                    opacity: 0.6,
-                    fontSize: "clamp(7px, 0.85vw, 10px)",
-                  }}
-                >
-                  {item.time}
-                </span>
-              )}
-              <p
-                className="font-serif"
+          <div className="flex flex-col items-center text-center gap-1.5 w-full">
+            {item.time && (
+              <span
+                className="uppercase tracking-[0.35em] sm:tracking-[0.4em] font-bold"
                 style={{
+                  fontFamily: "'Montserrat', sans-serif",
                   color: THEME_COLOR,
-                  opacity: 0.9,
-                  fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
+                  opacity: 0.6,
+                  fontSize: "clamp(7px, 0.85vw, 10px)",
                 }}
               >
-                {item.event}
-              </p>
-            </div>
+                {item.time}
+              </span>
+            )}
+            <p
+              className="font-serif"
+              style={{
+                color: THEME_COLOR,
+                opacity: 0.9,
+                fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
+              }}
+            >
+              {item.event}
+            </p>
           </div>
         </AnimatedSection>
       ))}
