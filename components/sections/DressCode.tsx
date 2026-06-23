@@ -9,7 +9,7 @@ const THEME_COLOR = "#2C3E35";
 const TEXTS = {
   EN: {
     title: "Dress Code",
-    card1Title: "Welcome Cruise",
+    card1Title: "",
     card1Date: "16 August",
     card1Attire: "Garden Cocktail Attire",
     card1Hint: "Light, breezy, and elegant — think flowing fabrics, neutral tones, and comfortable shoes for the pier.",
@@ -22,7 +22,7 @@ const TEXTS = {
   },
   IT: {
     title: "Codice di Abbigliamento",
-    card1Title: "Crociera di Benvenuto",
+    card1Title: "",
     card1Date: "16 Agosto",
     card1Attire: "Cocktail da Giardino",
     card1Hint: "Leggero, arioso ed elegante — tessuti fluidi, tonalità neutre e scarpe comode per il molo.",

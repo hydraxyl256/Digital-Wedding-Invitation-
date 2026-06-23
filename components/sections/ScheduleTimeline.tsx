@@ -8,21 +8,21 @@ const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
-    title: "Wedding Weekend",
-    itinerary: "Itinerary",
-    dates: "16 August 2026",
-    welcomeCruise: "Welcome Cruise on Lake Como",
-    cruiseDate: "16 August 2026",
-    cruiseIntro: "Please join us for cocktails and hors d'oeuvres as we sail the lake at golden hour",
+    title: "",
+    itinerary: "",
+    dates: "",
+    welcomeCruise: "",
+    cruiseDate: "",
+    cruiseIntro: "",
     wedding: "Wedding",
-    weddingSub: "16 August 2026 · Palazzo Gallio",
+    weddingSub: "",
     cruiseItems: [
-      { time: "3:00 PM", event: "Boarding from the Private Pier" },
-      { time: "3:30 – 5:00 PM", event: "Sunset Cocktails & Hors d'Œuvres" },
-      { time: "5:30 PM", event: "Return to the Private Pier" },
+      // { time: "", event: "Boarding from the Private Pier" },
+      // { time: "", event: "Sunset Cocktails & Hors d'Œuvres" },
+      // { time: "", event: "Return to the Private Pier" },
     ],
     weddingItems: [
-      { time: "3:00 PM", event: "Arrival & Welcome" },
+      { time: "", event: "Arrival & Welcome" },
       { time: "", event: "Ceremony" },
       { time: "", event: "Banquet" },
       { time: "", event: "Celebration" },
@@ -30,18 +30,16 @@ const TEXTS = {
     ],
   },
   IT: {
-    title: "Weekend del Matrimonio",
-    itinerary: "Programma",
-    dates: "16 Agosto 2026",
-    welcomeCruise: "Crociera di Benvenuto sul Lago di Como",
-    cruiseDate: "16 Agosto 2026",
-    cruiseIntro: "Unitevi a noi per cocktail e stuzzichini mentre navighiamo sul lago al tramonto",
+    title: "",
+    itinerary: "",
+    dates: "",
+    welcomeCruise: "",
+    cruiseDate: "",
+    cruiseIntro: "",
     wedding: "Matrimonio",
-    weddingSub: "16 Agosto 2026 · Palazzo Gallio",
+    weddingSub: "",
     cruiseItems: [
-      { time: "15:00", event: "Imbarco dal Molo Privato" },
-      { time: "15:30 – 17:00", event: "Cocktail al Tramonto & Stuzzichini" },
-      { time: "17:30", event: "Ritorno al Molo Privato" },
+
     ],
     weddingItems: [
       { time: "15:00", event: "Arrivo & Benvenuto" },
@@ -114,7 +112,7 @@ export default function ScheduleTimeline() {
       data-section
       className="relative bg-transparent overflow-hidden flex flex-col items-center"
       style={{
-        paddingTop: "clamp(3rem, 10vw, 10rem)",
+        paddingTop: "clamp(5rem, 10vw, 10rem)",
         paddingBottom: "clamp(5rem, 8vw, 8rem)",
       }}
     >
@@ -160,103 +158,17 @@ export default function ScheduleTimeline() {
         </motion.div>
       </div>
 
-      {/* PART 1: WELCOME CRUISE */}
-      <div
-        className="relative z-20 w-full max-w-2xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col items-center"
-        style={{
-          paddingTop: "clamp(1.5rem, 6vw, 8rem)",
-          paddingBottom: "clamp(3rem, 5vw, 6rem)",
-        }}
-      >
-        <AnimatedSection
-          direction="fade"
-          className="text-center mb-8 sm:mb-12 md:mb-16 flex flex-col items-center gap-2 sm:gap-3"
-        >
-          <h2
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: THEME_COLOR,
-              opacity: 0.9,
-              fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
-              lineHeight: 1.1,
-            }}
-          >
-            {t.title}
-          </h2>
-          <p
-            className="uppercase tracking-[0.5em] sm:tracking-[0.7em] font-bold"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              color: THEME_COLOR,
-              opacity: 0.55,
-              fontSize: "clamp(8px, 0.85vw, 10px)",
-            }}
-          >
-            {t.itinerary}
-          </p>
-          <p
-            className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-medium"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              color: THEME_COLOR,
-              opacity: 0.65,
-              fontSize: "clamp(9px, 0.95vw, 11px)",
-            }}
-          >
-            {t.dates}
-          </p>
-        </AnimatedSection>
 
-        <AnimatedSection
-          direction="fade"
-          className="text-center mb-8 sm:mb-10 md:mb-12 flex flex-col items-center gap-2 sm:gap-3"
-        >
-          <h3
-            className="leading-tight"
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: THEME_COLOR,
-              fontSize: "clamp(1.8rem, 4.5vw, 3.5rem)",
-            }}
-          >
-            {t.welcomeCruise}
-          </h3>
-          <p
-            className="font-serif italic"
-            style={{
-              color: THEME_COLOR,
-              opacity: 0.7,
-              fontSize: "clamp(9px, 0.95vw, 11px)",
-            }}
-          >
-            {t.cruiseDate}
-          </p>
-          <p
-            className="max-w-xs text-center leading-relaxed mt-1"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              color: THEME_COLOR,
-              opacity: 0.7,
-              fontSize: "clamp(9px, 1vw, 12px)",
-            }}
-          >
-            {t.cruiseIntro}
-          </p>
-        </AnimatedSection>
-
-        <TimelineBlock items={t.cruiseItems} />
-      </div>
 
       {/* PART 2: THE WEDDING */}
       <div
         className="relative z-20 w-full max-w-2xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col items-center"
         style={{
-          paddingTop: "clamp(2.5rem, 4vw, 5rem)",
+          paddingTop: "clamp(1.5rem, 3vw, 3rem)",
           paddingBottom: "clamp(3.5rem, 6vw, 6rem)",
         }}
       >
         <motion.img
-          src="/candles.png"
           alt=""
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

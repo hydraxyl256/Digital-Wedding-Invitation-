@@ -8,19 +8,19 @@ const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
-    title: "The Celebrations",
-    welcomeCruise: "Welcome Cruise",
+    title: "Venue",
+    // welcomeCruise: "Welcome Cruise",
     theWedding: "The Wedding",
     viewMap: "View on Map",
-    welcomeDesc: "Boarding at the private Gravedona pier",
+    welcomeDesc: "",
     weddingDesc: "Ceremony & reception in the Sala d'Onore",
   },
   IT: {
     title: "I Festeggiamenti",
-    welcomeCruise: "Crociera di Benvenuto",
+    // welcomeCruise: "Crociera di Benvenuto",
     theWedding: "Il Matrimonio",
     viewMap: "Visualizza sulla mappa",
-    welcomeDesc: "Imbarco dal molo privato di Gravedona",
+    welcomeDesc: "",
     weddingDesc: "Cerimonia e ricevimento nella Sala d'Onore",
   },
 };
@@ -207,11 +207,11 @@ export default function Celebrations() {
           <CelebrationCard
             image="/yacht.png"
             floatStyle="yacht"
-            subtitle={t.welcomeCruise}
+            subtitle=""
             location="Palazzo Gallio"
             address="Via Regina Levante 2, 22015 Gravedona CO, Italy"
             date={language === "IT" ? "Domenica, 16 Agosto 2026" : "Sunday, August 16, 2026"}
-            time="3:00 PM"
+            time=""
             viewMapLabel={t.viewMap}
             note={t.welcomeDesc}
           />

@@ -7,22 +7,18 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { useWedding } from "@/components/providers/WeddingContext";
 
-const THEME = "#2C3E35";
+const THEME = "#3D5A5B";
 
 const TEXTS = {
   EN: {
     quote: '"Two souls, one heart, one forever."',
     date: "Sunday, August 16, 2026",
-    thankYou:
-      "We are so grateful to have you with us on this journey. Your presence means the world to us — please share this invitation with family and friends.",
-    madeWith: "",
+
   },
   IT: {
     quote: '"Due anime, un cuore, un\'eternità."',
     date: "Domenica, 16 Agosto 2026",
-    thankYou:
-      "Siamo così grati di avervi con noi in questo viaggio. La vostra presenza significa il mondo per noi — condividete questo invito con familiari e amici.",
-    madeWith: "Fatto con ♡",
+
   },
 };
 
@@ -32,7 +28,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative bg-transparent flex flex-col items-center"
+      className="relative bg-[#f0f0e4] flex flex-col items-center"
       style={{
         paddingTop: "clamp(4rem, 6vw, 6rem)",
         paddingBottom: "clamp(3rem, 5vw, 5rem)",
@@ -115,7 +111,7 @@ export default function Footer() {
                 fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
               }}
             >
-              {t.thankYou}
+              {/* {t.thankYou} */}
             </p>
 
             {/* <ShareButton /> */}
@@ -134,7 +130,7 @@ export default function Footer() {
                 fontSize: "clamp(8px, 0.8vw, 10px)",
               }}
             >
-              {weddingConfig.hashtag} · {t.madeWith}
+              {weddingConfig.hashtag}
             </p>
           </div>
         </AnimatedSection>
