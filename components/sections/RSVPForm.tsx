@@ -53,7 +53,7 @@ export default function RSVPForm() {
 
   const txt = {
     title: "Rsvp",
-    deadline: "THE FAVOUR OF A REPLY IS KINDLY REQUESTED BY THE FIFTEENTH OF JUNE, 2026",
+    // deadline: "THE FAVOUR OF A REPLY IS KINDLY REQUESTED BY THE FIFTEENTH OF JUNE, 2026",
     fullName: "Full name",
     email: "Email address",
     attendLabel: "Will you be joining us? *",
@@ -139,9 +139,9 @@ export default function RSVPForm() {
       }}
     >
       <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 relative flex flex-col items-center">
-        
+
         {/* Header */}
-        <AnimatedSection direction="fade" className="text-center mb-12 sm:mb-16 flex flex-col items-center w-full">
+        <AnimatedSection direction="fade" className="text-center mb-20 sm:mb-28 flex flex-col items-center w-full">
           <h2
             style={{
               fontFamily: "'Great Vibes', cursive",
@@ -162,12 +162,17 @@ export default function RSVPForm() {
               fontWeight: 500,
             }}
           >
-            {txt.deadline}
+            {/* {txt.deadline} */}
           </p>
         </AnimatedSection>
 
         {/* Form Container */}
-        <div className="w-full max-w-2xl mx-auto relative z-10">
+        <div 
+          className="w-full max-w-2xl mx-auto relative z-10 bg-[#F1EFE9] border border-[#E3DFD5] rounded-[clamp(1.5rem,4vw,3rem)]"
+          style={{
+            padding: "clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem)",
+          }}
+        >
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <motion.div
@@ -213,11 +218,11 @@ export default function RSVPForm() {
                 onSubmit={handleSubmit}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full flex flex-col gap-10 sm:gap-12 relative z-20"
+                className="w-full flex flex-col text-left gap-10 sm:gap-12 relative z-20"
               >
                 {/* Attendance */}
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif">{txt.attendLabel}</h3>
+                <div className="flex flex-col gap-5 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif">{txt.attendLabel}</h3>
                   <label className="flex items-center gap-4 cursor-pointer group w-fit">
                     <input
                       type="radio"
@@ -243,8 +248,8 @@ export default function RSVPForm() {
                 </div>
 
                 {/* Events */}
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif">{txt.eventsLabel}</h3>
+                <div className="flex flex-col gap-5 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif">{txt.eventsLabel}</h3>
                   <label className="flex items-center gap-4 cursor-pointer group w-fit">
                     <input
                       type="checkbox"
@@ -270,8 +275,8 @@ export default function RSVPForm() {
                 </div>
 
                 {/* Guests */}
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif flex items-center gap-3">
+                <div className="flex flex-col gap-5 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif flex items-center gap-3 w-full">
                     <Users size={16} className="opacity-60" /> {txt.guestsLabel}
                   </h3>
                   <div className="flex items-center gap-4">
@@ -294,9 +299,9 @@ export default function RSVPForm() {
                 </div>
 
                 {/* Principal Guest */}
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif">{txt.principalLabel}</h3>
-                  <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif">{txt.principalLabel}</h3>
+                  <div className="flex flex-col gap-4 w-full">
                     <input
                       type="text"
                       placeholder={txt.fullName}
@@ -315,13 +320,13 @@ export default function RSVPForm() {
                 </div>
 
                 {/* Children */}
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif">{txt.childrenLabel}</h3>
+                <div className="flex flex-col gap-5 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif">{txt.childrenLabel}</h3>
                   <label className="flex items-center gap-4 cursor-pointer group w-fit">
                     <input
                       type="radio"
                       checked={form.children === true}
-                      onChange={() => setForm((f) => ({ ...f, children: true, numChildren: Math.max(1, f.numChildren || 0), childrenDetails: (f.childrenDetails || []).length === 0 ? [{name: '', diet: ''}] : f.childrenDetails }))}
+                      onChange={() => setForm((f) => ({ ...f, children: true, numChildren: Math.max(1, f.numChildren || 0), childrenDetails: (f.childrenDetails || []).length === 0 ? [{ name: '', diet: '' }] : f.childrenDetails }))}
                       className="w-4 h-4 accent-[#3D5046] cursor-pointer bg-transparent"
                     />
                     <span className="text-[#2C3E35] font-serif text-xs sm:text-sm opacity-85 group-hover:opacity-100 transition-opacity">
@@ -347,9 +352,9 @@ export default function RSVPForm() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="flex flex-col gap-8 overflow-hidden"
+                      className="flex flex-col gap-8 overflow-hidden w-full"
                     >
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-3 w-full">
                         <span className="text-sm text-[#2C3E35] font-serif opacity-70">Number of children</span>
                         <div className="flex items-center gap-4">
                           <button
@@ -367,7 +372,7 @@ export default function RSVPForm() {
                             type="button"
                             onClick={() => {
                               const num = (form.numChildren || 0) + 1;
-                              setForm((f) => ({ ...f, numChildren: num, childrenDetails: [...(f.childrenDetails || []), {name: '', diet: ''}] }));
+                              setForm((f) => ({ ...f, numChildren: num, childrenDetails: [...(f.childrenDetails || []), { name: '', diet: '' }] }));
                             }}
                             className="w-10 h-10 border border-[#E3DFD5] rounded-xl flex items-center justify-center text-[#2C3E35] hover:bg-[#2C3E35] hover:text-[#F8F6F0] transition-colors"
                           >
@@ -376,9 +381,9 @@ export default function RSVPForm() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-6 w-full">
                         {(form.childrenDetails || []).map((child, idx) => (
-                          <div key={idx} className="flex flex-col gap-3">
+                          <div key={idx} className="flex flex-col gap-3 w-full">
                             <h4 className="text-sm font-serif text-[#2C3E35] font-semibold">Child {idx + 1}</h4>
                             <input
                               type="text"
@@ -410,14 +415,16 @@ export default function RSVPForm() {
                 </AnimatePresence>
 
                 {/* Message */}
-                <div className="flex flex-col gap-5 relative z-30">
-                  <h3 className="text-base sm:text-lg text-[#2C3E35] font-serif">{txt.msgLabel}</h3>
-                  <textarea
-                    placeholder={txt.msgPh}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    style={{ ...inputBase, minHeight: 140, resize: "none" }}
-                  />
+                <div className="flex flex-col gap-5 relative z-30 w-full">
+                  <h3 className="text-[11px] sm:text-xs text-[#2C3E35] font-serif">{txt.msgLabel}</h3>
+                  <div className="w-full">
+                    <textarea
+                      placeholder={txt.msgPh}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      style={{ ...inputBase, minHeight: 140, resize: "none" }}
+                    />
+                  </div>
                 </div>
 
                 {errorMsg && (
@@ -475,7 +482,7 @@ export default function RSVPForm() {
             animate={{ rotate: [-1.5, 1.5, -1.5] }}
             transition={{ rotate: { duration: 10, repeat: Infinity, ease: "easeInOut" } }}
             className="absolute z-20 pointer-events-none origin-bottom-left"
-            style={{ 
+            style={{
               width: "clamp(100px, 12vw, 150px)",
               left: "clamp(-40px, -11vw, -130px)",
               bottom: "clamp(-80px, -15vw, -160px)"
@@ -490,7 +497,7 @@ export default function RSVPForm() {
             animate={{ rotate: [1.5, -1.5, 1.5] }}
             transition={{ rotate: { duration: 11, repeat: Infinity, ease: "easeInOut" } }}
             className="absolute z-20 pointer-events-none origin-bottom-right"
-            style={{ 
+            style={{
               width: "clamp(100px, 12vw, 150px)",
               right: "clamp(-40px, -11vw, -130px)",
               bottom: "clamp(-80px, -15vw, -160px)"

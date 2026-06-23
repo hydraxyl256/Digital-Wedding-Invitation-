@@ -15,7 +15,7 @@ const TEXTS = {
     date: "Sunday, August 16, 2026",
     thankYou:
       "We are so grateful to have you with us on this journey. Your presence means the world to us — please share this invitation with family and friends.",
-    madeWith: "Made with ♡",
+    madeWith: "",
   },
   IT: {
     quote: '"Due anime, un cuore, un\'eternità."',
@@ -118,7 +118,7 @@ export default function Footer() {
               {t.thankYou}
             </p>
 
-            <ShareButton />
+            {/* <ShareButton /> */}
 
             <div
               className="h-[1px] w-40"
