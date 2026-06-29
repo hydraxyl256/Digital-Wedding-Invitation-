@@ -30,6 +30,8 @@ export default function HeroSection() {
 
   const t = TEXTS[language as keyof typeof TEXTS] ?? TEXTS.EN;
 
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   useEffect(() => {
     setMounted(true);
 
@@ -68,6 +70,22 @@ export default function HeroSection() {
       }
     }
   }, [controlsLeft, controlsRight, controlsContent, controlsArrow, invitationOpen]);
+
+  // Respect users who enable reduced motion (spec §8 Accessibility).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const handleScrollDown = () => {
+    if (typeof document === "undefined") return;
+    const sections = document.querySelectorAll("[data-section]");
+    sections[1]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (!mounted) return null;
 
@@ -202,35 +220,55 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* ── SCROLL ARROW (Appears after sequence) — bolder & larger ── */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
+      {/* ── SCROLL INDICATOR (Appears after sequence) — compact glass disc ── */}
+      <motion.button
+        type="button"
+        onClick={handleScrollDown}
+        initial={{ opacity: 0, y: -12 }}
         animate={controlsArrow}
-        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 px-4"
+        whileHover={prefersReducedMotion ? undefined : { scale: 1.10 }}
+        whileTap={{ scale: 0.94 }}
+        aria-label={t.scroll}
+        className="group absolute bottom-7 sm:bottom-9 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center rounded-full cursor-pointer border border-white/35 bg-white/15 backdrop-blur-md transition-[box-shadow,background-color,border-color] duration-300 hover:bg-white/25 hover:border-white/55"
+        style={{
+          // 44px target — just enough for a touch tap on mobile, scaled slightly on desktop
+          width: 44,
+          height: 44,
+          padding: 0,
+          boxShadow:
+            "0 6px 22px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.boxShadow =
+            "0 6px 22px rgba(0,0,0,0.28), 0 0 18px rgba(255,255,255,0.35), inset 0 1px 0 rgba(255,255,255,0.22)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.boxShadow =
+            "0 6px 22px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)";
+        }}
       >
-        <span
-          className="text-white uppercase tracking-[0.4em] sm:tracking-[0.5em] font-semibold"
-          style={{
-            fontSize: "clamp(9px, 1.2vw, 12px)",
-            textShadow: "0 2px 10px rgba(0,0,0,0.55)",
-          }}
-        >
-          {t.scroll}
-        </span>
         <motion.div
-          animate={{ y: [0, 14, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="rounded-full bg-white/15 backdrop-blur-sm p-1.5 sm:p-2 border border-white/40"
-          style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.25)" }}
+          animate={prefersReducedMotion ? { y: 0 } : { y: [0, 4, 0] }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { repeat: Infinity, duration: 1.8, ease: "easeInOut" }
+          }
+          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         >
           <ChevronDown
-            className="text-white"
-            size={40}
-            strokeWidth={3}
-            style={{ width: "clamp(36px, 6vw, 44px)", height: "auto" }}
+            className="text-white transition-[filter,transform] duration-300 group-hover:brightness-110"
+            size={20}
+            strokeWidth={2.25}
+            style={{
+              filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.45))",
+            }}
           />
         </motion.div>
-      </motion.div>
+      </motion.button>
+
+      {/* Invisible readout for screen readers — same label, zero visual weight */}
+      <span className="sr-only">{t.scroll}</span>
     </section>
   );
 }
