@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { MousePointer2 } from "lucide-react";
 import { useWedding } from "@/components/providers/WeddingContext";
 import { useState, useRef, useEffect } from "react";
 
@@ -110,98 +110,116 @@ export default function IntroOverlay() {
         />
 
         {!closing && (
-          <motion.button
-            type="button"
-            onClick={handleOpen}
-            initial={{ opacity: 0, y: 14 }}
-            animate={
-              prefersReducedMotion
-                ? { opacity: 1, y: 0 }
-                : {
-                    opacity: [0, 1, 1],
-                    y: 0,
-                    scale: [1, 1.04, 1],
-                  }
-            }
-            transition={
-              prefersReducedMotion
-                ? { duration: 0.8, delay: 0.6 }
-                : {
-                    opacity: { duration: 1.2, delay: 0.6 },
-                    y: { duration: 1.2, delay: 0.6 },
-                    scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                  }
-            }
-            aria-label={tapText}
+          // Static centering wrapper — framer-motion's `animate={{ transform }}` would
+          // otherwise overwrite `translateX(-50%)` and push the button off-screen.
+          <div
             style={{
               position: "absolute",
-              bottom: 38,
-              left: "50%",
-              transform: "translateX(-50%)",
+              bottom: 36,
+              left: 0,
+              right: 0,
               display: "flex",
-              alignItems: "center",
-              gap: 9,
-              padding: "10px 18px",
-              minHeight: 44,
-              borderRadius: 999,
-              border: "1px solid rgba(255,255,255,0.22)",
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(14px)",
-              WebkitBackdropFilter: "blur(14px)",
-              boxShadow:
-                "0 6px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)",
-              cursor: "pointer",
-              pointerEvents: "auto",
+              justifyContent: "center",
               zIndex: 10,
+              pointerEvents: "none",
             }}
           >
-            <motion.span
-              aria-hidden
+            <motion.button
+              type="button"
+              onClick={handleOpen}
+              initial={{ opacity: 0, y: 14 }}
               animate={
                 prefersReducedMotion
-                  ? { y: 0, scale: 1, rotate: 0 }
-                  : isMobile
-                  ? { scale: [1, 1.18, 1] }
-                  : { y: [0, -3, 0], rotate: [0, -8, 0, 8, 0] }
+                  ? { opacity: 1, y: 0 }
+                  : {
+                      opacity: [0, 1, 1],
+                      y: 0,
+                      scale: [1, 1.05, 1],
+                    }
               }
               transition={
                 prefersReducedMotion
-                  ? { duration: 0 }
+                  ? { duration: 0.8, delay: 0.6 }
                   : {
-                      duration: 2.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
+                      opacity: { duration: 1.2, delay: 0.6 },
+                      y: { duration: 1.2, delay: 0.6 },
+                      scale: { duration: 2.6, repeat: Infinity, ease: "easeInOut" },
                     }
               }
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.06 }}
+              whileTap={{ scale: 0.96 }}
+              aria-label={tapText}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
+                gap: 10,
+                padding: "11px 22px 11px 18px",
+                minHeight: 48,
+                borderRadius: 999,
+                border: "1px solid rgba(201,168,76,0.45)",
+                background: "rgba(20, 16, 10, 0.55)",
+                backdropFilter: "blur(16px) saturate(140%)",
+                WebkitBackdropFilter: "blur(16px) saturate(140%)",
+                boxShadow:
+                  "0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.10), 0 0 0 1px rgba(0,0,0,0.05)",
+                cursor: "pointer",
+                pointerEvents: "auto",
+                willChange: "transform, opacity",
               }}
             >
-              <Sparkles
-                size={16}
-                strokeWidth={1.75}
+              <motion.span
+                aria-hidden
+                animate={
+                  prefersReducedMotion
+                    ? { y: 0, scale: 1, rotate: 0 }
+                    : isMobile
+                    ? { scale: [1, 1.12, 1] }
+                    : { y: [0, 4, 0, 4, 0] }
+                }
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0 }
+                    : {
+                        duration: 1.6,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.25, 0.5, 0.75, 1],
+                      }
+                }
                 style={{
-                  color: "rgba(201,168,76,0.95)",
-                  filter:
-                    "drop-shadow(0 0 6px rgba(201,168,76,0.45)) drop-shadow(0 1px 3px rgba(0,0,0,0.45))",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transformOrigin: "top left",
                 }}
-              />
-            </motion.span>
-            <span
-              style={{
-                fontSize: 10,
-                textTransform: "uppercase",
-                letterSpacing: "0.4em",
-                color: "rgba(255,255,255,0.92)",
-                fontWeight: 500,
-                textShadow: "0 1px 8px rgba(0,0,0,0.45)",
-              }}
-            >
-              {tapText}
-            </span>
-          </motion.button>
+              >
+                <MousePointer2
+                  size={20}
+                  strokeWidth={1.5}
+                  fill="rgba(228, 192, 110, 0.95)"
+                  stroke="rgba(228, 192, 110, 1)"
+                  style={{
+                    color: "rgba(228, 192, 110, 1)",
+                    filter:
+                      "drop-shadow(0 0 6px rgba(228, 192, 110, 0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.6))",
+                  }}
+                />
+              </motion.span>
+              <span
+                style={{
+                  fontSize: 10.5,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.4em",
+                  color: "rgba(255,255,255,0.95)",
+                  fontWeight: 600,
+                  textShadow: "0 1px 6px rgba(0,0,0,0.55)",
+                  fontFamily: "'Montserrat', sans-serif",
+                }}
+              >
+                {tapText}
+              </span>
+            </motion.button>
+          </div>
         )}
       </motion.div>
     </AnimatePresence>
