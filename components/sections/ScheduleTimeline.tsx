@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
+import { weddingTimelineDisplayItems } from "@/lib/data/weddingSchedule";
+import ScheduleDownload from "@/components/sections/ScheduleDownload";
 
 const THEME_COLOR = "#2C3E35";
 
@@ -21,13 +23,9 @@ const TEXTS = {
       // { time: "", event: "Sunset Cocktails & Hors d'Œuvres" },
       // { time: "", event: "Return to the Private Pier" },
     ],
-    weddingItems: [
-      { time: "", event: "Arrival & Welcome" },
-      { time: "", event: "Ceremony" },
-      { time: "", event: "Banquet" },
-      { time: "", event: "Celebration" },
-      { time: "", event: "After Party" },
-    ],
+    // Timeline rows are sourced from the shared schedule data so the site
+    // timeline and the downloadable program PDF can never drift apart.
+    weddingItems: weddingTimelineDisplayItems,
   },
   IT: {
     title: "",
@@ -42,11 +40,16 @@ const TEXTS = {
 
     ],
     weddingItems: [
-      { time: "15:00", event: "Arrivo & Benvenuto" },
-      { time: "", event: "Cerimonia" },
-      { time: "", event: "Banchetto" },
-      { time: "", event: "Festa" },
-      { time: "", event: "After Party" },
+      { time: "2:30 PM", event: "Arrivo degli ospiti" },
+      { time: "3:30 PM", event: "Cerimonia" },
+      { time: "4:15 PM", event: "Aperitivo nei giardini" },
+      { time: "5:30 PM", event: "Ritratti al tramonto" },
+      { time: "6:30 PM", event: "Cena di ricevimento" },
+      { time: "8:30 PM", event: "Discorsi e brindisi" },
+      { time: "9:00 PM", event: "Taglio della torta" },
+      { time: "9:30 PM", event: "Primo ballo" },
+      { time: "10:00 PM", event: "Balli sotto le stelle" },
+      { time: "11:30 PM", event: "Saluto con le stelline luminose" },
     ],
   },
 };
@@ -209,6 +212,8 @@ export default function ScheduleTimeline() {
             }}
           />
         </div>
+
+        <ScheduleDownload />
       </div>
     </section>
   );

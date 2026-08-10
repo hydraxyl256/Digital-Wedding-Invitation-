@@ -15988,10 +15988,10 @@ function $D(e, t) {
 const FD = {
         en: {
             "hero.subtitle": "We are getting married",
-            "hero.date": "23 July 2026",
+            "hero.date": "11 October 2026",
             "hero.rsvp": "RSVP",
             "countdown.title": "Countdown",
-            "countdown.until": "Until 23 July 2026",
+            "countdown.until": "Until 11 October 2026",
             "countdown.days": "Days",
             "countdown.hours": "Hours",
             "countdown.minutes": "Minutes",

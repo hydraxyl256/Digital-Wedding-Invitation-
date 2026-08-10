@@ -11,14 +11,14 @@ const THEME_COLOR = "#2C3E35";
 
 const TEXTS = {
   EN: {
-    until: "Until 16 August 2026",
+    until: "Until 11 October 2026",
     days: "Days",
     hours: "Hours",
     minutes: "Minutes",
     over: "The celebration has begun!",
   },
   IT: {
-    until: "Fino al 16 Agosto 2026",
+    until: "Fino al 11 ottobre 2026",
     days: "Giorni",
     hours: "Ore",
     minutes: "Minuti",

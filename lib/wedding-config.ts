@@ -5,22 +5,22 @@ export const weddingConfig = {
   maintenanceMode: false,
 
   // Couple
-  bride: "Anita",
-  groom: "Richard",
-  coupleNames: "Anita & Richard",
-  hashtag: "#AnitaAndRichard2026",
+  bride: "Richard",
+  groom: "Anita",
+  coupleNames: "Richard & Anita",
+  hashtag: "#RichardAndAnita2026",
 
   // Date & Time
-  weddingDate: new Date("2026-08-16T15:00:00"),
-  weddingDateFormatted: "Sunday, August 16, 2026",
-  weddingDateShort: "16 August 2026",
+  weddingDate: new Date("2026-10-11T15:00:00"),
+  weddingDateFormatted: "Sunday, October 11, 2026",
+  weddingDateShort: "11 October 2026",
   weddingTime: "3:00 PM",
 
   // Ceremony & Reception Venue (combined at Palazzo Gallio)
   ceremony: {
     name: "Palazzo Gallio",
     address: "Via Regina Levante 2, 22015 Gravedona CO, Italy",
-    time: "3:00 PM",
+    time: "2:30 PM",
     mapsUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2787.443!2d9.1438!3d46.1441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47841a0f5e3b3b3b%3A0x40671111111!2sPalazzo%20Gallio!5e0!3m2!1sen!2sit!4v1700000000000",
     openMapsUrl:

@@ -53,15 +53,15 @@ export default function RSVPForm() {
 
   const txt = {
     title: "Rsvp",
-    // deadline: "THE FAVOUR OF A REPLY IS KINDLY REQUESTED BY THE FIFTEENTH OF JUNE, 2026",
+    // deadline: "THE FAVOUR OF A REPLY IS KINDLY REQUESTED BY THE 30th September, 2026",
     fullName: "Full name",
     email: "Email address",
     attendLabel: "Will you be joining us? *",
     attendYes: "Delighted to accept",
     attendNo: "Regretfully unable to attend",
     eventsLabel: "Which events will you be attending? *",
-    event1: "Welcome Cruise - 15th August",
-    event2: "Wedding Ceremony & Reception - 16th August",
+    event1: "Welcome Cruise - 10th Otober",
+    event2: "Wedding Ceremony & Reception - 11th October",
     guestsLabel: "Number of guests in your party",
     principalLabel: "Principal guest",
     childrenLabel: "Will any children be accompanying you?",

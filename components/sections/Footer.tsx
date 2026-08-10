@@ -12,12 +12,12 @@ const THEME = "#3D5A5B";
 const TEXTS = {
   EN: {
     quote: '"Two souls, one heart, one forever."',
-    date: "Sunday, August 16, 2026",
+    date: "Sunday, October 11th, 2026",
 
   },
   IT: {
     quote: '"Due anime, un cuore, un\'eternità."',
-    date: "Domenica, 16 Agosto 2026",
+    date: "Domenica, 11 ottobre 2026",
 
   },
 };
