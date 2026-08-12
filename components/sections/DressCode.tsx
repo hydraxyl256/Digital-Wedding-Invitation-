@@ -4,46 +4,16 @@ import { motion } from "framer-motion";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import { useWedding } from "@/components/providers/WeddingContext";
 
+// ─── Theme tokens (untouched from the approved design) ───────────────────
 const THEME_COLOR = "#2C3E35";
 
+// Localization is preserved for the section title in case other sections
+// share the locale context, but the new editorial copy is English-only and
+// approved as supplied — it is not auto-translated into Italian.
 const TEXTS = {
-  EN: {
-    title: "Dress Code",
-    card1Title: "",
-    card1Date: "11 October",
-    card1Attire: "Garden Cocktail Attire",
-    card1Hint: "Light, breezy, and elegant — think flowing fabrics, neutral tones, and comfortable shoes for the pier.",
-    card2Title: "Wedding",
-    card2Date: "11 October",
-    card2Attire: "Black Tie",
-    card2Hint: "Floor-length gowns and tuxedos. Rich jewel tones welcome. Please avoid white, ivory, and cream.",
-    paletteLabel: "Suggested palette",
-    palette: ["#2C3E35", "#7A8B80", "#F8F6F0", "#E3DFD5", "#1A1510"],
-  },
-  IT: {
-    title: "Codice di Abbigliamento",
-    card1Title: "",
-    card1Date: "11 ottobre",
-    card1Attire: "Cocktail da Giardino",
-    card1Hint: "Leggero, arioso ed elegante — tessuti fluidi, tonalità neutre e scarpe comode per il molo.",
-    card2Title: "Matrimonio",
-    card2Date: "11 ottobre",
-    card2Attire: "Black Tie",
-    card2Hint: "Abiti lunghi e smoking. Toni gioiello benvenuti. Si prega di evitare bianco, avorio e crema.",
-    paletteLabel: "Palette suggerita",
-    palette: ["#2C3E35", "#7A8B80", "#F8F6F0", "#E3DFD5", "#1A1510"],
-  },
-};
-
-function Swatch({ color }: { color: string }) {
-  return (
-    <div
-      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full border border-[#E3DFD5]"
-      style={{ background: color }}
-      aria-hidden
-    />
-  );
-}
+  EN: { title: "Dress Code" },
+  IT: { title: "Codice di Abbigliamento" },
+} as const;
 
 export default function DressCode() {
   const { language } = useWedding();
@@ -59,22 +29,11 @@ export default function DressCode() {
       }}
     >
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-16 flex flex-col items-center gap-10 sm:gap-14 md:gap-20">
-        <AnimatedSection direction="fade">
-          <h2
-            className="text-center"
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              color: THEME_COLOR,
-              opacity: 0.92,
-              fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
-              lineHeight: 1.1,
-            }}
-          >
-            {t.title}
-          </h2>
+        <AnimatedSection direction="fade" className="sr-only">
+          <h2>{t.title}</h2>
         </AnimatedSection>
 
-        {/* CARD 1 */}
+        {/* ─── CARD 1 — DRESS CODE ─────────────────────────────────────── */}
         <div className="relative w-full">
           <motion.img
             src="/roses.png"
@@ -99,18 +58,11 @@ export default function DressCode() {
               padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
             }}
           >
-            <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
-              <h3
-                style={{
-                  fontFamily: "'Great Vibes', cursive",
-                  color: THEME_COLOR,
-                  fontSize: "clamp(2.2rem, 6vw, 4rem)",
-                }}
-              >
-                {t.card1Title}
-              </h3>
+            <div className="flex flex-col items-center justify-center text-center gap-4 sm:gap-6">
+
+              {/* Card 1 label — DRESS CODE */}
               <p
-                className="uppercase tracking-[0.5em] sm:tracking-[0.6em] font-bold"
+                className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-bold"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   color: THEME_COLOR,
@@ -118,34 +70,104 @@ export default function DressCode() {
                   fontSize: "clamp(9px, 0.95vw, 12px)",
                 }}
               >
-                {t.card1Date}
+                Dress Code
               </p>
+
+              {/* Main title — TIMELESS ROYAL ELEGANCE */}
+              <h3
+                style={{
+                  fontFamily: "'Great Vibes', cursive",
+                  color: THEME_COLOR,
+                  fontSize: "clamp(2.2rem, 6vw, 4rem)",
+                  lineHeight: 1.1,
+                }}
+              >
+                Timeless Royal Elegance
+              </h3>
+
+              {/* Descriptor — Formal • Sophisticated • Regal */}
               <p
-                className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-semibold mt-1 sm:mt-2"
+                className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-semibold"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   color: THEME_COLOR,
-                  opacity: 0.85,
+                  opacity: 0.7,
                   fontSize: "clamp(9px, 0.95vw, 12px)",
                 }}
               >
-                {t.card1Attire}
+                Formal &nbsp;&middot;&nbsp; Sophisticated &nbsp;&middot;&nbsp; Regal
               </p>
+
+              {/* Introductory italic statement */}
               <p
                 className="font-serif italic max-w-md leading-relaxed mt-1 sm:mt-2"
                 style={{
                   color: THEME_COLOR,
                   opacity: 0.75,
-                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                  fontSize: "clamp(0.95rem, 1.25vw, 1.15rem)",
                 }}
               >
-                {t.card1Hint}
+                Come dressed for a celebration worthy
+                <br />
+                of a love story that belongs among the ages.
               </p>
+
+              {/* Scripture */}
+              <blockquote
+                className="font-serif italic leading-relaxed mt-2 sm:mt-4"
+                style={{
+                  color: THEME_COLOR,
+                  opacity: 0.85,
+                  fontSize: "clamp(1.05rem, 1.55vw, 1.4rem)",
+                  maxWidth: "32ch",
+                  margin: 0,
+                }}
+              >
+                <span aria-hidden>&ldquo;</span>What God has joined together,
+                <br />
+                let no one separate.<span aria-hidden>&rdquo;</span>
+                <footer
+                  className="not-italic mt-3 sm:mt-4 font-serif"
+                  style={{
+                    fontSize: "clamp(0.8rem, 1.05vw, 0.95rem)",
+                    opacity: 0.7,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  &mdash; Mark 10:9
+                </footer>
+              </blockquote>
+
+              {/* Couple signature — RICHARD & ANITA */}
+              <h4
+                className="mt-2 sm:mt-4"
+                style={{
+                  fontFamily: "'Great Vibes', cursive",
+                  color: THEME_COLOR,
+                  fontSize: "clamp(1.9rem, 5vw, 3.4rem)",
+                  lineHeight: 1.1,
+                }}
+              >
+                Richard <span style={{ fontStyle: "italic" }}>&amp;</span> Anita
+              </h4>
+
+              {/* Closing italic statement */}
+              <p
+                className="font-serif italic max-w-md leading-relaxed"
+                style={{
+                  color: THEME_COLOR,
+                  opacity: 0.75,
+                  fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
+                }}
+              >
+                One love. One promise. One beautiful forever.
+              </p>
+
             </div>
           </motion.div>
         </div>
 
-        {/* CARD 2 */}
+        {/* ─── CARD 2 — THE WEDDING CELEBRATION ──────────────────────── */}
         <div className="relative w-full mb-6 sm:mb-8 md:mb-16">
           <motion.img
             src="/cypress.png"
@@ -184,68 +206,75 @@ export default function DressCode() {
               padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 4rem)",
             }}
           >
-            <div className="flex flex-col items-center justify-center text-center gap-3 sm:gap-4">
+            <div className="flex flex-col items-center justify-center text-center gap-4 sm:gap-6">
+
+              {/* Heading — THE WEDDING CELEBRATION */}
               <h3
                 style={{
                   fontFamily: "'Great Vibes', cursive",
                   color: THEME_COLOR,
                   fontSize: "clamp(2.2rem, 6vw, 4rem)",
+                  lineHeight: 1.1,
                 }}
               >
-                {t.card2Title}
+                The Wedding Celebration
               </h3>
+
+              {/* Date — Sunday, 11 October 2026 */}
               <p
-                className="uppercase tracking-[0.5em] sm:tracking-[0.6em] font-bold"
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  color: THEME_COLOR,
-                  opacity: 0.6,
-                  fontSize: "clamp(9px, 0.95vw, 12px)",
-                }}
-              >
-                {t.card2Date}
-              </p>
-              <p
-                className="uppercase tracking-[0.3em] sm:tracking-[0.35em] font-semibold mt-1 sm:mt-2"
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  color: THEME_COLOR,
-                  opacity: 0.9,
-                  fontSize: "clamp(9px, 0.95vw, 12px)",
-                }}
-              >
-                {t.card2Attire}
-              </p>
-              <p
-                className="font-serif italic max-w-md leading-relaxed mt-1 sm:mt-2"
+                className="font-serif"
                 style={{
                   color: THEME_COLOR,
-                  opacity: 0.75,
-                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                  opacity: 0.85,
+                  fontSize: "clamp(1rem, 1.4vw, 1.25rem)",
+                  letterSpacing: "0.01em",
                 }}
               >
-                {t.card2Hint}
+                Sunday, 11 October 2026
               </p>
 
-              {/* Color palette */}
-              <div className="mt-4 sm:mt-6 flex flex-col items-center gap-2 sm:gap-3">
+              {/* Venue — Palazzo Gallio / Lake Como, Italy */}
+              <div
+                className="flex flex-col items-center"
+                style={{ gap: "clamp(0.15rem, 0.4vw, 0.3rem)" }}
+              >
                 <p
-                  className="uppercase tracking-[0.4em] sm:tracking-[0.5em] font-bold"
+                  className="font-serif italic"
+                  style={{
+                    color: THEME_COLOR,
+                    fontSize: "clamp(1.15rem, 1.7vw, 1.5rem)",
+                    fontWeight: 500,
+                  }}
+                >
+                  Palazzo Gallio
+                </p>
+                <p
+                  className="uppercase tracking-[0.25em] sm:tracking-[0.3em] font-medium"
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
                     color: THEME_COLOR,
-                    opacity: 0.55,
-                    fontSize: "clamp(8px, 0.85vw, 10px)",
+                    opacity: 0.7,
+                    fontSize: "clamp(9px, 0.95vw, 12px)",
                   }}
                 >
-                  {t.paletteLabel}
+                  Lake Como, Italy
                 </p>
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  {t.palette.map((c) => (
-                    <Swatch key={c} color={c} />
-                  ))}
-                </div>
               </div>
+
+              {/* Closing italic description */}
+              <p
+                className="font-serif italic max-w-md leading-relaxed mt-2 sm:mt-4"
+                style={{
+                  color: THEME_COLOR,
+                  opacity: 0.75,
+                  fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
+                }}
+              >
+                An evening of timeless romance, regal elegance,
+                <br />
+                and a love that will last for generations.
+              </p>
+
             </div>
           </motion.div>
         </div>

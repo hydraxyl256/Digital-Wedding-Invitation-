@@ -14,7 +14,7 @@ const TEXTS = {
     viewMap: "View on Map",
     welcomeDesc: "",
     weddingDesc: "Ceremony & reception in the Sala d'Onore",
-    historyTitle: "Why Palazzo Gallio",
+    historyTitle: "Palazzo Gallio",
     // History is displayed as four separate <p> elements. Wording is verbatim
     // from the approved program brief; do not paraphrase or merge.
     history: [

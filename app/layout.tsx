@@ -8,6 +8,11 @@ import { weddingConfig } from "@/lib/wedding-config";
 export const metadata: Metadata = {
   title: `${weddingConfig.coupleNames} — Wedding Invitation`,
   description: `Join us for the wedding celebration of ${weddingConfig.coupleNames} on ${weddingConfig.weddingDateFormatted} in Nairobi, Kenya.`,
+  icons: {
+    icon: [{ url: "/AR.png", type: "image/png" }],
+    shortcut: ["/AR.png"],
+    apple:  ["/AR.png"],
+  },
   openGraph: {
     title: `${weddingConfig.coupleNames} — Wedding Invitation`,
     description: `You are cordially invited to our wedding on ${weddingConfig.weddingDateFormatted}.`,

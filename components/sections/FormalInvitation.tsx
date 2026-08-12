@@ -1,61 +1,139 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { weddingConfig } from "@/lib/wedding-config";
-import AnimatedSection from "@/components/ui/AnimatedSection";
-import { useWedding } from "@/components/providers/WeddingContext";
+import { type CSSProperties } from "react";
 
 // ─── Local tokens ────────────────────────────────────────────────────────
-// Kept private to this component so the rest of the design system is not
-// perturbed by a one-off invitation treatment.
+// Quiet luxury lives in restraint: warm ivory paper, deep charcoal type,
+// a hushed sage for italic emphasis, antique champagne for one hairline.
 const COLOR = {
-  ivory:    "#F6F1E6", // warm parchment ground
-  ink:      "#2C2A26", // editorial charcoal (slightly warmer than theme)
-  inkSoft:  "#5A554C", // secondary text
-  gold:     "#B49A57", // antique champagne — used only for hairline rules
-  goldSoft: "rgba(180,154,87,0.35)",
-  paper:    "rgba(120,100,60,0.06)", // micro-texture tint
+  ivory:     "#F4EFE3",
+  ivoryWarm: "#FAF6EB",
+  ink:       "#26241F",
+  inkSoft:   "#5C574B",
+  sage:      "#6F7B6A",
+  gold:      "#B49A57",
 } as const;
 
-const TEXTS = {
-  EN: {
-    line1: "We request the pleasure of your company",
-    line2: "To celebrate our wedding on",
-    month: "October",
-    weekday: "Sunday",
-    held: "To be held at",
+// Approved invitation copy — verbatim from the brief. Wording must not be
+// rewritten, paraphrased, summarized, or "improved." Bold markers from the
+// brief indicate which words receive a subtle italic-serif emphasis.
+const INVITATION = {
+  eyebrow:   "A Royal Celebration of Love",
+  firstName: "Richard",
+  ampersand: "&",
+  lastName:  "Anita",
+  opening:   "With grateful hearts and the blessing of God,",
+  body: [
+    "we invite you to join us as we celebrate",
+    "the beginning of a beautiful new chapter",
+    "in our love story.",
+  ],
+  closing: {
+    emphasis: "Two hearts, two journeys,",
+    rest:     "now becoming one.",
   },
-  IT: {
-    line1: "Con il piacere della vostra compagnia",
-    line2: "Celebriamo il nostro matrimonio il",
-    month: "ottobre",
-    weekday: "Domenica",
-    held: "Presso",
-  },
-};
+} as const;
 
 export default function FormalInvitation() {
-  const { language } = useWedding();
-  const t = TEXTS[language as keyof typeof TEXTS] ?? TEXTS.EN;
   const reduceMotion = useReducedMotion();
+
+  // Slow, gentle, staggered fade-up of the five invitation blocks.
+  // Total sequence ~2.4s — under the user's patience threshold.
+  const sequence = reduceMotion
+    ? { initial: false, animate: { opacity: 1, y: 0 } }
+    : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+      };
+  const timings = [
+    { duration: 0.9, delay: 0.10, ease: [0.22, 1, 0.36, 1] as const },
+    { duration: 1.1, delay: 0.30, ease: [0.22, 1, 0.36, 1] as const },
+    { duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+    { duration: 0.8, delay: 0.85, ease: [0.22, 1, 0.36, 1] as const },
+    { duration: 1.0, delay: 1.10, ease: [0.22, 1, 0.36, 1] as const },
+  ];
+
+  // ─── Type styles (private, restrained palette) ──────────────────────────
+  const eyebrowStyle: CSSProperties = {
+    fontFamily: "'Montserrat', sans-serif",
+    color: COLOR.inkSoft,
+    letterSpacing: "0.42em",
+    fontSize: "clamp(0.62rem, 0.78vw, 0.82rem)",
+    fontWeight: 500,
+    textTransform: "uppercase",
+  };
+
+  const namesContainerStyle: CSSProperties = {
+    fontFamily: "'Cormorant Garamond', serif",
+    color: COLOR.ink,
+    fontWeight: 500,
+    fontSize: "clamp(2.6rem, 6.2vw, 4.6rem)",
+    letterSpacing: "0.07em",
+    lineHeight: 1.05,
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "baseline",
+    justifyContent: "center",
+    gap: "clamp(0.45rem, 1.4vw, 1rem)",
+  };
+
+  const ampersandStyle: CSSProperties = {
+    fontFamily: "'Great Vibes', cursive",
+    fontWeight: 400,
+    fontSize: "0.88em",
+    color: COLOR.sage,
+    letterSpacing: "0.02em",
+    transform: "translateY(-0.12em)",
+  };
+
+  const openingStyle: CSSProperties = {
+    fontFamily: "'Cormorant Garamond', serif",
+    fontStyle: "italic",
+    color: COLOR.sage,
+    fontWeight: 500,
+    fontSize: "clamp(1.1rem, 1.55vw, 1.45rem)",
+    lineHeight: 1.45,
+    letterSpacing: "0.01em",
+  };
+
+  const bodyStyle: CSSProperties = {
+    fontFamily: "'Cormorant Garamond', serif",
+    color: COLOR.ink,
+    fontWeight: 400,
+    fontSize: "clamp(1.05rem, 1.4vw, 1.35rem)",
+    lineHeight: 1.65,
+    letterSpacing: "0.005em",
+  };
+
+  const closingStyle: CSSProperties = {
+    fontFamily: "'Cormorant Garamond', serif",
+    color: COLOR.ink,
+    fontWeight: 500,
+    fontStyle: "italic",
+    fontSize: "clamp(1.25rem, 1.95vw, 1.85rem)",
+    lineHeight: 1.4,
+    letterSpacing: "0.01em",
+  };
 
   return (
     <section
       data-section
-      aria-label={language === "IT" ? "Invito formale" : "Formal invitation"}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      aria-label="Formal wedding invitation"
+      className="relative w-full flex items-center justify-center overflow-hidden"
       style={{
         backgroundColor: COLOR.ivory,
-        // Two soft radial gradients produce an almost-imperceptible warm
-        // tonal variation; reads as paper rather than as decoration.
-        backgroundImage: [
-          "radial-gradient(120% 80% at 50% 18%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 60%)",
-          "radial-gradient(80% 60% at 50% 100%, rgba(180,154,87,0.06) 0%, rgba(180,154,87,0) 70%)",
-        ].join(", "),
-        paddingBlock: "clamp(4rem, 9vw, 8rem)",
+        // Material: warm ivory ground + a whisper of paper warmth at the
+        // top edge. Avoids the "flat default" feel without becoming a
+        // gradient. Intentionally non-rendered as an obvious gradient.
+        backgroundImage:
+          "radial-gradient(120% 60% at 50% 0%, rgba(255,250,236,0.85) 0%, rgba(255,250,236,0) 65%)",
+        paddingBlock: "clamp(3.5rem, 6vw, 6rem)",
+        minHeight: "100vh",
       }}
     >
-      {/* Existing invitation-card image, kept but quieted for restraint. */}
+      {/* Existing invitation-card image — atmospheric only. Multiply-blended
+          and dimmed so it reads as paper grain rather than content. */}
       <div
         aria-hidden
         className="absolute inset-0 z-0 pointer-events-none"
@@ -63,262 +141,147 @@ export default function FormalInvitation() {
           backgroundImage: "url('/invitation-card.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.10,
+          opacity: 0.07,
           mixBlendMode: "multiply",
         }}
       />
 
-      {/* Hairline double-rule editorial frame, drawn as a single absolute
-          layer behind the content. Uses :where-friendly inset via border-
-          inside-box approach so spacing adapts fluidly. */}
+      {/* Engraved-stationery boundary: a single fine double-rule frame,
+          inset from the section edges. Square corners (no rounding) so it
+          reads as paper, not as a UI card. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+        className="absolute z-0 pointer-events-none"
+        style={{
+          inset: "clamp(1.25rem, 4vw, 3.75rem)",
+          border: `1px solid ${COLOR.gold}33`,
+        }}
       >
         <div
-          className="relative h-full w-full"
+          className="absolute"
           style={{
-            marginInline: "clamp(1rem, 5vw, 5rem)",
-            marginBlock: "clamp(2rem, 6vw, 5rem)",
-            border: `1px solid ${COLOR.goldSoft}`,
-            borderRadius: "2px",
+            inset: "clamp(0.5rem, 1.4vw, 0.9rem)",
+            border: `1px solid ${COLOR.gold}26`,
           }}
-        >
-          {/* Inner double-rule */}
-          <div
-            className="absolute"
-            style={{
-              inset: "6px",
-              border: `1px solid ${COLOR.goldSoft}`,
-              borderRadius: "2px",
-            }}
-          />
-        </div>
+        />
       </div>
 
-      <AnimatedSection
-        direction="fade"
-        className="relative z-10 w-full max-w-3xl mx-auto"
+      <div
+        className="relative z-10 mx-auto flex flex-col items-center"
+        style={{
+          // §32: content width ~600–760px. We use a fluid max-width so the
+          // composition stays within editorial proportions on every screen.
+          width: "min(88vw, 720px)",
+          // Tight, deliberate vertical rhythm so the whole invitation fits
+          // 1366×768 without scrolling on desktop (§19).
+          gap: "clamp(1.5rem, 3.4vw, 2.6rem)",
+        }}
       >
-        {/* The card itself sits inside the frame's safe area. */}
-        <div
-          className="text-center flex flex-col items-center"
-          style={{
-            gap: "clamp(1.75rem, 4vw, 3rem)",
-            paddingInline: "clamp(1.5rem, 5vw, 4rem)",
-          }}
+        {/* 1 · Eyebrow — A ROYAL CELEBRATION OF LOVE */}
+        <motion.p
+          {...sequence}
+          transition={timings[0]}
+          style={eyebrowStyle}
         >
-          {/* Invitation wording — small, tracked, restrained. */}
-          <div
-            className="flex flex-col items-center w-full"
-            style={{ gap: "clamp(0.5rem, 1.2vw, 0.85rem)" }}
-          >
-            <p
-              className="uppercase font-semibold"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                color: COLOR.ink,
-                letterSpacing: "0.42em",
-                fontSize: "clamp(0.65rem, 0.8vw, 0.85rem)",
-                opacity: 0.78,
-              }}
-            >
-              {t.line1}
-            </p>
-            <p
-              className="uppercase font-medium"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                color: COLOR.inkSoft,
-                letterSpacing: "0.32em",
-                fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
-              }}
-            >
-              {t.line2}
-            </p>
-          </div>
+          {INVITATION.eyebrow}
+        </motion.p>
 
-          {/* Date — month / day / year in a quiet editorial row. */}
-          <div
-            className="flex items-center justify-center w-full"
-            style={{
-              gap: "clamp(1rem, 4vw, 3.5rem)",
-              marginBlock: "clamp(0.5rem, 1.5vw, 1rem)",
-            }}
-          >
-            {/* Month */}
-            <div className="flex flex-col items-center" style={{ gap: 8 }}>
-              <span
-                aria-hidden
-                style={{
-                  display: "block",
-                  width: "clamp(2.5rem, 6vw, 4.5rem)",
-                  height: "1px",
-                  background: COLOR.gold,
-                  opacity: 0.7,
-                }}
-              />
-              <span
-                className="uppercase"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  color: COLOR.ink,
-                  letterSpacing: "0.34em",
-                  fontSize: "clamp(0.95rem, 1.5vw, 1.25rem)",
-                  fontWeight: 500,
-                }}
-              >
-                {t.month}
+        {/* Tiny ornamental glyph (a single 4px diamond) — one detail only. */}
+        <motion.span
+          {...sequence}
+          transition={timings[0]}
+          aria-hidden
+          style={{
+            display: "block",
+            width: 4,
+            height: 4,
+            background: COLOR.gold,
+            transform: "rotate(45deg)",
+            marginTop: "-0.4rem",
+          }}
+        />
+
+        {/* 2 · Names — RICHARD & ANITA (the visual heart) */}
+        <motion.h2
+          {...sequence}
+          transition={timings[1]}
+          style={namesContainerStyle}
+        >
+          <span>{INVITATION.firstName}</span>
+          <span aria-label="and" style={ampersandStyle}>
+            {INVITATION.ampersand}
+          </span>
+          <span>{INVITATION.lastName}</span>
+        </motion.h2>
+
+        {/* 3 · Opening sentence (italic emphasis) + body */}
+        <motion.div
+          {...sequence}
+          transition={timings[2]}
+          className="flex flex-col items-center text-center"
+          style={{ gap: "clamp(0.6rem, 1.3vw, 1.05rem)", maxWidth: "44ch" }}
+        >
+          <p style={openingStyle}>{INVITATION.opening}</p>
+          <p style={bodyStyle}>
+            {INVITATION.body.map((line, i) => (
+              <span key={i} style={{ display: "block" }}>
+                {line}
               </span>
-              <span
-                aria-hidden
-                style={{
-                  display: "block",
-                  width: "clamp(2.5rem, 6vw, 4.5rem)",
-                  height: "1px",
-                  background: COLOR.gold,
-                  opacity: 0.7,
-                }}
-              />
-            </div>
-
-            {/* Day — the engraved focal number. */}
-            <motion.span
-              aria-label={`Day ${11}`}
-              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-              className="leading-none"
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                color: COLOR.ink,
-                fontWeight: 400,
-                fontSize: "clamp(4.5rem, 12vw, 8.5rem)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              11
-            </motion.span>
-
-            {/* Year */}
-            <div className="flex flex-col items-center" style={{ gap: 8 }}>
-              <span
-                aria-hidden
-                style={{
-                  display: "block",
-                  width: "clamp(2.5rem, 6vw, 4.5rem)",
-                  height: "1px",
-                  background: COLOR.gold,
-                  opacity: 0.7,
-                }}
-              />
-              <span
-                className="uppercase"
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  color: COLOR.ink,
-                  letterSpacing: "0.34em",
-                  fontSize: "clamp(0.95rem, 1.5vw, 1.25rem)",
-                  fontWeight: 500,
-                }}
-              >
-                2026
-              </span>
-              <span
-                aria-hidden
-                style={{
-                  display: "block",
-                  width: "clamp(2.5rem, 6vw, 4.5rem)",
-                  height: "1px",
-                  background: COLOR.gold,
-                  opacity: 0.7,
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Weekday — quieter than the date. */}
-          <p
-            className="uppercase"
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              color: COLOR.inkSoft,
-              letterSpacing: "0.5em",
-              fontSize: "clamp(0.6rem, 0.75vw, 0.78rem)",
-              marginTop: "-0.5rem",
-            }}
-          >
-            {t.weekday}
+            ))}
           </p>
+        </motion.div>
 
-          {/* Divider — fine antique-gold hairline. */}
-          <div
-            aria-hidden
-            className="flex items-center justify-center w-full"
-            style={{ gap: 12 }}
-          >
-            <span
-              style={{
-                display: "block",
-                flex: 1,
-                maxWidth: 120,
-                height: "1px",
-                background: COLOR.gold,
-                opacity: 0.6,
-              }}
-            />
-            <span
-              aria-hidden
-              style={{
-                width: 5,
-                height: 5,
-                background: COLOR.gold,
-                borderRadius: "50%",
-                opacity: 0.7,
-              }}
-            />
-            <span
-              style={{
-                display: "block",
-                flex: 1,
-                maxWidth: 120,
-                height: "1px",
-                background: COLOR.gold,
-                opacity: 0.6,
-              }}
-            />
-          </div>
+        {/* 4 · Delicate divider — exactly one, hairline-thick, antique champagne */}
+        <motion.div
+          {...sequence}
+          transition={timings[3]}
+          aria-hidden
+          className="flex items-center justify-center"
+          style={{ gap: 14, marginBlock: "clamp(0.4rem, 1vw, 0.85rem)" }}
+        >
+          <span
+            style={{
+              display: "block",
+              width: "clamp(2.5rem, 7vw, 4.5rem)",
+              height: 1,
+              background: COLOR.gold,
+              opacity: 0.55,
+            }}
+          />
+          <span
+            style={{
+              width: 4,
+              height: 4,
+              background: COLOR.gold,
+              borderRadius: "50%",
+              opacity: 0.75,
+            }}
+          />
+          <span
+            style={{
+              display: "block",
+              width: "clamp(2.5rem, 7vw, 4.5rem)",
+              height: 1,
+              background: COLOR.gold,
+              opacity: 0.55,
+            }}
+          />
+        </motion.div>
 
-          {/* Venue */}
-          <div
-            className="flex flex-col items-center"
-            style={{ gap: "clamp(0.6rem, 1.4vw, 1rem)" }}
-          >
-            <p
-              className="uppercase font-semibold"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                color: COLOR.ink,
-                letterSpacing: "0.42em",
-                fontSize: "clamp(0.65rem, 0.8vw, 0.85rem)",
-                opacity: 0.78,
-              }}
-            >
-              {t.held}
-            </p>
-            <p
-              style={{
-                fontFamily: "'Great Vibes', cursive",
-                color: COLOR.ink,
-                fontSize: "clamp(2rem, 4.5vw, 3rem)",
-                lineHeight: 1.1,
-              }}
-            >
-              {weddingConfig.ceremony.name}
-            </p>
-          </div>
-        </div>
-      </AnimatedSection>
+        {/* 5 · Closing — Two hearts, two journeys, now becoming one. */}
+        <motion.div
+          {...sequence}
+          transition={timings[4]}
+          className="flex flex-col items-center text-center"
+          style={{ maxWidth: "32ch" }}
+        >
+          <p style={closingStyle}>
+            <span style={{ fontWeight: 600 }}>{INVITATION.closing.emphasis}</span>
+            <br />
+            {INVITATION.closing.rest}
+          </p>
+        </motion.div>
+      </div>
     </section>
   );
 }

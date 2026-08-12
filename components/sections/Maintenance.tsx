@@ -13,7 +13,7 @@ export default function Maintenance() {
       <div
         className="absolute inset-0 opacity-40 mix-blend-overlay"
         style={{
-          backgroundImage: "url('/hero-background.png')",
+          backgroundImage: "url('/hero-background.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

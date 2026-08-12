@@ -117,7 +117,7 @@ export default function HeroSection() {
           <div
             className="absolute inset-0 w-[200%] h-full"
             style={{
-              backgroundImage: "url('/hero-background.png')",
+              backgroundImage: "url('/hero-background.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "left center",
             }}
@@ -132,7 +132,7 @@ export default function HeroSection() {
           <div
             className="absolute inset-0 w-[200%] h-full -left-full"
             style={{
-              backgroundImage: "url('/hero-background.png')",
+              backgroundImage: "url('/hero-background.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "right center",
             }}
